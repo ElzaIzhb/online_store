@@ -1,9 +1,174 @@
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+header {
+    font-size: 16px;
+}
+
+.container {
+    padding: 30px;
+}
+
 .flex {
     display: flex;
 }
+
 .wrap {
     flex-wrap: wrap;
 }
-.jcsp {
+
+.jcspa {
     justify-content: space-around;
+}
+
+.jcspb {
+    justify-content: space-between;
+}
+
+.jcs {
+    justify-content: start;
+}
+
+.jce {
+    justify-content: end;
+}
+
+.aic {
+    align-items: center;
+}
+
+.catalog {
+    padding: 15px 30px;
+    border-radius: 9px;
+    color: white;
+    background-color: #F188F2;
+    font-weight: 700;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.catalog:hover {
+    background-color: #B566B6;
+}
+
+.search {
+    position: relative;
+    padding: 15px 30px 15px 15px;
+    border: 2px solid #A9A9A9;
+    border-radius: 9px;
+    font-size: 9px;
+}
+
+.input-search {
+    padding-left: 7px;
+    outline: none;
+    border: none;
+}
+
+.search::before {
+    content: "";
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    background-image: url(../img/icons-search.png);
+    background-size: cover;
+}
+
+.input-search::placeholder {
+    font-size: 14px;
+}
+
+input:focus::-webkit-input-placeholder { 
+    color:transparent; 
+}
+
+.nav-item {
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.nav-item:hover {
+    color: #FC42FF;
+}
+
+.customer-icons {
+    gap: 7px;
+    margin-left: 10px;
+}
+
+.log-in-icon {
+    background-image: url('../img/logged-out-icon3.png');
+    background-size: cover;
+    background-position: center;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.cart-icon {
+    background-image: url('../img/cart-icon3.png');
+    background-size: cover;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.categories {
+    padding: 25px 0;
+    gap: 20px;
+}
+
+.category-item {
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.category-item:hover {
+    color: rgb(67, 67, 67);
+    text-decoration: underline;
+}
+
+.menu-contacts {
+    gap: 20px;
+}
+
+.phone {
+    font-size: 14px;
+}
+
+.logo {
+    display: block;
+    background-size: cover;
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    transition: all 0.3s;
+}
+
+.logo:hover {
+    transform: scale(1.3);
+}
+
+.telegram-logo {
+    background-image: url('..//img/telegram-logo.png');
+}
+
+.whatsapp-logo {
+    background-image: url('..//img/whatsapp-logo.png');
+}
+
+.work-hours {
+    font-size: 12px;
 }
