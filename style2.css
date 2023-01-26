@@ -1,13 +1,13 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #FEF4FE;
-    background-image: url('balls.webp');
-    background-size: cover;
+    background-color: rgb(255,177,217);
+    background-color: linear-gradient(130deg, rgba(255,177,217,1) 0%, rgba(255,90,173,1) 45%, rgba(255,66,175,1) 90%);
 }
 
 .text-request {
-    color: #3c223d;
+  font-family: Arial;
+    color: #960096;
     border-bottom: 3px solid rgb(255, 160, 176);
     width: 70%;
     left: 14.6%;
@@ -29,26 +29,28 @@ body {
     width: 30vw;
     border-radius: 5px;
     border: 2px solid rgb(255, 160, 176);
-    color: #3c223d;
+    color: #960096;
     font-size: 16px;
     margin-bottom: 4%;
     margin-left: 18%;
+
   }
   
   .form-text {
-    color: #3c223d;
+    color: #960096;
     font-size: 18px;
     margin-left: 18%;
+    font-family: Arial;
     
   }
   
   .form-submit {
     position: relative;
-    left: 43%;
+    left: 40.5%;
     width: 9vw;
     height: 5vh;
-    background-color: rgb(255, 160, 176);
-    color: black;
+    background-color: rgb(255, 108, 164);
+    color: rgb(78, 16, 70);
     font-size: 16px;
     border-radius: 5px;
     border: none;
@@ -59,4 +61,3 @@ body {
   .form-submit:hover {
     background-color: #f188f2;
   }
-  
