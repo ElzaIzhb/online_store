@@ -172,3 +172,83 @@ input:focus::-webkit-input-placeholder {
 .work-hours {
     font-size: 12px;
 }
+
+.section1 {
+    background-image: url('../img/1614843435_100-p-fon-s-dnem-rozhdeniya-122.jpg');
+    height: 600px;
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 30px;
+}
+.texth1 {
+    width: 50%;
+    padding: 100px 0 20px 50px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 200;
+    font-size: 28px;
+    line-height: 57px;
+}
+.butdiv {
+    padding: 0 50px;
+}
+.but1 {
+    padding: 25px 50px;
+    /* width: 241px; */
+    height: 82px;
+    left: 51px;
+    top: 546px;
+    background: linear-gradient(0deg, #F188F2, #F188F2), linear-gradient(0deg, #F188F2, #F188F2);
+    border-radius: 13px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    margin-right: 20px;
+    cursor: pointer;
+    border: 2px solid #FFFFFF;
+    font-size: 18px;
+}
+.but2 {
+    padding: 25px 40px;
+    /* width: 235px; */
+    height: 82px;
+    left: 332px;
+    top: 546px;
+    border: 2px solid #FFFFFF;
+    border-radius: 13px;
+    background: transparent;
+    font-family: 'Montserrat';
+    font-style: normal;
+    cursor: pointer;
+    font-size: 18px;
+}
+.section2 {
+    height: 600px;
+    margin: 0 20px 30px;
+}
+.but3 {
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 12px 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    margin-left: 20px;
+}
+h1 {
+    margin: 0;
+}
+.section3 {
+    height: 600px;
+    margin: 0 20px 30px;
+}
+.section4 {
+    background-image: url('../img/2017Girls___Beautyful_Girls_Beautiful_girl_with_multi-colored_balloons_in_hands_on_a_white_background_115598_.jpg');
+    height: 600px;
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 30px;
+}
+footer {
+    margin: 0 20px 30px 20px;
+}
