@@ -106,8 +106,7 @@ input:focus::-webkit-input-placeholder {
     margin-left: 10px;
 }
 
-.log-in-icon {
-    background-image: url('../img/logged-out-icon3.png');
+.icon {
     background-size: cover;
     background-position: center;
     width: 24px;
@@ -115,13 +114,20 @@ input:focus::-webkit-input-placeholder {
     cursor: pointer;
 }
 
+.log-in-icon {
+    background-image: url('../img/logged-out-icon3.png');
+}
+
+.favourite-icon {
+    background-image: url('../img/favourite-heart.png');
+    margin-left: 5px;
+}
+
 .cart-icon {
-    background-image: url('../img/cart-icon3.png');
-    background-size: cover;
-    background-position: center;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
+    background-image: url('../img/cart-icon3cropped.png');
+    width: 23px;
+    height: 25px;
+    margin-left: 5px;
 }
 
 .categories {
