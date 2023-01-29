@@ -15,13 +15,13 @@
 		<div class="container">
 			<div class="navigation flex jcspb aic">
 				<div class="logo-co">ART<br><i>Colibri</i></div>
-				<div class="catalog">Каталог</div>
+				<div class="catalog" onclick="renderCatalog()">Каталог</div>
 				<div id="search" class="search">
 					<input class="input-search" type="text" placeholder="Поиск">
 				</div>
 				<div><a href="" class="nav-item">Акции</a></div>
 				<div><a href="" class="nav-item">Доставка</a></div>
-				<div><a href="" class="nav-item">Контакты</a></div>
+				<div><a href="" class="nav-item" onclick="renderCont()">Контакты</a></div>
 				<div><a href="" class="nav-item">Отзывы</a></div>
 				<div class="customer-icons flex aic">
 					<div class="icon log-in-icon"></div>
@@ -94,6 +94,81 @@
 
 		</div>
 	</div>
+
+
+
+
+
+	<main class="flex">
+		<!-- для отображения каталога? -->
+    </main>
+
+	<template id="tmpl-catalog">
+        <div class="card">
+            <div class="title curs">
+                <h1>${title}</h1>
+            </div>
+            <div class="imgg">
+                <img onclick="renderCard(${id})" src="${photo}">
+            </div>
+        </div>
+    </template>
+
+    <template id="tmpl-card">
+        <div class="card curs">
+            <div class="title">
+                <h1>${title}</h1>
+            </div>
+            <div class="imgg">
+                <img src="${photo}">
+            </div>
+        </div>
+        <div class="about">
+            <b>Описание:</b> ${Текст}<br>
+            <br>
+            <b>Рейтинг:</b> ${Rating}<br>
+            <br>
+            <b>Количество серий:</b> ${episodeCount} <br>
+            <br>
+            <b>Длина эпизодов(а):</b> ${episodeLength} <br>
+            <br>
+            <b>Возрастной рейтинг:</b> ${ageRatingGuide} <br>
+            <br>
+            <b>Статус:</b> ${status} <br>
+        </div>
+    </template>
+
+    <!--создаем блоки для "о нас"-->
+    <template id="aboutus">
+        <div class="concon">
+            <b>О нас:</b> ${Us}<br>
+            <br>
+            <b>Спонсоры:</b> ${Spons}<br>
+            <br>
+            <b>Предназначение сайта:</b> ${Desstiny} <br>
+        </div>
+    </template>
+
+    <!--создаем блоки для "контакты"-->
+    <template id="contacts">
+        <div class="concon">
+            <b>Телефон:</b> ${Tel}<br>
+            <br>
+            <b>E-mail:</b> ${Emaill}<br>
+            <br>
+            <b>Телеграм:</b> <a href="https://t.me/Elza_Izh" style="text-decoration: none;" target="_blank">${Teleg}</a> <!--добавить ссылку на телегу--><br>
+        </div>
+    </template>
+
+
+
+
+
+
+
+
+
+
 
 	<footer class="flex jcspa">
 		<div>
