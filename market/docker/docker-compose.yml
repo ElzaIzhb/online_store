@@ -9,7 +9,7 @@ services:
     volumes:
       - ./../site/:/var/www
     ports: 
-      - 8091:80
+      - 8090:80
 
   php:
     build: 
@@ -18,7 +18,7 @@ services:
     volumes:
       - ./../site/:/var/www
     ports:
-      - 9011:9000
+      - 9010:9000
 
   mysql:
     build:
@@ -30,12 +30,12 @@ services:
       MYSQL_ROOT_PASSWORD: "test123"
       MYSQL_DATABASE: "shop"
     ports:
-      - 3310:3306
+      - 3309:3306
 
   adminer:
     build:
       context: .
       dockerfile: Dockerfile-adminer
     ports:
-      - 9001:8080
+      - 9000:8080
 
