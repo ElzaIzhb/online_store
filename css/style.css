@@ -349,14 +349,15 @@ footer {
     margin: 0 auto;
     background-position: center;
     background-size: cover;
+    border-radius: 10px;
 }
 
 .slider-item1 {
-    background-image: url('../img/slider-item1.png');
+    background-image: url('../img/6136511163.jpg');
 }
 
 .slider-item2 {
-    background-image: url('../img/slider-item2.png');
+    background-image: url('../img/208_original.jpg');
 }
 
 .slider-item3 {
@@ -370,7 +371,15 @@ footer {
 .slider-item5 {
     background-image: url('../img/Rectangle-2051.png');
 }
-
+.slider-item6 {
+    background-image: url('../img/bobo-led.jpg');
+}
+.slider-item7 {
+    background-image: url('../img/bh-kompoziciy-01.jpg');
+}
+.slider-item8 {
+    background-image: url('../img/28ab2384d90afc33b1dcaa1ec856e689.jpeg');
+}
 
 /* Точки */
 .slider .slick-dots {
@@ -392,4 +401,31 @@ footer {
     background-color: rgb(0, 0, 0);
     border-radius: 50%;
     border: 1px solid #000000;
+}
+.title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-size: 50px;
+    padding: 150px 0 0 300px;
+}
+.but4 {
+    border: 2.39494px solid;
+    border-radius: 25.1468px;
+    background: transparent;
+    padding: 10px;
+    width: 250px;
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-size: 18px;
+    background-color: #F188F2;
+    margin: 0 0 0 300px;
+    cursor: pointer;
+}
+form input {
+    margin: 15px 0 15px 300px;
+    background: transparent;
+    border-radius: 25.1468px;
+    border: 2.39494px solid #F188F2;
+    height: 30px;
+    width: 240px;
 }
