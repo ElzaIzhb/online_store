@@ -1,5 +1,5 @@
 //находим коробку под карточки (под данные шаблона)
-let main = document.querySelector('main');
+let main = document.querySelector('main-container');
 
 //получем данные шаблона каталога
 let templateCatalog = document.getElementById('tmpl-catalog').innerHTML;
@@ -23,9 +23,9 @@ function renderCatalog() {
     //рисуем данные на экран
     for (let i = 0; i < data['data'].length; i++) {
         //выводим данные шаблона
-        main.innerHTML += templateCatalog.replace('${title}', data['data'][i]["attributes"]["titles"]["en_jp"])
-                                         .replace('${id}', data['data'][i]['id'])
-                                         .replace('${photo}', data['data'][i]["attributes"]["posterImage"]["small"]);
+        main.innerHTML += templateCatalog.replace('${id}', data['data'][i]['id'])
+                                         .replace('${photo}', data['data'][i]["attributes"]["posterImage"]["small"])
+                                         .replace('${title}', data['data'][i]["attributes"]["titles"]["en_jp"]);
     
     document.querySelector('main').classList.add('flex-box');
     document.querySelector('main').classList.remove('main-card');

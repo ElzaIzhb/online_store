@@ -54,114 +54,128 @@
 		</div>
 	</header>
 
-	<div class="section1">
-		<div class="texth1">
-			<h1><b>Распродажа в честь</b> <br>предстоящих праздников!</h1>
-		</div>
-		<div class="flex butdiv">
-			<button class="but1" onclick="renderAkc()">
-				Все акции
-			</button>
-			<button class="but2" onclick="renderCatalog()">
-				Подробнее
-			</button>
-		</div>
-	</div>
+	<main class="container">
+		<!-- main-container - контейнер для отрисовки любого из шаблонов, которые займут всю страницу? -->
+		<div class="main-container">
+			<!-- для отображения каталога? -->
 
-	<div class="section2">
-		<div class="flex">
-			<h1><b>Популярные категории</b></h1>
-			<button class="but3" onclick="renderPopular()">смотреть все ></button>
 		</div>
+
+		<!-- главную страницу тоже придется поместить в шаблон и отрисовывать (когда будет БД товаров) при первой загрузке страницы + при нажатии на "Главная" в хлебных крошках (будут добавлены)? -->
+		<div class="section1">
+			<div class="texth1">
+				<h1><b>Распродажа в честь</b> <br>предстоящих праздников!</h1>
+			</div>
+			<div class="flex butdiv">
+				<button class="but1" onclick="renderAkc()">
+					Все акции
+				</button>
+				<button class="but2" onclick="renderCatalog()">
+					Подробнее
+				</button>
+			</div>
+		</div>
+
+		<div class="section2">
+			<div class="flex">
+				<h1><b>Популярные категории</b></h1>
+				<button class="but3" onclick="renderPopular()">смотреть все ></button>
+			</div>
+				<div class="wrapper">
+					<div class="slider">
+						<div class="slider-cards">
+							<div class="slider-card">
+								<div class="slider-card-img slider-item1" onclick="renderLatex()"></div>
+							</div>
+						</div>
+						<div class="slider-cards">
+							<div class="slider-card">
+								<div class="slider-card-img slider-item2" onclick="renderFolg()"></div>
+							</div>
+						</div>
+						<div class="slider-cards">
+							<div class="slider-card">
+								<div class="slider-card-img slider-item3" onclick="renderNumber()"></div>
+							</div>
+						</div>
+						<div class="slider-cards">
+							<div class="slider-card">
+								<div class="slider-card-img slider-item4" onclick="render3D()"></div>
+							</div>
+						</div>
+						<div class="slider-cards">
+							<div class="slider-card">
+								<div class="slider-card-img slider-item5" onclick="renderXrom()"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+
+		<div class="section3">
+			<div class="flex">
+				<h1><b>Лидеры продаж</b></h1>
+				<button class="but3" onclick="renderLiders()">показать все ></button>
+			</div>
 			<div class="wrapper">
 				<div class="slider">
 					<div class="slider-cards">
 						<div class="slider-card">
-							<div class="slider-card-img slider-item1" onclick="renderLatex()"></div>
+							<div class="slider-card-img slider-item6" onclick="renderLatex()"></div>
 						</div>
 					</div>
 					<div class="slider-cards">
 						<div class="slider-card">
-							<div class="slider-card-img slider-item2" onclick="renderFolg()"></div>
+							<div class="slider-card-img slider-item7" onclick="renderFolg()"></div>
 						</div>
 					</div>
 					<div class="slider-cards">
 						<div class="slider-card">
-							<div class="slider-card-img slider-item3" onclick="renderNumber()"></div>
+							<div class="slider-card-img slider-item8" onclick="renderNumber()"></div>
 						</div>
-					</div>
-					<div class="slider-cards">
-						<div class="slider-card">
-							<div class="slider-card-img slider-item4" onclick="render3D()"></div>
-						</div>
-					</div>
-					<div class="slider-cards">
-						<div class="slider-card">
-							<div class="slider-card-img slider-item5" onclick="renderXrom()"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-	</div>
-
-	<div class="section3">
-		<div class="flex">
-			<h1><b>Лидеры продаж</b></h1>
-			<button class="but3" onclick="renderLiders()">показать все ></button>
-		</div>
-		<div class="wrapper">
-			<div class="slider">
-				<div class="slider-cards">
-					<div class="slider-card">
-						<div class="slider-card-img slider-item6" onclick="renderLatex()"></div>
-					</div>
-				</div>
-				<div class="slider-cards">
-					<div class="slider-card">
-						<div class="slider-card-img slider-item7" onclick="renderFolg()"></div>
-					</div>
-				</div>
-				<div class="slider-cards">
-					<div class="slider-card">
-						<div class="slider-card-img slider-item8" onclick="renderNumber()"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="section4">
-		<form method="GET" action="https://api.telegram.org/bot5559440799:AAGmPpwU4j6JnaGWh-1YZFwV4r2fx-ar1EY/sendMessage" target="_blank">
-			<div class="title flex">
-				Скидка 5% <br>на первый заказ
-			</div>
-			<div>
-				<input name="chat_id" type="hidden" value="1028368132" placeholder="Введите ID юзера">
-			</div>
-			<div>
-				<input name="text" type="text" placeholder="Введите номер телефона">
-			</div>
-			<div>
-				<button class="but4">Получить скидку</button>
-			</div>
-		</form>
-	</div>
+		<div class="section4">
+			<form method="GET" action="https://api.telegram.org/bot5559440799:AAGmPpwU4j6JnaGWh-1YZFwV4r2fx-ar1EY/sendMessage" target="_blank">
+				<div class="title flex">
+					Скидка 5% <br>на первый заказ
+				</div>
+				<div>
+					<input name="chat_id" type="hidden" value="1028368132" placeholder="Введите ID юзера">
+				</div>
+				<div>
+					<input name="text" type="text" placeholder="Введите номер телефона">
+				</div>
+				<div>
+					<button class="but4">Получить скидку</button>
+				</div>
+			</form>
+		</div>
 
+	</main>
 
-
-
-
-	<main class="flex">
-		<!-- для отображения каталога? -->
-    </main>
-
-	<template id="tmpl-catalog">
-        <div class="card">
-            <div class="title curs">
-                <h1>${title}</h1>
-            </div>
-            <div class="imgg">
+	<template id="tmpl-catalog">	
+		<h2>Каталог</h2>
+			<!-- "хлебные крошки" - навигация внутри каталога -->
+		<div class="breadcrumbs-container">
+			<ul class="breadcrumbs-list">
+				<li>
+					<a href="#">Главная</a>
+				</li>
+				<li>
+					<span>Каталог</span>
+				</li>
+			</ul>
+		</div>
+        <div class="catalog-card">
+            <div class="catalog-card_img">
                 <img onclick="renderCard(${id})" src="${photo}">
+            </div>
+			<div class="catalog-card_title">
+                <h3>${title}</h3>
             </div>
         </div>
     </template>
