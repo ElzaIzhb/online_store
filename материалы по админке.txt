@@ -1,0 +1,4 @@
+https://basecourse.ru/mysql/adminpanel.php
+https://skillbox.ru/media/code/kak_sozdat_adminku_dlya_sayta_na_php_s_nulya/
+
+https://code.tutsplus.com/ru/tutorials/build-a-shopping-cart-with-php-and-mysql--net-5144
