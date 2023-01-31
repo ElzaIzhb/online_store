@@ -57,8 +57,50 @@
 	<main class="container">
 		<!-- main-container - контейнер для отрисовки любого из шаблонов, которые займут всю страницу? -->
 		<div class="main-container">
-			<!-- для отображения каталога? -->
-
+			<!-- для проверки верстки любого шаблона без участия js можно вставлять сюда его содержимое (то, что между тегами <template></template>) -->
+			<!-- В Карточке отрисовывается ОДИН КОНКРЕТНЫЙ ТОВАР крупным планом	 -->
+			<div class="card">
+				<!-- "хлебные крошки" - навигация внутри каталога -->
+				<div class="breadcrumbs-container">
+					<ul class="breadcrumbs-list">
+						<li>
+							<a href="#" onclick="renderHomePage()">Главная</a>
+						</li>
+						<li>
+							<a href="#" onclick="renderCatalog()">Каталог</a>
+						</li>
+						<li>
+							<a href="#" onclick="renderCardsInCategory(${category_id})">${category_title}</a>
+						</li>
+						<li>
+							<p>${goods_title}</p>
+						</li>
+					</ul>
+				</div>
+				<div class="goods-title">
+					<h3>${goods_title}</h3>
+				</div>
+				<!-- !!!ЗАМЕНИТЬ в url картинку на ${goods_img}, когда дойдем по отрисовки по апи!!! -->
+				<div class="horizontal-wrap">
+					<div class="goods-img" style="background-image: url('img/goods-big.png');">
+					</div>
+					<div class="goods-info">
+						<div class="price-line">
+							<div class="actual-price huge">${price}</div>
+							<div class="crossed-out-price bigger">${crssd}</div>
+							<div class="sale-num bigger">${sale}</div>
+						</div>
+						<button class="btn-to-basket" onclick="addToBasket()">В корзину</button>
+						<div class="dotted-line"></div>
+						<div class="goods-description">
+							<p><b>Состав:</b></p>
+							<p>${goods_description}</p>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
 		</div>
 
 		<!-- главную страницу тоже придется поместить в шаблон и отрисовывать (когда будет БД товаров) при первой загрузке страницы + при нажатии на "Главная" в хлебных крошках (будут добавлены)? -->
@@ -157,30 +199,93 @@
 
 	</main>
 
-	<template id="tmpl-catalog">	
+	<template id="tmpl-catalog">
+		<!-- В Каталоге отрисовываются КАТЕГОРИИ товаров	 -->
 		<h2>Каталог</h2>
-			<!-- "хлебные крошки" - навигация внутри каталога -->
+		<!-- "хлебные крошки" - навигация внутри каталога -->
 		<div class="breadcrumbs-container">
 			<ul class="breadcrumbs-list">
 				<li>
-					<a href="#">Главная</a>
+					<a href="#" onclick="renderHomePage()">Главная</a>
 				</li>
 				<li>
-					<span>Каталог</span>
+					<p>Каталог</p>
 				</li>
 			</ul>
 		</div>
-        <div class="catalog-card">
-            <div class="catalog-card_img">
-                <img onclick="renderCard(${id})" src="${photo}">
-            </div>
-			<div class="catalog-card_title">
-                <h3>${title}</h3>
-            </div>
-        </div>
+		<div class="frame__flex-wrap">
+			<div class="category-card">
+				<div class="category-card_img">
+					<!-- !!!ЗАМЕНИТЬ в src картинку на ${category_img}, когда дойдем по отрисовки по апи!!! -->
+					<img onclick="renderCardsInCategory(${category_id})" src="img/slider-item1.png">
+				</div>
+				<div class="category-card_title">
+					<h3>${category_title}</h3>
+				</div>
+			</div>
+		</div>
     </template>
 
+	<template id="tmpl-category">
+		<!-- В Категории отрисовываются ТОВАРЫ ВНУТРИ ВЫБРАННОЙ КАТЕГОРИИ	 -->
+		<h2>${category_title}</h2>
+		<!-- "хлебные крошки" - навигация внутри каталога -->
+		<div class="breadcrumbs-container">
+			<ul class="breadcrumbs-list">
+				<li>
+					<a href="#" onclick="renderHomePage()">Главная</a>
+				</li>
+				<li>
+					<a href="#" onclick="renderCatalog()">Каталог</a>
+				</li>
+				<li>
+					<p>${category_title}</p>
+				</li>
+			</ul>
+		</div>
+		<!-- Базовый фильтр товаров -->
+		<div class="filter">
+			<div class="filter_price">
+				<p>Цена</p>
+				<input id="price-from" type="number" placeholder="от">
+				<input id="price-to" type="number" placeholder="до">
+			</div>
+			<div class="filter_with-discount">
+				<p>Товары со скидкой</p>
+				<input type="checkbox">
+			</div>
+			<div class="filter_sort-by">
+				<p>Сортировать:</p>
+				<select name="sort-type" id="sort-by">
+					<option value="default">По умолчанию</option>
+					<option value="price-up">По возрастанию цены</option>
+					<option value="price-down">По убыванию цены</option>
+					<option value="popular">По популярности</option>
+					<option value="rating">По рейтингу</option>
+				</select>
+			</div>
+		</div>
+		<div class="frame__flex-wrap">
+			<div class="card-in-category">
+				<div class="card-in-category_img">
+					<!-- !!!ЗАМЕНИТЬ в src картинку на ${goods_img}, когда дойдем по отрисовки по апи!!! -->
+					<img src="img/slider-item2.png" onclick="renderCard(${card_id})">
+					<button class="btn-add-to-basket" onclick="addToBasket()">Добавить в корзину</button>
+				</div>
+				<div class="info-under-img">
+					<div class="price-line">
+						<div class="actual-price">${price}</div>
+						<div class="crossed-out-price">${crssd}</div>
+						<div class="sale-num">${sale}</div>
+					</div>
+					<h4>${goods_title}</h4>
+				</div>
+			</div>
+		</div>
+	</template>
+
     <template id="tmpl-card">
+		<!-- В Карточке отрисовывается ОДИН КОНКРЕТНЫЙ ТОВАР крупным планом	 -->
         <div class="card curs">
             <div class="title">
                 <h1>${title}</h1>
