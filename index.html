@@ -58,48 +58,6 @@
 		<!-- main-container - контейнер для отрисовки любого из шаблонов, которые займут всю страницу? -->
 		<div class="main-container">
 			<!-- для проверки верстки любого шаблона без участия js можно вставлять сюда его содержимое (то, что между тегами <template></template>) -->
-			<!-- В Карточке отрисовывается ОДИН КОНКРЕТНЫЙ ТОВАР крупным планом	 -->
-			<div class="card">
-				<!-- "хлебные крошки" - навигация внутри каталога -->
-				<div class="breadcrumbs-container">
-					<ul class="breadcrumbs-list">
-						<li>
-							<a href="#" onclick="renderHomePage()">Главная</a>
-						</li>
-						<li>
-							<a href="#" onclick="renderCatalog()">Каталог</a>
-						</li>
-						<li>
-							<a href="#" onclick="renderCardsInCategory(${category_id})">${category_title}</a>
-						</li>
-						<li>
-							<p>${goods_title}</p>
-						</li>
-					</ul>
-				</div>
-				<div class="goods-title">
-					<h3>${goods_title}</h3>
-				</div>
-				<!-- !!!ЗАМЕНИТЬ в url картинку на ${goods_img}, когда дойдем по отрисовки по апи!!! -->
-				<div class="horizontal-wrap">
-					<div class="goods-img" style="background-image: url('img/goods-big.png');">
-					</div>
-					<div class="goods-info">
-						<div class="price-line">
-							<div class="actual-price huge">${price}</div>
-							<div class="crossed-out-price bigger">${crssd}</div>
-							<div class="sale-num bigger">${sale}</div>
-						</div>
-						<button class="btn-to-basket" onclick="addToBasket()">В корзину</button>
-						<div class="dotted-line"></div>
-						<div class="goods-description">
-							<p><b>Состав:</b></p>
-							<p>${goods_description}</p>
-						</div>
-					</div>
-				</div>
-				
-			</div>
 			
 		</div>
 
@@ -286,27 +244,47 @@
 
     <template id="tmpl-card">
 		<!-- В Карточке отрисовывается ОДИН КОНКРЕТНЫЙ ТОВАР крупным планом	 -->
-        <div class="card curs">
-            <div class="title">
-                <h1>${title}</h1>
-            </div>
-            <div class="imgg">
-                <img src="${photo}">
-            </div>
-        </div>
-        <div class="about">
-            <b>Описание:</b> ${Текст}<br>
-            <br>
-            <b>Рейтинг:</b> ${Rating}<br>
-            <br>
-            <b>Количество серий:</b> ${episodeCount} <br>
-            <br>
-            <b>Длина эпизодов(а):</b> ${episodeLength} <br>
-            <br>
-            <b>Возрастной рейтинг:</b> ${ageRatingGuide} <br>
-            <br>
-            <b>Статус:</b> ${status} <br>
-        </div>
+		<div class="card">
+			<!-- "хлебные крошки" - навигация внутри каталога -->
+			<div class="breadcrumbs-container">
+				<ul class="breadcrumbs-list">
+					<li>
+						<a href="#" onclick="renderHomePage()">Главная</a>
+					</li>
+					<li>
+						<a href="#" onclick="renderCatalog()">Каталог</a>
+					</li>
+					<li>
+						<a href="#" onclick="renderCardsInCategory(${category_id})">${category_title}</a>
+					</li>
+					<li>
+						<p>${goods_title}</p>
+					</li>
+				</ul>
+			</div>
+			<div class="goods-title">
+				<h3>${goods_title}</h3>
+			</div>
+			<!-- !!!ЗАМЕНИТЬ в url картинку на ${goods_img}, когда дойдем по отрисовки по апи!!! -->
+			<div class="horizontal-wrap">
+				<div class="goods-img" style="background-image: url('img/goods-big.png');">
+				</div>
+				<div class="goods-info">
+					<div class="price-line">
+						<div class="actual-price huge">${price}</div>
+						<div class="crossed-out-price bigger">${crssd}</div>
+						<div class="sale-num bigger">${sale}</div>
+					</div>
+					<button class="btn-to-basket" onclick="addToBasket()">В корзину</button>
+					<div class="dotted-line"></div>
+					<div class="goods-description">
+						<p><b>Состав:</b></p>
+						<p>${goods_description}</p>
+					</div>
+				</div>
+			</div>
+			
+		</div>
     </template>
 
     <!--создаем блоки для "о нас"-->
