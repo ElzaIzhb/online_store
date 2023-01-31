@@ -33,14 +33,5 @@ while($row = $result->fetch()){
 //кодируем данные в json
 $data = json_encode($array, JSON_UNESCAPED_UNICODE);
 
-//print_r($data); 
+print_r($data); 
 ?>
-
-<script>
-window.array = <?php echo $data; ?>;
-</script>
-
-<script>
-console.log(window.array); // Output: "value"
-</script>
-
