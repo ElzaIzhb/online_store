@@ -1,4 +1,6 @@
 <?php
+//разрешаю запросы из браузера
+header('Access-Control-Allow-Origin: *');
 
 $host = 'mysql';
 $db   = 'inordic';
