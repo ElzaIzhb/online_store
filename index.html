@@ -55,13 +55,12 @@
 	</header>
 
 	<main id="container">
-		<!-- main-container - контейнер для отрисовки любого из шаблонов, которые займут всю страницу? -->
-		<!-- <div class="main-container"> -->
-			<!-- для проверки верстки любого шаблона без участия js можно вставлять сюда его содержимое (то, что между тегами <template></template>) -->
-			
-		<!-- </div> -->
+		<!-- контейнер для отрисовки любого из шаблонов, которые занимают всю страницу -->
 
-		<!-- главную страницу тоже придется поместить в шаблон и отрисовывать (когда будет БД товаров) при первой загрузке страницы + при нажатии на "Главная" в хлебных крошках (будут добавлены)? -->
+	</main>
+
+	<!-- шаблон Главной страницы -->
+	<template id="tmpl-home-page">
 		<div class="section1">
 			<div class="texth1">
 				<h1><b>Распродажа в честь</b> <br>предстоящих праздников!</h1>
@@ -154,11 +153,10 @@
 				</div>
 			</form>
 		</div>
+	</template>
 
-	</main>
-
-	<template id="tmpl-catalog">
-		<!-- В Каталоге отрисовываются КАТЕГОРИИ товаров	 -->
+	<!-- Отдельный шаблон для шапки Каталога -->
+	<template id="tmpl-catalog-nav">
 		<h2>Каталог</h2>
 		<!-- "хлебные крошки" - навигация внутри каталога -->
 		<div class="breadcrumbs-container">
@@ -171,21 +169,20 @@
 				</li>
 			</ul>
 		</div>
-		<div class="frame__flex-wrap">
+	</template>
+
+	<template id="tmpl-catalog">
+		<!-- В Каталоге отрисовываются КАТЕГОРИИ товаров	 -->
 			<div class="category-card">
-				<div class="category-card_img">
-					<!-- !!!ЗАМЕНИТЬ в src картинку на ${category_img}, когда дойдем по отрисовки по апи!!! -->
-					<img onclick="renderCardsInCategory()" src="img/slider-item1.png">
-				</div>
+				<div class="category-card_img"  onclick="renderCardsInCategory(${category_id})" style="background-image: url('${category_img}');"></div>
 				<div class="category-card_title">
-					<h3>${category_title}</h3>
+					<h3 onclick="renderCardsInCategory(${category_id})">${category_title}</h3>
 				</div>
 			</div>
-		</div>
     </template>
 
-	<template id="tmpl-category">
-		<!-- В Категории отрисовываются ТОВАРЫ ВНУТРИ ВЫБРАННОЙ КАТЕГОРИИ	 -->
+	<!-- Отдельный шаблон для шапки Категории (с фильтром)-->
+	<template id="tmpl-category-nav">
 		<h2>${category_title}</h2>
 		<!-- "хлебные крошки" - навигация внутри каталога -->
 		<div class="breadcrumbs-container">
@@ -201,7 +198,6 @@
 				</li>
 			</ul>
 		</div>
-		<!-- Базовый фильтр товаров -->
 		<div class="filter">
 			<div class="filter_price">
 				<p>Цена</p>
@@ -223,23 +219,27 @@
 				</select>
 			</div>
 		</div>
-		<div class="frame__flex-wrap">
+	</template>
+
+	<template id="tmpl-category">
+		<!-- В Категории отрисовываются ТОВАРЫ ВНУТРИ ВЫБРАННОЙ КАТЕГОРИИ	 -->
+
+		<!-- Базовый фильтр товаров -->
 			<div class="card-in-category">
 				<div class="card-in-category_img">
 					<!-- !!!ЗАМЕНИТЬ в src картинку на ${goods_img}, когда дойдем по отрисовки по апи!!! -->
-					<img src="img/slider-item2.png" onclick="renderCard(${card_id})">
+					<img src="img/slider-item2.png" onclick="renderCard(${category_id},${card_id})">
 					<button class="btn-add-to-basket" onclick="addToBasket()">Добавить в корзину</button>
 				</div>
 				<div class="info-under-img">
 					<div class="price-line">
-						<div class="actual-price">${price}</div>
-						<div class="crossed-out-price">${crssd}</div>
-						<div class="sale-num">${sale}</div>
+						<div class="actual-price">${price} р.</div>
+						<div class="crossed-out-price">${crssd} р.</div>
+						<div class="sale-num">-${sale}%</div>
 					</div>
-					<h4>${goods_title}</h4>
+					<h4 onclick="renderCard(${category_id},${card_id})">${goods_title}</h4>
 				</div>
 			</div>
-		</div>
 	</template>
 
     <template id="tmpl-card">
@@ -271,9 +271,9 @@
 				</div>
 				<div class="goods-info">
 					<div class="price-line">
-						<div class="actual-price huge">${price}</div>
-						<div class="crossed-out-price bigger">${crssd}</div>
-						<div class="sale-num bigger">${sale}</div>
+						<div class="actual-price huge">${price} р.</div>
+						<div class="crossed-out-price bigger">${crssd} р.</div>
+						<div class="sale-num bigger">-${sale}%</div>
 					</div>
 					<button class="btn-to-basket" onclick="addToBasket()">В корзину</button>
 					<div class="dotted-line"></div>
@@ -350,6 +350,7 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="slick-slider/js/slick.min.js"></script>
 	<script src="slick-slider/js/main.js"></script>
+	<script src="Store/main.js"></script>
 	<script src="js/main.js"></script>
 </body>
 </html>

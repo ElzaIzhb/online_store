@@ -456,6 +456,9 @@ form input {
     height: 30px;
     width: 240px;
 }
+.main-container {
+    padding: 30px;
+}
 
 /* Хлебные крошки */
 .breadcrumbs-container {
@@ -497,11 +500,22 @@ form input {
 .category-card_title > h3 {
     font-size: 18px;
     margin: 20px auto 0px auto;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.category-card_title > h3:hover {
+    text-decoration: underline;
+    color: #3A3A3A;
 }
 
 .category-card_img {
+    background-size: cover;
+    background-position: center;
     width: 318px;
+    height: 318px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 /* Фильтр на странице с названием категории */
@@ -587,6 +601,13 @@ form input {
 .info-under-img > h4 {
     margin: 10px 15px;
     font-size: 16px;
+    color: #3A3A3A;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.info-under-img > h4:hover {
+    text-decoration: underline;
     color: #3A3A3A;
 }
 
