@@ -34,6 +34,9 @@
 
         //отрисовываем в main шаблон шапки ОТДЕЛЬНО
         main.innerHTML += templateHomePage;
+
+        main.style.padding = '0';
+
     }
 
     //функция отрисовки Каталога
@@ -89,6 +92,7 @@
         let flexFrameContainer = document.createElement('div');
         flexFrameContainer.classList.add('frame__flex-wrap');
         main.appendChild(flexFrameContainer);
+        main.style.padding = '40px';
 
         //рисуем данные на экран
         for (let i = 0; i < data.length; i++) {
@@ -133,7 +137,8 @@
             //     document.getElementsByClassName('crossed-out-price')[card_id].style.display = 'none';
             //     document.getElementsByClassName('sale-num')[card_id].style.display = 'none';
             // }
-                            
+        
+        main.style.padding = '40px';
     }
 
     //функция очистки страницы
