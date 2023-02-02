@@ -18,6 +18,8 @@ $opt = [
 //создание объекта для подключения к БД
 $pdo = new PDO($dsn, $user, $pass, $opt);
 
+
+if (isset($_GET['all'])) {
 //достаём данные из бд
 $sql = "SELECT * FROM goods";
 $result = $pdo->query($sql);
@@ -35,5 +37,48 @@ while($row = $result->fetch()){
 //кодируем данные в json
 $data = json_encode($array, JSON_UNESCAPED_UNICODE);
 
-print_r($data); 
+print_r($data);
+
+}
+
+
+
+
+
+
+
+//строка фильтрации
+$filterStr = '';
+
+//строка фильтрации
+if (isset($_GET['category'])) {
+    //получаем название таблицы из GET параметра
+    $table = $_GET['table'];
+    $category = $_GET['category'];
+    $filterStr = $filterStr . " AND category LIKE '%$category%' ";
+
+
+    //СЧИТЫВАНИЕ ДАННЫХ
+
+//достаём данные из БД
+$sqltext_category = "SELECT * FROM " . $table . ' WHERE id > 0 ' . $filterStr;
+
+$result_category = $pdo->query($sqltext_category);
+
+//отрезаем по одной строчке из результата и показываем каждую в виде ассоц массива
+$category = [];
+while($row = $result_category->fetch()) {
+
+    $category[] = $row;
+
+}
+
+//кодируем и выводим на экран
+$data_category = json_encode($category, JSON_UNESCAPED_UNICODE);
+
+print_r($data_category); 
+}
+
+
+
 ?>
