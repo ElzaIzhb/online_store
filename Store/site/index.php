@@ -18,7 +18,7 @@ $opt = [
 //создание объекта для подключения к БД
 $pdo = new PDO($dsn, $user, $pass, $opt);
 
-
+//получение всех данных из таблицы goods
 if (isset($_GET['all'])) {
 //достаём данные из бд
 $sql = "SELECT * FROM goods";
@@ -41,11 +41,58 @@ print_r($data);
 
 }
 
+//получение всех данных из таблицы categories
+if (isset($_GET['allcategories'])) {
+    //достаём данные из бд
+    $sql = "SELECT * FROM categories";
+    $result = $pdo->query($sql);
+    
+    //создаём пустой массив
+    $array = array();
+    
+    //с помощью цикла перебираем каждую строчку массива с данными из бд
+    while($row = $result->fetch()){
+    
+        //записываем строчки в пустой массив
+        array_push($array, $row);
+    }
+    
+    //кодируем данные в json
+    $data = json_encode($array, JSON_UNESCAPED_UNICODE);
+    
+    print_r($data);
+    
+    }
 
+   
+//получение данных по отдельным категориям из сджойненных таблиц goods и categories
 
-
-
-
+if (isset($_GET['category_id'])) {
+    $catId = $_GET['category_id'];
+    //достаём данные из бд
+    $sql = "SELECT * FROM goods AS g
+                LEFT JOIN categories AS c
+                ON g.category = c.category
+                WHERE category_id = $catId";
+    $result = $pdo->query($sql);
+    
+    //создаём пустой массив
+    $array = array();
+    
+    //с помощью цикла перебираем каждую строчку массива с данными из бд
+    while($row = $result->fetch()){
+    
+        //записываем строчки в пустой массив
+        array_push($array, $row);
+    }
+    
+    //кодируем данные в json
+    $data = json_encode($array, JSON_UNESCAPED_UNICODE);
+    
+    print_r($data);
+    
+    }
+    
 
 //строка фильтрации
 $filterStr = '';
@@ -72,6 +119,7 @@ while($row = $result_category->fetch()) {
     $category[] = $row;
 
 }
+
 
 //кодируем и выводим на экран
 $data_category = json_encode($category, JSON_UNESCAPED_UNICODE);

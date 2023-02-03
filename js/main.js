@@ -27,10 +27,10 @@
         //очищаем страницу
         clearPage();
 
-        let json = sendRequestGET("http://localhost:8091/");
+        //let json = sendRequestGET("http://localhost:8091/?all");
 
         //раскодируем данные
-        let data = JSON.parse(json);    
+        //let data = JSON.parse(json);    
 
         //отрисовываем в main шаблон шапки ОТДЕЛЬНО
         main.innerHTML += templateHomePage;
@@ -44,7 +44,7 @@
         //очищаем страницу
         clearPage();
 
-        let json = sendRequestGET("http://localhost:8091/");
+        let json = sendRequestGET("http://localhost:8091/?allcategories");
 
         //раскодируем данные
         let data = JSON.parse(json);    
@@ -62,7 +62,7 @@
         for (let i = 0; i < data.length; i++) {
             //выводим данные шаблона
             flexFrameContainer.innerHTML += templateCatalog.replace('${category_id}', data[i]['category_id']) //СЕЙЧАС ВМЕСТО id КАТЕГОРИИ отрисовывается  id КАРТОЧКИ
-                                                           .replace('${category_img}', data[i]['photo'])
+                                                           .replace('${category_img}', data[i]['category_img'])
                                                            .replace('${category_id}', data[i]['category_id']) //СЕЙЧАС ВМЕСТО id КАТЕГОРИИ отрисовывается  id КАРТОЧКИ
                                                            .replace('${category_title}', data[i]['category']);
         
@@ -73,20 +73,26 @@
     }
 
     //функция отрисовки набора товаров внутри Категории
-    function renderCardsInCategory(category_id) {
+    function renderCardsInCategory(category_id) { //id в БД начинается с 1
         //очищаем страницу
         clearPage();
 
-        let json = sendRequestGET("http://localhost:8091/");
+        let json = sendRequestGET("http://localhost:8091/?all");
 
         //раскодируем данные
         let data = JSON.parse(json);    
 
         //отрисовываем в main шаблон шапки ОТДЕЛЬНО
-        main.innerHTML += templateCategoryNav.replace('${category_title}', data[category_id]['category'])
-                                             .replace('${category_title}', data[category_id]['category']);
+        main.innerHTML += templateCategoryNav.replace('${category_title}', data[category_id - 1]['category']) // сдвиг на единицу, т.к в ДБ отсчет id с 1, а в массиве  - с 0
+                                             .replace('${category_title}', data[category_id - 1]['category']);
 
 
+        console.log(category_id);
+        let json2 = sendRequestGET("http://localhost:8091/?category_id=" + category_id);
+        console.log(json2);
+        //раскодируем данные
+        let data2 = JSON.parse(json2);  
+        
 
         //создаем флекс-контейнер ВНУТРИ main, куда будет отрисовываться содержимое (если отрисовывать сразу в main, верстка слетит)
         let flexFrameContainer = document.createElement('div');
@@ -95,16 +101,16 @@
         main.style.padding = '40px';
 
         //рисуем данные на экран
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data2.length; i++) {
             //выводим данные шаблона
-            flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data[i]['category_id']) //ЗАМЕНИТЬ data[i]['id'] НА id КАТЕГОРИИ
-                                                            .replace('${card_id}', data[i]['id'])
-                                                            .replace('${price}', Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))))
-                                                            .replace('${crssd}', data[i]['price'])
-                                                            .replace('${sale}', (data[i]['sale']) ? data[i]['sale'] : '0')
-                                                            .replace('${category_id}', data[i]['category_id']) //ЗАМЕНИТЬ data[i]['id'] НА id КАТЕГОРИИ
-                                                            .replace('${card_id}', data[i]['id'])
-                                                            .replace('${goods_title}', data[i]['name']);
+            flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data2[i]['category_id']) //ЗАМЕНИТЬ data[i]['id'] НА id КАТЕГОРИИ
+                                                            .replace('${card_id}', data2[i]['id'])
+                                                            .replace('${price}', Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100))))
+                                                            .replace('${crssd}', data2[i]['price'])
+                                                            .replace('${sale}', (data2[i]['sale']) ? data2[i]['sale'] : '0')
+                                                            .replace('${category_id}', data2[i]['category_id']) //ЗАМЕНИТЬ data[i]['id'] НА id КАТЕГОРИИ
+                                                            .replace('${card_id}', data2[i]['id'])
+                                                            .replace('${goods_title}', data2[i]['name']);
         
             if (main.getElementsByClassName('sale-num')[i].innerHTML === '-0%') {
                 document.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
@@ -132,11 +138,11 @@
                                       .replace('${crssd}', data[card_id]['price'])
                                       .replace('${sale}', (data[card_id]['sale']) ? data[card_id]['sale'] : '0')
                                       .replace('${goods_description}', data[card_id]['consist']);
-        
-            // if (main.getElementsByClassName('sale-num bigger')[card_id].innerHTML === '-0%') {
-            //     document.getElementsByClassName('crossed-out-price')[card_id].style.display = 'none';
-            //     document.getElementsByClassName('sale-num')[card_id].style.display = 'none';
-            // }
+
+            if (main.getElementsByClassName('sale-num bigger')[0].innerHTML === '-0%') {
+                document.getElementsByClassName('crossed-out-price')[0].style.display = 'none';
+                document.getElementsByClassName('sale-num')[0].style.display = 'none';
+            }
         
         main.style.padding = '40px';
     }
@@ -156,6 +162,7 @@
         return xhr.responseText;
     }
 
+    /*
     //создаем функцию для выведения данных о сайте
     function renderSait() {
         //очищаем страницу
@@ -185,3 +192,4 @@
         document.querySelector('main').classList.add('main-card');
         document.querySelector('main').classList.add('center-main');
     }
+ */

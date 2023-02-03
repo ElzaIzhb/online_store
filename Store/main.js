@@ -1,3 +1,4 @@
+/*
 // создаём объкт который умеет отправлять запросы
 let requestObj = new XMLHttpRequest();
 
@@ -33,3 +34,4 @@ requestObj_category.send();
 let array_category = JSON.parse(requestObj_category.responseText);
     
 console.log(array_category);
+*/
