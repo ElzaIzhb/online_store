@@ -101,13 +101,13 @@
         for (let i = 0; i < data2.length; i++) {
             //выводим данные шаблона
             flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data2[i]['category_id'])
-                                                            .replace('${card_id}', data2[i]['id'])
+                                                            .replace('${card_id}', i)
                                                             .replace('${goods_img}', data2[i]['photo'])
                                                             .replace('${price}', Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100))))
                                                             .replace('${crssd}', data2[i]['price'])
                                                             .replace('${sale}', (data2[i]['sale']) ? data2[i]['sale'] : '0')
                                                             .replace('${category_id}', data2[i]['category_id'])
-                                                            .replace('${card_id}', data2[i]['id'])
+                                                            .replace('${card_id}', i)
                                                             .replace('${goods_title}', data2[i]['name']);
         
             if (main.getElementsByClassName('sale-num')[i].innerHTML === '-0%') {
@@ -127,16 +127,19 @@
         //раскодируем данные
         let data = JSON.parse(json);
 
+        console.log(category_id,card_id);
+
         //отрисовываем в main шаблон Карточки
         main.innerHTML += templateCard.replace('${category_id}', category_id)
-                                      .replace('${category_title}', data[category_id]['category'])
+                                      .replace('${category_title}', data[card_id]['category'])
                                       .replace('${goods_title}', data[card_id]['name'])
                                       .replace('${goods_title}', data[card_id]['name'])
+                                      .replace('${goods_img}', data[card_id]['photo']) //??? 
                                       .replace('${price}', Math.round(parseInt(data[card_id]['price']) - (parseInt(data[card_id]['price']) * (data[card_id]['sale'] ? (parseInt(data[card_id]['sale']) / 100) : 0 / 100))))
                                       .replace('${crssd}', data[card_id]['price'])
                                       .replace('${sale}', (data[card_id]['sale']) ? data[card_id]['sale'] : '0')
                                       .replace('${goods_description}', data[card_id]['consist']);
-
+                                      console.log(data[card_id]['photo']);
             //если скидки нет
             if (main.getElementsByClassName('sale-num bigger')[0].innerHTML === '-0%') {
                 document.getElementsByClassName('crossed-out-price')[0].style.display = 'none';
