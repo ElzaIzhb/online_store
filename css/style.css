@@ -553,7 +553,10 @@ form input {
 
 .card-in-category_img {
     position: relative;
-    width: fit-content;
+    background-size: cover;
+    background-position: center;
+    width: 318px;
+    height: 276px;
 }
 
 .btn-add-to-basket {

@@ -226,9 +226,7 @@
 
 		<!-- Базовый фильтр товаров -->
 			<div class="card-in-category">
-				<div class="card-in-category_img">
-					<!-- !!!ЗАМЕНИТЬ в src картинку на ${goods_img}, когда дойдем по отрисовки по апи!!! -->
-					<img src="img/slider-item2.png" onclick="renderCard(${category_id},${card_id})">
+				<div class="card-in-category_img" onclick="renderCard(${category_id},${card_id})" style="background-image: url('${goods_img}');">
 					<button class="btn-add-to-basket" onclick="addToBasket()">Добавить в корзину</button>
 				</div>
 				<div class="info-under-img">

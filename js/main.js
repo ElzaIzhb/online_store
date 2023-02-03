@@ -66,9 +66,6 @@
                                                            .replace('${category_id}', data[i]['category_id']) //СЕЙЧАС ВМЕСТО id КАТЕГОРИИ отрисовывается  id КАРТОЧКИ
                                                            .replace('${category_title}', data[i]['category']);
         
-        // document.querySelector('main').classList.add('flex-box');
-        // document.querySelector('main').classList.remove('main-card');
-        // document.querySelector('main').classList.remove('center-main');
         }
     }
 
@@ -86,14 +83,14 @@
         main.innerHTML += templateCategoryNav.replace('${category_title}', data[category_id - 1]['category']) // сдвиг на единицу, т.к в ДБ отсчет id с 1, а в массиве  - с 0
                                              .replace('${category_title}', data[category_id - 1]['category']);
 
-
         console.log(category_id);
+
+        //отправляем отдельный запрос для получения данных из сджойненных таблиц goods и categories, выстроенных по category id
         let json2 = sendRequestGET("http://localhost:8091/?category_id=" + category_id);
-        console.log(json2);
+
         //раскодируем данные
         let data2 = JSON.parse(json2);  
         
-
         //создаем флекс-контейнер ВНУТРИ main, куда будет отрисовываться содержимое (если отрисовывать сразу в main, верстка слетит)
         let flexFrameContainer = document.createElement('div');
         flexFrameContainer.classList.add('frame__flex-wrap');
@@ -103,12 +100,13 @@
         //рисуем данные на экран
         for (let i = 0; i < data2.length; i++) {
             //выводим данные шаблона
-            flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data2[i]['category_id']) //ЗАМЕНИТЬ data[i]['id'] НА id КАТЕГОРИИ
+            flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data2[i]['category_id'])
                                                             .replace('${card_id}', data2[i]['id'])
+                                                            .replace('${goods_img}', data2[i]['photo'])
                                                             .replace('${price}', Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100))))
                                                             .replace('${crssd}', data2[i]['price'])
                                                             .replace('${sale}', (data2[i]['sale']) ? data2[i]['sale'] : '0')
-                                                            .replace('${category_id}', data2[i]['category_id']) //ЗАМЕНИТЬ data[i]['id'] НА id КАТЕГОРИИ
+                                                            .replace('${category_id}', data2[i]['category_id'])
                                                             .replace('${card_id}', data2[i]['id'])
                                                             .replace('${goods_title}', data2[i]['name']);
         
@@ -124,7 +122,7 @@
         //очищаем страницу
         clearPage();
 
-        let json = sendRequestGET("http://localhost:8091/");
+        let json = sendRequestGET("http://localhost:8091/?category_id=" + category_id);
 
         //раскодируем данные
         let data = JSON.parse(json);
@@ -139,6 +137,7 @@
                                       .replace('${sale}', (data[card_id]['sale']) ? data[card_id]['sale'] : '0')
                                       .replace('${goods_description}', data[card_id]['consist']);
 
+            //если скидки нет
             if (main.getElementsByClassName('sale-num bigger')[0].innerHTML === '-0%') {
                 document.getElementsByClassName('crossed-out-price')[0].style.display = 'none';
                 document.getElementsByClassName('sale-num')[0].style.display = 'none';
