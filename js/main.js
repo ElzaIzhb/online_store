@@ -37,6 +37,44 @@
 
         main.style.padding = '0';
 
+        //чтобы слайдер не ломался
+        $(function(){
+            $('.slider').slick({
+                arrows: true, //отображение стрелок
+                dots: true, //отображение точек
+                adaptiveHeight: false, //слайдер подстраивается по высоте под высоту активного слайда
+                slidesToShow: 2, //сколько слайдов будет показано в одном ряду
+                slidesToScroll: 1, //сколько слайдов пролистывается по одному нажатию на стрелку
+                speed: 1000, //скорость прокрутки (в мс)
+                easing: 'linear', //тип анимации
+                infinite: true, //будет ли слайдер пролистываться бесконечно
+                autoplay: false, //автоматическое пролистывание
+                autoplaySpeed: 1000, //интервал автопролистывания
+                pauseOnFocus: true, //прекращение автопролистывания при focus
+                pauseOnHover: true, //прекращение автопролистывания при hover
+                pauseOnDotsHover: true, //прекращение автопролистывания при hover на точках
+                draggable: false, //возможность перетаскивать слайды мышью на ПК
+                swipe: true, //возможность свайпать слайды через тачскрин
+                touchThreshold: 2, //необходимый размах свайпа для активации пролистывания
+                touchMove: true, //возможность двигать слайды туда-сюда пальцем
+                waitForAnimate: true, //будет ли скорость пролистывания быстрее, чем заданная в анимации, при более быстрых кликах/свайпах
+                centerMode: false, //будет ли главный слайд показываться в центре, а не в начале
+                variableWidth: false, //будет ли вся ширина видимой части заполнена слайдерами до предела без промежутков между ними
+                rows: 1, //количество этажей слайдера
+                slidesPerRow: 1, //количество колонок при rows > 1
+                vertical: false, //вертикальное направление слайдера
+                verticalSwiping: false, //переключение горизонтального свайпа на вертикальный
+                responsive: [
+                    {
+                        breakpoint: 1020,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
+            });
+        });
+
     }
 
     //функция отрисовки Каталога
@@ -134,12 +172,12 @@
                                       .replace('${category_title}', data[card_id]['category'])
                                       .replace('${goods_title}', data[card_id]['name'])
                                       .replace('${goods_title}', data[card_id]['name'])
-                                      .replace('${goods_img}', data[card_id]['photo']) //??? 
+                                      .replace('${goods_img_big}', data[card_id]['photo'])
                                       .replace('${price}', Math.round(parseInt(data[card_id]['price']) - (parseInt(data[card_id]['price']) * (data[card_id]['sale'] ? (parseInt(data[card_id]['sale']) / 100) : 0 / 100))))
                                       .replace('${crssd}', data[card_id]['price'])
                                       .replace('${sale}', (data[card_id]['sale']) ? data[card_id]['sale'] : '0')
                                       .replace('${goods_description}', data[card_id]['consist']);
-                                      console.log(data[card_id]['photo']);
+                                     
             //если скидки нет
             if (main.getElementsByClassName('sale-num bigger')[0].innerHTML === '-0%') {
                 document.getElementsByClassName('crossed-out-price')[0].style.display = 'none';

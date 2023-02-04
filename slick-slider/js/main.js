@@ -1,4 +1,5 @@
-$(document).ready(function(){
+/*
+$(function(){
     $('.slider').slick({
         arrows: true, //отображение стрелок
         dots: true, //отображение точек
@@ -34,3 +35,4 @@ $(document).ready(function(){
         ]
     });
 });
+*/
