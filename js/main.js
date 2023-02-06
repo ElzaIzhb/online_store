@@ -261,34 +261,37 @@
         return xhr.responseText;
     }
 
-    /*
-    //создаем функцию для выведения данных о сайте
-    function renderSait() {
+    function renderAkc() {
         //очищаем страницу
         clearPage();
 
-        document.querySelector('main').innerHTML += document.getElementById('aboutus').innerHTML.replace('${Us}', arr1['datawe'][0]["attributes1"]["aboutus"])
-                                                                                                .replace('${Spons}', arr1['datawe'][0]["attributes1"]["spons"])
-                                                                                                .replace('${Desstiny}', arr1['datawe'][0]["attributes1"]["destiny"]);
 
-        //удалим класс, чтобы было в одну строчку
-        document.querySelector('main').classList.remove('flex-box');
-        document.querySelector('main').classList.add('main-card');
-        document.querySelector('main').classList.add('center-main');
     }
 
-    //создаем функцию для выведения данных контакты
+    function renderDelivery() {
+        //очищаем страницу
+        clearPage();
+
+        
+    }
+
     function renderCont() {
         //очищаем страницу
         clearPage();
 
-        document.querySelector('main').innerHTML += document.getElementById('contacts').innerHTML.replace('${Tel}', arr2['datacon'][0]["attributes2"]["tel"])
-                                                                                                .replace('${Emaill}', arr2['datacon'][0]["attributes2"]["email"])
-                                                                                                .replace('${Teleg}', arr2['datacon'][0]["attributes2"]["telegram"]);
         
-        //удалим класс, чтобы было в одну строчку
-        document.querySelector('main').classList.remove('flex-box');
-        document.querySelector('main').classList.add('main-card');
-        document.querySelector('main').classList.add('center-main');
     }
- */
+
+    function renderReviews() {
+        //очищаем страницу
+        clearPage();
+
+        
+    }
+
+    function renderReviews() {
+        //очищаем страницу
+        clearPage();
+
+        
+    } 
