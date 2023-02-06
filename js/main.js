@@ -115,16 +115,17 @@
         //очищаем страницу
         clearPage();
 
-        let json = sendRequestGET("http://localhost:8091/?all");
+        let json = sendRequestGET("http://localhost:8091/?allcategories");
 
         //раскодируем данные
         let data = JSON.parse(json);    
 
         //отрисовываем в main шаблон шапки ОТДЕЛЬНО
-        main.innerHTML += templateCategoryNav.replace('${category_title}', data[category_id - 1]['category']) // сдвиг на единицу, т.к в ДБ отсчет id с 1, а в массиве  - с 0
-                                             .replace('${category_title}', data[category_id - 1]['category']);
+        main.innerHTML += templateCategoryNav.replace('${category_title}', data[category_id -1]['category']) // сдвиг на единицу, т.к в ДБ отсчет id с 1, а в массиве  - с 0
+                                             .replace('${category_title}', data[category_id -1]['category']);
 
-        console.log(category_id);
+        //console.log(category_id);
+        //console.log(data[category_id - 1]['category']);
 
         //отправляем отдельный запрос для получения данных из сджойненных таблиц goods и categories, выстроенных по category id
         let json2 = sendRequestGET("http://localhost:8091/?category_id=" + category_id);
