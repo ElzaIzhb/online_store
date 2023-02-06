@@ -467,6 +467,23 @@ form input {
 .main-container {
     padding: 30px;
 }
+.logo-co {
+    cursor: pointer;
+}
+.conteiners {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-size: 20px;
+    line-height: 1.5;
+    justify-content: center;
+}
+iframe {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 0px;
+}
 
 /* Хлебные крошки */
 .breadcrumbs-container {

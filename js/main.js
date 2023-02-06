@@ -266,33 +266,26 @@
         //очищаем страницу
         clearPage();
 
-
+        main.innerHTML += document.getElementById('akc').innerHTML;
     }
 
     function renderDelivery() {
         //очищаем страницу
         clearPage();
 
-        
+        main.innerHTML += document.getElementById('delivery').innerHTML;
     }
 
     function renderCont() {
         //очищаем страницу
         clearPage();
 
-        
+        main.innerHTML += document.getElementById('contacts').innerHTML;
     }
 
     function renderReviews() {
         //очищаем страницу
         clearPage();
 
-        
+        main.innerHTML += document.getElementById('reviews').innerHTML;
     }
-
-    function renderReviews() {
-        //очищаем страницу
-        clearPage();
-
-        
-    } 
