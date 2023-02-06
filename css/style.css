@@ -37,6 +37,10 @@ header {
     padding: 30px;
 } */
 
+.hidden {
+    display: none;
+}
+
 .flex {
     display: flex;
 }
@@ -63,6 +67,10 @@ header {
 
 .aic {
     align-items: center;
+}
+
+.aibl {
+    align-items: baseline;
 }
 
 .frame__flex-wrap {
@@ -469,26 +477,31 @@ form input {
     display: flex;
 }
 
-.breadcrumbs-list li {
+.breadcrumbs > a, .breadcrumbs-list li {
     display: inline-block;
     margin-right: 18px;
 }
 
-.breadcrumbs-list li > a {
+.breadcrumbs > a, .breadcrumbs-list li > a {
     position: relative;
     transition: all 0.3s;
 }
 
-.breadcrumbs-list li > a::after {
+.breadcrumbs > a::after, .breadcrumbs-list li > a::after {
     content: '>';
     position: absolute;
     right: -14px;
     top: 0;
 }
 
-.breadcrumbs-list li > a:hover {
+.breadcrumbs > a:hover, .breadcrumbs-list li > a:hover {
     color: rgb(67, 67, 67);
     text-decoration: underline;
+}
+
+.left {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 /* Карточка КАТЕГОРИИ (на странице "Каталог") */
@@ -693,3 +706,104 @@ form input {
     font-size: 20px;
     margin-bottom: 15px;
 }
+
+/* Корзина */
+.chosen-goods_container {
+    
+}
+
+.chosen-goods-cards {
+    margin: 30px 0;
+    position: relative;
+}
+
+.chosen-goods {
+
+}
+
+.bsk-goods-info {
+    padding: 0 30px;
+}
+
+.vertical-flex {
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bsk-goods-img {
+    background-size: cover;
+    background-position: center;
+    border-radius: 18px;
+    width: 160px;
+    height: 160px;
+}
+
+.bsk-goods-title {
+    font-size: 18px;
+}
+
+.delete-goods {
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.order-frame_container {
+    min-width: 215px;
+    width: 320px;
+    height: fit-content;
+    border: 2px solid #000000;
+    border-radius: 13px;
+    padding: 25px;
+}
+
+.order-details {
+    margin-bottom: 40px;
+}
+.quantity > p {
+    margin: 15px 0;
+}
+
+.quantity > span {
+    font-weight: 600;
+}
+
+.sum > span {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.user-phone {
+    outline: none;
+    padding: 12px 30px 12px 15px;
+    border: 1px solid #484848;
+    border-radius: 13px;
+    margin-bottom: 25px;
+    width: -webkit-fill-available;
+}
+
+.user-phone::placeholder {
+    font-size: 14px;
+}
+
+input:focus::-webkit-input-placeholder { 
+    color:transparent; 
+}
+
+.btn-order {
+    padding: 15px 30px;
+    border-radius: 13px;
+    color: white;
+    background-color: #F188F2;
+    font-weight: 700;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-order:hover {
+    background-color: #B566B6;
+}
+

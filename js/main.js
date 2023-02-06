@@ -19,6 +19,9 @@
     //получем данные шаблона Карточки
     let templateCard = document.getElementById('tmpl-card').innerHTML;
 
+    //получем данные шаблона Корзины
+    let templateBasket = document.getElementById('tmpl-basket').innerHTML;
+
     //вызываем функцию при загрузке страницы
     renderHomePage();
 
@@ -184,6 +187,62 @@
                 document.getElementsByClassName('sale-num')[0].style.display = 'none';
             }
         
+        main.style.padding = '40px';
+    }
+    
+    //функция добавления товаров в корзину
+    function addToBasket() {
+
+        //записываем в переменные данные о товаре (id, фото, название, цена, скидка)
+
+        //делаем из этого массив
+
+        //превращаем его в джейсон
+
+        //отправляем постом на сервер
+
+
+
+
+    }
+
+
+    //функция отрисовки Корзины
+    function renderBasket() {
+        //очищаем страницу
+        clearPage();
+
+        /*
+        //отправляем запрос на сервер и получаем данные по добавленным в корзину товарам (СНАЧАЛА ПРОПИСАТЬ ФУНКЦИЮ addToBasket)
+        let json = sendRequestGET("http://localhost:8091/get/basket");
+
+        //раскодируем данные
+        let data = JSON.parse(json);
+
+        console.log();
+
+
+        //отрисовываем в main шаблон Карточки
+        main.innerHTML += templateCard.replace('${category_id}', category_id)
+                                      .replace('${category_title}', data[card_id]['category'])
+                                      .replace('${goods_title}', data[card_id]['name'])
+                                      .replace('${goods_title}', data[card_id]['name'])
+                                      .replace('${goods_img_big}', data[card_id]['photo'])
+                                      .replace('${price}', Math.round(parseInt(data[card_id]['price']) - (parseInt(data[card_id]['price']) * (data[card_id]['sale'] ? (parseInt(data[card_id]['sale']) / 100) : 0 / 100))))
+                                      .replace('${crssd}', data[card_id]['price'])
+                                      .replace('${sale}', (data[card_id]['sale']) ? data[card_id]['sale'] : '0')
+                                      .replace('${goods_description}', data[card_id]['consist']);
+                                     
+            //если скидки нет
+            if (main.getElementsByClassName('sale-num bigger')[0].innerHTML === '-0%') {
+                document.getElementsByClassName('crossed-out-price')[0].style.display = 'none';
+                document.getElementsByClassName('sale-num')[0].style.display = 'none';
+            }
+            */
+        
+        //отрисовываем в main шаблон Корзины (ПОКА БЕЗ ДОБАВЛЕННЫХ ТОВАРОВ)
+        main.innerHTML += templateBasket;
+
         main.style.padding = '40px';
     }
 

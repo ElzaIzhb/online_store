@@ -26,15 +26,15 @@
 				<div class="customer-icons flex aic">
 					<div class="icon log-in-icon"></div>
 					<div class="icon favourite-icon"></div>
-					<div class="icon cart-icon"></div>
+					<div class="icon cart-icon" onclick="renderBasket()"></div>
 				</div>
 			</div>
 			<div class="categories flex jcspb aic">
-				<div class="category-item" onclick="renderLatex()">Латексные шары</div>
-				<div class="category-item" onclick="renderFolg()">Фольгированные шары</div>
-				<div class="category-item" onclick="renderNumber()">Цифры</div>
-				<div class="category-item" onclick="render3D()">3D Сферы</div>
-				<div class="category-item" onclick="renderXrom()">Хромовые шары</div>
+				<div class="category-item" onclick="renderCardsInCategory(1)">Латексные шары</div>
+				<div class="category-item" onclick="renderCardsInCategory(2)">Фольгированные шары</div>
+				<div class="category-item" onclick="renderCardsInCategory(3)">Цифры</div>
+				<div class="category-item" onclick="renderCardsInCategory(4)">3D Сферы</div>
+				<div class="category-item" onclick="renderCardsInCategory(5)">Хромовые шары</div>
 
 				<div class="menu-contacts flex">
 					<!-- <div>
@@ -56,6 +56,9 @@
 
 	<main id="container">
 		<!-- контейнер для отрисовки любого из шаблонов, которые занимают всю страницу -->
+
+
+		
 
 	</main>
 
@@ -263,7 +266,7 @@
 			<div class="goods-title">
 				<h3>${goods_title}</h3>
 			</div>
-			<!-- !!!ЗАМЕНИТЬ в url картинку на ${goods_img}, когда дойдем по отрисовки по апи!!! -->
+
 			<div class="horizontal-wrap">
 				<div class="goods-img" style="background-image: url('${goods_img_big}');">
 				</div>
@@ -284,6 +287,67 @@
 			
 		</div>
     </template>
+
+	<template id="tmpl-basket">
+		<h2>Корзина</h2>
+		<!-- "хлебные крошки" - навигация внутри каталога -->
+		<div class="basket horizontal-wrap jcspb">
+			<div class="chosen-goods_container">
+				<div class="breadcrumbs-list jcspb">
+					<div class="breadcrumbs left">
+							<a href="#" onclick="renderHomePage()">Главная</a>
+							<p>Корзина</p>
+					</div>
+					<div class="breadcrumbs right">
+							<a href="#" onclick="renderCatalog()">Вернуться в магазин</a>
+					</div>
+				</div>
+				<div class="chosen-goods-cards">
+					<!-- Контейнер для карточек товаров, добавленных в корзину -->
+
+					<div class="chosen-goods flex jcspb">
+						<div class="bsk-goods-img" style="background-image: url('https://ir.ozone.ru/s3/multimedia-p/wc1000/6015837217.jpg');"></div>
+						<div class="bsk-goods-info flex vertical-flex">
+							<div class="bsk-goods-title">
+								<p>${bsk-goods}</p>
+							</div>
+							<div class="quantity">
+								<p>
+									<button>-</button>
+									<span id="quantityInCard">2</span>
+									<button>+</button>
+								</p>
+							</div>
+						</div>
+						<div class="price-line">
+							<div class="actual-price">${price} р.</div>
+							<div class="crossed-out-price">${crssd} р.</div>
+							<div class="sale-num hidden">-${sale}%</div>
+						</div>
+					</div>
+					<div id="delFromBsk" class="delete-goods" onclick="delFromBasket()">&#10006;</div>
+				</div>
+			</div>
+			
+			<div class="order-frame_container">
+				<h4>Детали заказа</h4>
+				<div class="order-details">
+					<div class="quantity flex wrap jcspb aibl">
+						<p>Количество: </p>
+						<span id="quantityInOrder">2</span>
+					</div>
+					<div class="sum flex wrap jcspb aibl">
+						<p>Сумма: </p>
+						<span id="sum">432643</span>
+					</div>
+				</div>
+				<div class="order-form">
+					<input class="user-phone" id="userPhone" type="tel" placeholder="+7 (999) 999-99-99">
+					<div id="btn-order" class="btn-order">Заказать</div>
+				</div>
+			</div>
+		</div>
+	</template>
 
     <!--создаем блоки для "о нас"-->
     <template id="aboutus">
