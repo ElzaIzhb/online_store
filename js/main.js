@@ -262,9 +262,16 @@
         return xhr.responseText;
     }
 
-    function renderAkc() {
+    function renderAkc(sale) {
         //очищаем страницу
         clearPage();
+
+        let json = sendRequestGET("http://localhost:8091/?sale");
+
+        //раскодируем данные
+        let data = JSON.parse(json);
+
+        console.log(sale);
 
         main.innerHTML += document.getElementById('akc').innerHTML;
     }
