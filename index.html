@@ -14,15 +14,15 @@
 	<header class="header">
 		<div class="container">
 			<div class="navigation flex jcspb aic">
-				<div class="logo-co">ART<br><i>Colibri</i></div>
+				<div class="logo-co" onclick="renderHomePage()">ART<br><i>Colibri</i></div>
 				<div class="catalog" onclick="renderCatalog()">Каталог</div>
 				<div id="search" class="search">
 					<input class="input-search" type="text" placeholder="Поиск">
 				</div>
-				<div><a href="" class="nav-item" onclick="renderAkc()">Акции</a></div>
-				<div><a href="" class="nav-item" onclick="renderDelivery()">Доставка</a></div>
-				<div><a href="" class="nav-item" onclick="renderCont()">Контакты</a></div>
-				<div><a href="" class="nav-item" onclick="renderReviews()">Отзывы</a></div>
+				<div><a href="#" class="nav-item" onclick="renderAkc()">Акции</a></div>
+				<div><a href="#" class="nav-item" onclick="renderDelivery()">Доставка</a></div>
+				<div><a href="#" class="nav-item" onclick="renderCont()">Контакты</a></div>
+				<div><a href="#" class="nav-item" onclick="renderReviews()">Отзывы</a></div>
 				<div class="customer-icons flex aic">
 					<div class="icon log-in-icon"></div>
 					<div class="icon favourite-icon"></div>
@@ -354,32 +354,128 @@
 		<div class="separating-line"></div>
 	</template>
 
-    <!--создаем блоки для "о нас"-->
-    <template id="aboutus">
-        <div class="concon">
-            <b>О нас:</b> ${Us}<br>
-            <br>
-            <b>Спонсоры:</b> ${Spons}<br>
-            <br>
-            <b>Предназначение сайта:</b> ${Desstiny} <br>
+    <!--создаем блок для "акции"-->
+    <template id="akc">
+        <div class="main-container">
+            <h2>Акции</h2>
+			<!-- "хлебные крошки" - навигация внутри каталога -->
+			<div class="breadcrumbs-container">
+				<ul class="breadcrumbs-list">
+					<li>
+						<a href="#" onclick="renderHomePage()">Главная</a>
+					</li>
+					<li>
+						<p>Акции</p>
+					</li>
+				</ul>
+			</div>
+			<div>
+				<!-- сформировать запрос к бд и отрисовывать карточки только те у кого есть скидка -->
+			</div>
         </div>
     </template>
 
-    <!--создаем блоки для "контакты"-->
+	<!--создаем блок для "доставка"-->
+	<template id="delivery">
+		<div class="main-container">
+			<h2>Доставка</h2>
+			<!-- "хлебные крошки" - навигация внутри каталога -->
+			<div class="breadcrumbs-container">
+				<ul class="breadcrumbs-list">
+					<li>
+						<a href="#" onclick="renderHomePage()">Главная</a>
+					</li>
+					<li>
+						<p>Доставка</p>
+					</li>
+				</ul>
+			</div>
+			<div class="conteiners flex">
+				Круглосуточная доставка по Москве и Московской области.<br>
+
+				Прием заказов по телефону с 8:00 до 22:00 без выходных.<br>
+
+				Уважаемые покупатели учитывайте пробки в часы пик. Просьба заказывать заранее.<br>
+
+				<br>
+
+				Стоимость доставки в пределах МКАД составляет 350р. в интервал 3 часа (например с 15:00 до 18:00)<br>
+
+				Ночная доставка с 23:00 до 07:00 составляет 700р.<br>
+
+				Доставка точно ко времени +\- 15мин 500р.<br>
+
+				Срочная доставка в режиме такси. Вы вызываете нам такси. Согласование обязательно!!!<br>
+
+				Стоимость доставки за пределы МКАД рассчитывается индивидуально.<br>
+			</div>
+		</div>
+	</template>
+
+	<!--создаем блок для "контакты"-->
     <template id="contacts">
-        <div class="concon">
-            <b>Телефон:</b> ${Tel}<br>
-            <br>
-            <b>E-mail:</b> ${Emaill}<br>
-            <br>
-            <b>Телеграм:</b> <a href="https://t.me/Elza_Izh" style="text-decoration: none;" target="_blank">${Teleg}</a> <!--добавить ссылку на телегу--><br>
+        <div class="main-container">
+            <h2>Контакты</h2>
+			<!-- "хлебные крошки" - навигация внутри каталога -->
+			<div class="breadcrumbs-container">
+				<ul class="breadcrumbs-list">
+					<li>
+						<a href="#" onclick="renderHomePage()">Главная</a>
+					</li>
+					<li>
+						<p>Контакты</p>
+					</li>
+				</ul>
+			</div>
+			<div class="conteiners">
+				<div class="flex" style="justify-content: space-around; margin-bottom: 15px; flex-wrap: wrap">
+					<div>
+						<div class="flex">
+							<h3 style="padding-left: 10px; padding-top: 15px">Телефон</h3>
+						</div>
+						<div>
+							<p> +7-999-999-99-99</p><br>
+							<p> +7-999-549-52-99</p>
+						</div>
+					</div>
+					<div>
+						<div class="flex">
+							<h3 style="padding-left: 10px; padding-top: 15px">Телефон</h3>
+						</div>
+						<div>
+							<p> +7-999-777-77-77</p><br>
+							<p> +7-999-526-64-78</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="wrapperForMaps">
+					<iframe src="https://yandex.ru/map-widget/v1/?indoorLevel=1&amp;ll=73.355923%2C54.993402&amp;mode=whatshere&amp;whatshere%5Bpoint%5D=73.355301%2C54.993222&amp;whatshere%5Bzoom%5D=17&amp;z=17" frameborder="1" allowfullscreen="true" "=""></iframe>
+				</div>
+			</div>
         </div>
     </template>
 
-
-
-
-
+	<!--создаем блок для "отзывы"-->
+    <template id="reviews">
+        <div class="main-container">
+            <h2>Отзывы</h2>
+			<!-- "хлебные крошки" - навигация внутри каталога -->
+			<div class="breadcrumbs-container">
+				<ul class="breadcrumbs-list">
+					<li>
+						<a href="#" onclick="renderHomePage()">Главная</a>
+					</li>
+					<li>
+						<p>Отзывы</p>
+					</li>
+				</ul>
+			</div>
+			<div class="conteiners flex">
+				<!-- содержимое -->
+			</div>
+        </div>
+    </template>
 
 
 

@@ -62,7 +62,7 @@ if (isset($_GET['allcategories'])) {
     
     print_r($data);
     
-    }
+}
 
    
 //получение данных по отдельным категориям из сджойненных таблиц goods и categories
@@ -91,7 +91,7 @@ if (isset($_GET['category_id'])) {
     
     print_r($data);
     
-    }
+}
     
 
 //строка фильтрации
@@ -107,26 +107,79 @@ if (isset($_GET['category'])) {
 
     //СЧИТЫВАНИЕ ДАННЫХ
 
-//достаём данные из БД
-$sqltext_category = "SELECT * FROM " . $table . ' WHERE id > 0 ' . $filterStr;
+    //достаём данные из БД
+    $sqltext_category = "SELECT * FROM " . $table . ' WHERE id > 0 ' . $filterStr;
 
-$result_category = $pdo->query($sqltext_category);
+    $result_category = $pdo->query($sqltext_category);
 
-//отрезаем по одной строчке из результата и показываем каждую в виде ассоц массива
-$category = [];
-while($row = $result_category->fetch()) {
+    //отрезаем по одной строчке из результата и показываем каждую в виде ассоц массива
+    $category = [];
+    while($row = $result_category->fetch()) {
 
-    $category[] = $row;
+        $category[] = $row;
 
+    }
+
+
+    //кодируем и выводим на экран
+    $data_category = json_encode($category, JSON_UNESCAPED_UNICODE);
+
+    print_r($data_category); 
 }
 
+//получение данных для акций ПОКА НЕ РАБОТАЕТ
 
-//кодируем и выводим на экран
-$data_category = json_encode($category, JSON_UNESCAPED_UNICODE);
-
-print_r($data_category); 
+if (isset($_GET['sale'])) {
+    // $sale = $_GET['sale'];
+    //достаём данные из бд
+    $sql = "SELECT * FROM goods AS g
+                LEFT JOIN categories AS c
+                ON g.category = c.category
+                WHERE sale != NULL";
+    $result = $pdo->query($sql);
+    
+    //создаём пустой массив
+    $array = array();
+    
+    //с помощью цикла перебираем каждую строчку массива с данными из бд
+    while($row = $result->fetch()){
+    
+        //записываем строчки в пустой массив
+        array_push($array, $row);
+    }
+    
+    //кодируем данные в json
+    $data = json_encode($array, JSON_UNESCAPED_UNICODE);
+    
+    print_r($data);
+    
 }
 
+//получение данных для акций ПОКА НЕ РАБОТАЕТ
 
-
+if (isset($_GET['sale'])) {
+    // $sale = $_GET['sale'];
+    //достаём данные из бд
+    $sql = "SELECT * FROM goods AS g
+                LEFT JOIN categories AS c
+                ON g.category = c.category
+                WHERE sale != NULL";
+    $result = $pdo->query($sql);
+    
+    //создаём пустой массив
+    $array = array();
+    
+    //с помощью цикла перебираем каждую строчку массива с данными из бд
+    while($row = $result->fetch()){
+    
+        //записываем строчки в пустой массив
+        array_push($array, $row);
+    }
+    
+    //кодируем данные в json
+    $data = json_encode($array, JSON_UNESCAPED_UNICODE);
+    
+    print_r($data);
+    
+}
 ?>
