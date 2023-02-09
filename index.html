@@ -26,7 +26,9 @@
 				<div class="customer-icons flex aic">
 					<div class="icon log-in-icon"></div>
 					<div class="icon favourite-icon"></div>
-					<div class="icon cart-icon" onclick="renderBasket()"></div>
+					<div class="icon basket-icon" onclick="renderBasket()">
+						<div id="counter" class="counter hidden">0</div>
+					</div>
 				</div>
 			</div>
 			<div class="categories flex jcspb aic">
@@ -160,7 +162,6 @@
 
 	<!-- Отдельный шаблон для шапки Каталога -->
 	<template id="tmpl-catalog-nav">
-		<h2>Каталог</h2>
 		<!-- "хлебные крошки" - навигация внутри каталога -->
 		<div class="breadcrumbs-container">
 			<ul class="breadcrumbs-list">
@@ -172,6 +173,7 @@
 				</li>
 			</ul>
 		</div>
+		<h2>Каталог</h2>
 	</template>
 
 	<template id="tmpl-catalog">
@@ -186,7 +188,6 @@
 
 	<!-- Отдельный шаблон для шапки Категории (с фильтром)-->
 	<template id="tmpl-category-nav">
-		<h2>${category_title}</h2>
 		<!-- "хлебные крошки" - навигация внутри каталога -->
 		<div class="breadcrumbs-container">
 			<ul class="breadcrumbs-list">
@@ -201,6 +202,7 @@
 				</li>
 			</ul>
 		</div>
+		<h2>${category_title}</h2>
 		<div class="filter">
 			<div class="filter_price">
 				<p>Цена</p>
@@ -229,8 +231,8 @@
 
 		<!-- Базовый фильтр товаров -->
 			<div class="card-in-category">
-				<div class="card-in-category_img" onclick="renderCard(${category_id},${card_id})" style="background-image: url('${goods_img}');">
-					<button class="btn-add-to-basket" onclick="addToBasket()">Добавить в корзину</button>
+				<div class="card-in-category_img" onclick="renderCard(${category_id},${goods_id})" style="background-image: url('${goods_img}');">
+					<button class="btn-add-to-basket" onclick="addToBasket(${bsk_goods_id},'${goods_title}')">Добавить в корзину</button>
 				</div>
 				<div class="info-under-img">
 					<div class="price-line">
@@ -238,7 +240,7 @@
 						<div class="crossed-out-price">${crssd} р.</div>
 						<div class="sale-num">-${sale}%</div>
 					</div>
-					<h4 onclick="renderCard(${category_id},${card_id})">${goods_title}</h4>
+					<h4 onclick="renderCard(${category_id},${goods_id})">${goods_title}</h4>
 				</div>
 			</div>
 	</template>
@@ -276,7 +278,7 @@
 						<div class="crossed-out-price bigger">${crssd} р.</div>
 						<div class="sale-num bigger">-${sale}%</div>
 					</div>
-					<button class="btn-to-basket" onclick="addToBasket()">В корзину</button>
+					<button class="btn-to-basket" onclick="addToBasket(${bsk_goods_id},'${goods_title}')">В корзину</button>
 					<div class="dotted-line"></div>
 					<div class="goods-description">
 						<p><b>Состав:</b></p>
@@ -289,43 +291,22 @@
     </template>
 
 	<template id="tmpl-basket">
-		<h2>Корзина</h2>
 		<!-- "хлебные крошки" - навигация внутри каталога -->
 		<div class="basket horizontal-wrap jcspb">
 			<div class="chosen-goods_container">
 				<div class="breadcrumbs-list jcspb">
 					<div class="breadcrumbs left">
-							<a href="#" onclick="renderHomePage()">Главная</a>
-							<p>Корзина</p>
+						<a href="#" onclick="renderHomePage()">Главная</a>
+						<p>Корзина</p>
 					</div>
 					<div class="breadcrumbs right">
 							<a href="#" onclick="renderCatalog()">Вернуться в магазин</a>
 					</div>
 				</div>
-				<div class="chosen-goods-cards">
+				<h2>Корзина</h2>
+				<div id="bsk-goods-container" class="chosen-goods-cards">
 					<!-- Контейнер для карточек товаров, добавленных в корзину -->
-
-					<div class="chosen-goods flex jcspb">
-						<div class="bsk-goods-img" style="background-image: url('https://ir.ozone.ru/s3/multimedia-p/wc1000/6015837217.jpg');"></div>
-						<div class="bsk-goods-info flex vertical-flex">
-							<div class="bsk-goods-title">
-								<p>${bsk-goods}</p>
-							</div>
-							<div class="quantity">
-								<p>
-									<button>-</button>
-									<span id="quantityInCard">2</span>
-									<button>+</button>
-								</p>
-							</div>
-						</div>
-						<div class="price-line">
-							<div class="actual-price">${price} р.</div>
-							<div class="crossed-out-price">${crssd} р.</div>
-							<div class="sale-num hidden">-${sale}%</div>
-						</div>
-					</div>
-					<div id="delFromBsk" class="delete-goods" onclick="delFromBasket()">&#10006;</div>
+			
 				</div>
 			</div>
 			
@@ -334,11 +315,11 @@
 				<div class="order-details">
 					<div class="quantity flex wrap jcspb aibl">
 						<p>Количество: </p>
-						<span id="quantityInOrder">2</span>
+						<span id="quantity-in-order">0</span>
 					</div>
 					<div class="sum flex wrap jcspb aibl">
 						<p>Сумма: </p>
-						<span id="sum">432643</span>
+						<span id="sum">0</span>
 					</div>
 				</div>
 				<div class="order-form">
@@ -347,6 +328,30 @@
 				</div>
 			</div>
 		</div>
+	</template>
+
+	<!-- Шаблон для карточек товаров, добавленных в корзину -->
+	<template id="tmpl_goods-in-basket">
+		<div class="chosen-goods flex jcs">
+			<div class="bsk-goods-img" style="background-image: url('${goods_img_mini}');"></div>
+			<div class="bsk-goods-info flex vertical-flex">
+				<div class="bsk-goods-title">
+					<p>${bsk_goods_title}</p>
+				</div>
+				<div class="qnt flex aic">
+					<button class="less-goods" onclick="lessGoods(${bsk_goods_id})">–</button>
+					<span class="quantity-in-card">${N}</span>
+					<button class="less-goods" onclick="moreGoods(${bsk_goods_id})">&#43;</button>
+				</div>
+			</div>
+			<div class="price-line fdc">
+				<div class="actual-price">${price} р.</div>
+				<div class="crossed-out-price">${crssd} р.</div>
+				<div class="sale-num hidden">-${sale}%</div>
+			</div>
+			<div class="delete-goods" onclick="delFromBasket('${goods_name}')">&#10006;</div>
+		</div>
+		<div class="separating-line"></div>
 	</template>
 
     <!--создаем блоки для "о нас"-->

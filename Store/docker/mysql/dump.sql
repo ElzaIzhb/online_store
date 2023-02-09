@@ -5,11 +5,26 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+DROP TABLE IF EXISTS `basket`;
+CREATE TABLE `basket` (
+  `goods_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `goods_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `goods_price` mediumint unsigned NOT NULL,
+  `goods_img` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `goods_sale` tinyint unsigned DEFAULT NULL,
+  `quantity` smallint unsigned DEFAULT NULL,
+  PRIMARY KEY (`goods_id`),
+  CONSTRAINT `basket_ibfk_1` FOREIGN KEY (`goods_id`) REFERENCES `goods` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO `basket` (`goods_id`, `goods_name`, `goods_price`, `goods_img`, `goods_sale`, `quantity`) VALUES
+(1,	'0',	0,	'0',	0,	NULL);
+
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `category_id` int unsigned NOT NULL AUTO_INCREMENT,
   `category` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `category_img` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `category_img` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`category_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -26,10 +41,10 @@ CREATE TABLE `goods` (
   `name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `description` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `category` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `price` int NOT NULL,
+  `price` int unsigned NOT NULL,
   `consist` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `photo` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `sale` tinyint DEFAULT NULL,
+  `sale` tinyint unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -43,4 +58,4 @@ INSERT INTO `goods` (`id`, `name`, `description`, `category`, `price`, `consist`
 (7,	'Шар 3D ЗВЕЗДА 64см Составная Light Pink',	'Объемная фольгированная звезда нежно розового цвета. Комплект содержит 13 элементов (конусов). Каждый элемент имеет встроенный клапан и надувается воздухом. ',	'3D Сферы',	500,	'Надутые элементы (12 штук) необходимо попарно связать между собой за хвосты и затем соединить пары друг с другом таким образом, чтобы получилась звезда. В комплект добавлен запасной, 13й элемент.',	'https://zatey.ru/upload/resize_cache/webp/iblock/478/kfs2e3l6r4eal7afjlvstqnhx2kmgsht/rozovaya_shar_3d_zvezda_64sm_sostavnaya_light_pink_1209_0439.webp',	NULL),
 (8,	'Шары Сердце 30см хром ассорти В.Затея',	'Шары в форме объемных сердец зеркально-блестящих оттенков (хром).',	'Хромовые шары',	562,	'Цвета: серебро, золото, розовый, розовое золото, синий, зеленый.',	'https://zatey.ru/upload/resize_cache/webp/iblock/3a3/dsf3kyodw3m7h3ofdt1uv2lrpvs2beoa/goryachie_serdtsa_shary_serdtse_30sm_khrom_assorti_v_zateya_1105_0440.webp',	5);
 
--- 2023-02-06 09:43:37
+-- 2023-02-06 21:41:07
