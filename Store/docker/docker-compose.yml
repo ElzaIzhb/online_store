@@ -38,4 +38,6 @@ services:
       dockerfile: Dockerfile-adminer
     ports:
       - 9001:8080
+    volumes: 
+      - ./mysql/:/docker-entrypoint-initdb.d
 

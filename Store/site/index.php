@@ -155,4 +155,19 @@ if (isset($_GET['sale'])) {
     
 }
 
+if (isset($_GET['personal'])) {
+
+    
+
+    //запрос на создание пользователя
+    $name = $_POST['name'];
+    $e_mail = $_POST['e-mail'];
+    $login = $_POST['login'];
+    $password = $_POST['password'];
+    $sql_ins = " INSERT INTO Users (`name`, `e-mail`, `login`, `password`) VALUES('$name', '$e_mail', '$login', '$password') ";
+    
+    $pdo->query($sql_ins);
+    
+    
+    }
 ?>
