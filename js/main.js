@@ -421,22 +421,25 @@
 
     //функция уменьшения количества товара по клику на -
     function lessGoods(goods_id) {
-    
-        let quantity = document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML;
+
+        //достаем из карточки количество отрисованного товара
+        let individualQuantity = document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML;
 
         //переменная для обновленного значения
         let newQuantity = 0;
 
-        console.log(parseInt(quantity));
+        console.log('Товара было: ' + parseInt(individualQuantity));
 
-        if (parseInt(quantity) > 1) {
+        if (parseInt(individualQuantity) > 1) {
 
             //уменьшаем значение на единицу и записываем в новую переменную
-            newQuantity = parseInt(quantity) - 1;
+            newQuantity = parseInt(individualQuantity) - 1;
+            console.log('После убавления : ' + newQuantity);
 
             //передаем новое значение в верстку
             document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML = newQuantity;
-
+            console.log('В карточке после убавления: ' + document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML);
+            
             if (newQuantity == 1) {
 
                 //если новое значение уменьшилось до единицы, делаем кнопку неактивной
@@ -455,72 +458,158 @@
 
             //кладем перезаписанный массив в хранилище
             localStorage.setItem('basket', currentGoodsJson);
+            console.log('В хранилище после убавления: ' + currentGoodsJson);
         
             //и отражаем это в верстке на счетчике
-            document.getElementById('counter').innerHTML = newQuantity;
-
-            //умножаем цену в карточке товара на его количество
-            let crossedPrice = document.getElementsByClassName('crossed-out-price')[goods_id].innerHTML;
-            let newCrossedPrice = 0;
-            newCrossedPrice += newQuantity * parseInt(crossedPrice);
-            document.getElementsByClassName('crossed-out-price')[goods_id].innerHTML = newCrossedPrice;
-
-            let finalPrice = document.getElementsByClassName('actual')[goods_id].innerHTML;
-            let newFinalPrice = 0;
-            newFinalPrice += newQuantity * parseInt(finalPrice);
-            document.getElementsByClassName('actual')[goods_id].innerHTML = newFinalPrice;
-
-
+            let oldCounter = document.getElementById('counter').innerHTML;
+            let currentCounter = 0;
+            currentCounter = parseInt(oldCounter) - 1;
+            document.getElementById('counter').innerHTML = currentCounter;
+            console.log('Счетчик после убавления: ' + document.getElementById('counter').innerHTML);
+         
             //записываем новое значение счетчика в local storage
-            localStorage.setItem('total_quantity', newQuantity);
+            localStorage.setItem('total_quantity', currentCounter);
+
+            //обновляем в верстке общее количество товара в блоке "Детали заказа"
+            let totalQuantity = document.getElementById('quantity-in-order').innerHTML.replace(' шт.', '');
+            let newTotal = parseInt(totalQuantity) - 1;
+             document.getElementById('quantity-in-order').innerHTML = String(newTotal) + ' шт.';
+
+            //для пересчета цены умножаем изначальную цену в карточке товара на его количество
+            //ЗДЕСЬ НАДО ДОСТАВАТЬ ИЗНАЧАЛЬНОЕ ЗНАЧЕНИЕ, КАК В БД
+            let crossedPrice = document.getElementsByClassName('crossed-out-price')[goods_id].innerHTML.replace(' p.', '');
+
+            //без БД пока что вычисляем изначальную цену, разделив цену товара до скидки (в верстке зачеркнута или единственная) на кол-во товара В МОМЕНТ ДОБАВЛЕНИЯ в корзину
+            let actualPrice = parseInt(crossedPrice) / parseInt(individualQuantity);
+            console.log('Зачеркнутая цена: ' + parseInt(crossedPrice));
+            console.log('Значение при добавлении в корзину: ' + parseInt(individualQuantity));
+            //console.log('Обновленное значение: ' + parseInt(newQuantity));
+            console.log('Стоимость 1 шт без скидки: ' + actualPrice);
+
+            //переменная для обновляемой цены
+            let newCrossedPrice = 0;
+            //теперь умножаем вычисленную изначальную цену (т.к. не кидали запрос в БД) на ОБНОВЛЕННОЕ количество
+            newCrossedPrice = parseInt(newQuantity) * parseInt(actualPrice);
+            console.log('Обновленная изначальная (зачеркнутая или единственная) цена после убавления: ' + newCrossedPrice);
+            document.getElementsByClassName('crossed-out-price')[goods_id].innerHTML = newCrossedPrice + ' р.';
+            console.log('Зачеркнутая после убавления: ' + document.getElementsByClassName('crossed-out-price')[goods_id].innerHTML);
+
+            //обновляем цену после скидки
+            let finalPrice = document.getElementsByClassName('actual-price')[goods_id].innerHTML.replace(' p.', '');
+            let actualFinalPrice = parseInt(finalPrice) / parseInt(individualQuantity);
+            console.log('Стоимость 1 шт со скидкой (при наличии): ' + actualFinalPrice);
+            let newFinalPrice = 0;
+            newFinalPrice = parseInt(newQuantity) * parseInt(actualFinalPrice);
+            document.getElementsByClassName('actual-price')[goods_id].innerHTML = newFinalPrice + ' р.';
+
+            
+           //обновляем в верстке общую сумму товаров в блоке "Детали заказа"
+           let sum = document.getElementById('sum').innerHTML.replace(' p.', '');
+           console.log(sum);
+           //let oneGoodsSum = document.querySelectorAll('.actual-price')[goods_id].innerHTML.replace(' p.', '');
+           //console.log(oneGoodsSum);
+
+           let newSum = parseInt(sum) - actualPrice;
+           console.log(actualPrice);
+           console.log(newSum);
+
+           document.getElementById('sum').innerHTML = newSum + ' р.';
 
         }
         
-
     }
 
     //функция увеличения количества товара по клику на +
     function moreGoods(goods_id) {
 
-        let quantity = document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML;
+        //достаем из карточки количество отрисованного товара
+        let individualQuantity = document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML;
 
         //переменная для обновленного значения
         let newQuantity = 0;
 
-        if (parseInt(quantity) == 1) {
+        console.log('Товара было: ' + parseInt(individualQuantity));
 
-            //делаем книпку уменьшения снова активной
+        if (parseInt(individualQuantity) == 1) {
+
+            //делаем кнопку уменьшения снова активной
             document.getElementsByClassName('less-goods')[goods_id].classList.remove('disabled');
         }
 
-            //увеличиваем значение на единицу и записываем в новую переменную
-            newQuantity = parseInt(quantity) + 1;
+        //увеличиваем значение на единицу и записываем в новую переменную
+        newQuantity = parseInt(individualQuantity) + 1;
+        console.log('После прибавления : ' + newQuantity);
 
-            console.log(quantity);
-
-            //передаем новое значение в верстку
-            document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML = newQuantity;
-
-            //и в хранилище
-            let currentGoods = JSON.parse(localStorage.getItem('basket'));
-
-            //переписываем значение quantity у данного товара
-            currentGoods[goods_id]['quantity'] = newQuantity;
-            console.log(currentGoods[goods_id]['quantity']);
-
-            //кодируем обратно в json, чтобы положить в хранилище
-            let currentGoodsJson = JSON.stringify(currentGoods);
-
-            console.log(currentGoodsJson);
-
-            //кладем перезаписанный массив в хранилище
-            localStorage.setItem('basket', currentGoodsJson);
+        //передаем новое значение в верстку
+        document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML = newQuantity;
+        console.log('В карточке после прибавления: ' + document.getElementsByClassName('quantity-in-card')[goods_id].innerHTML);
         
-            //и отражаем это в верстке на счетчике
-            document.getElementById('counter').innerHTML = newQuantity;
+        //и в хранилище
+        let currentGoods = JSON.parse(localStorage.getItem('basket'));
 
-            //записываем новое значение счетчика в local storage
-            localStorage.setItem('total_quantity', newQuantity);
+        //переписываем значение quantity у данного товара
+        currentGoods[goods_id]['quantity'] = newQuantity;
+
+        //кодируем обратно в json, чтобы положить в хранилище
+        let currentGoodsJson = JSON.stringify(currentGoods);
+
+        //кладем перезаписанный массив в хранилище
+        localStorage.setItem('basket', currentGoodsJson);
+        console.log('В хранилище после прибавления: ' + currentGoodsJson);
+    
+        //и отражаем это в верстке на счетчике
+        let oldCounter = document.getElementById('counter').innerHTML;
+        let currentCounter = 0;
+        currentCounter = parseInt(oldCounter) + 1;
+        document.getElementById('counter').innerHTML = currentCounter;
+        console.log('Счетчик после прибавления: ' + document.getElementById('counter').innerHTML);
+        
+        //записываем новое значение счетчика в local storage
+        localStorage.setItem('total_quantity', currentCounter);
+
+        //обновляем в верстке общее количество товара в блоке "Детали заказа"
+        let totalQuantity = document.getElementById('quantity-in-order').innerHTML.replace(' шт.', '');
+        document.getElementById('quantity-in-order').innerHTML = String(parseInt(totalQuantity) + 1) + ' шт.';
+         
+
+        //для пересчета цены умножаем изначальную цену в карточке товара на его количество
+        //ЗДЕСЬ НАДО ДОСТАВАТЬ ИЗНАЧАЛЬНОЕ ЗНАЧЕНИЕ, КАК В БД
+        let crossedPrice = document.getElementsByClassName('crossed-out-price')[goods_id].innerHTML.replace(' p.', '');
+
+        //без БД пока что вычисляем изначальную цену, разделив цену товара до скидки (в верстке зачеркнута или единственная) на кол-во товара В МОМЕНТ ДОБАВЛЕНИЯ в корзину
+        let actualPrice = parseInt(crossedPrice) / parseInt(individualQuantity);
+        console.log('Зачеркнутая цена: ' + parseInt(crossedPrice));
+        console.log('Значение при добавлении в корзину: ' + parseInt(individualQuantity));
+        //console.log('Обновленное значение: ' + parseInt(newQuantity));
+        console.log('Стоимость 1 шт без скидки: ' + actualPrice);
+
+        //переменная для обновляемой цены
+        let newCrossedPrice = 0;
+        //теперь умножаем вычисленную изначальную цену (т.к. не кидали запрос в БД) на ОБНОВЛЕННОЕ количество
+        newCrossedPrice = parseInt(newQuantity) * parseInt(actualPrice);
+        console.log('Обновленная изначальная (зачеркнутая или единственная) цена после убавления: ' + newCrossedPrice);
+        document.getElementsByClassName('crossed-out-price')[goods_id].innerHTML = newCrossedPrice + ' р.';
+        console.log('Зачеркнутая после убавления: ' + document.getElementsByClassName('crossed-out-price')[goods_id].innerHTML);
+
+        //обновляем цену после скидки
+        let finalPrice = document.getElementsByClassName('actual-price')[goods_id].innerHTML.replace(' p.', '');
+        let actualFinalPrice = parseInt(finalPrice) / parseInt(individualQuantity);
+        console.log('Стоимость 1 шт со скидкой (при наличии): ' + actualFinalPrice);
+        let newFinalPrice = 0;
+        newFinalPrice = parseInt(newQuantity) * parseInt(actualFinalPrice);
+        document.getElementsByClassName('actual-price')[goods_id].innerHTML = newFinalPrice + ' р.';
+
+                   //обновляем в верстке общую сумму товаров в блоке "Детали заказа"
+                   let sum = document.getElementById('sum').innerHTML.replace(' p.', '');
+                   console.log(sum);
+                   //let oneGoodsSum = document.querySelectorAll('.actual-price')[goods_id].innerHTML.replace(' p.', '');
+                   //console.log(oneGoodsSum);
+        
+                   let newSum = parseInt(sum) + actualPrice;
+                   console.log(actualPrice);
+                   console.log(newSum);
+        
+                   document.getElementById('sum').innerHTML = newSum + ' р.';
 
     }
 
@@ -585,11 +674,6 @@
             //записываем новое значение счетчика в local storage
             localStorage.setItem('total_quantity', intCounter);
 
-                    //если на счетчике 0, скрываем его
-                    // if (intCounter === 0) {
-                    //     document.getElementById('counter').classList.add('hidden');
-                    // }
-
             //кодируем обратно в виде строки и перезаписываем хранилище
             localStorage.setItem('total_quantity', String(intCounter));
             console.log(localStorage.getItem('total_quantity'));
@@ -618,6 +702,9 @@
         //если Корзина не пуста
         if (totalQuantity > 0) {
 
+            //открываем блок с деталями заказа
+            document.getElementById('order-container').classList.remove('hidden');
+
            //достаем из хранилища добавленные в Корзину товары в виде jsonа и сразу превращаем в массив
            let data = JSON.parse(localStorage.getItem('basket'));
 
@@ -642,17 +729,25 @@
                                                               .replace('${sale}', (data[i]['sale']) ? data[i]['sale'] : '0')
                                                               .replace('${goods_name}', data[i]['name']);
                //если скидки нет
-               if (main.getElementsByClassName('actual-price')[i].innerHTML === main.getElementsByClassName('crossed-out-price')[i].innerHTML) {
+               if (bskContainer.getElementsByClassName('actual-price')[i].innerHTML === bskContainer.getElementsByClassName('crossed-out-price')[i].innerHTML) {
 
                     //не показываем перечеркнутое число
-                   document.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
+                    bskContainer.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
+                   
+               }
+
+               //если количество товара равно единице
+               if (bskContainer.getElementsByClassName('quantity-in-card')[i].innerHTML == 1) {
+                    
+                    //делаем неактивной кнопку "-"
+                    bskContainer.getElementsByClassName('less-goods')[i].classList.add('disabled');
                }
 
            }
 
            //отрисовываем в верстке количество товара в блоке "Детали заказа"
            let quantity = document.getElementById('quantity-in-order').innerHTML;
-           document.getElementById('quantity-in-order').innerHTML = parseInt(quantity) + parseInt(totalQuantity);
+           document.getElementById('quantity-in-order').innerHTML = String(parseInt(quantity) + parseInt(totalQuantity)) + ' шт.';
 
            //отрисовываем в верстке сумму товаров в блоке "Детали заказа"
            let sum = document.getElementById('sum').innerHTML;
@@ -667,14 +762,21 @@
                 price += intValue;
            }
 
-           document.getElementById('sum').innerHTML = parseInt(sum) + price;
+           document.getElementById('sum').innerHTML = String(parseInt(sum) + price) + ' р.';
 
         //если в Корзине ничего нет
         } else {
 
             //выводим надпись
-            document.getElementById('bsk-goods-container').innerHTML = "Ваша корзина пуста :)";
-            document.getElementById('bsk-goods-container').style.color = '#B566B6';
+            document.getElementById('bsk-goods-container').innerHTML = "Ваша корзина пуста";
+            //document.getElementById('bsk-goods-container').style.color = '#B566B6';
+            //document.getElementById('bsk-goods-container').style.fontWeight = 'bold';
+
+            //выделяем жирным предложение вернуться в магазин
+            document.querySelector('.back-to-store').style.fontWeight = 'bold';
+
+            //и прячем блок с деталями заказа
+            document.getElementById('order-container').classList.add('hidden');
 
             
         }

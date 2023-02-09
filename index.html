@@ -300,7 +300,7 @@
 						<p>Корзина</p>
 					</div>
 					<div class="breadcrumbs right">
-							<a href="#" onclick="renderCatalog()">Вернуться в магазин</a>
+							<a class="back-to-store" href="#" onclick="renderCatalog()">Вернуться в магазин</a>
 					</div>
 				</div>
 				<h2>Корзина</h2>
@@ -310,7 +310,7 @@
 				</div>
 			</div>
 			
-			<div class="order-frame_container">
+			<div id="order-container" class="order-frame_container">
 				<h4>Детали заказа</h4>
 				<div class="order-details">
 					<div class="quantity flex wrap jcspb aibl">
@@ -341,7 +341,7 @@
 				<div class="qnt flex aic">
 					<button class="less-goods" onclick="lessGoods(${bsk_goods_id})">–</button>
 					<span class="quantity-in-card">${N}</span>
-					<button class="less-goods" onclick="moreGoods(${bsk_goods_id})">&#43;</button>
+					<button class="more-goods" onclick="moreGoods(${bsk_goods_id})">&#43;</button>
 				</div>
 			</div>
 			<div class="price-line fdc">
