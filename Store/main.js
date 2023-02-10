@@ -19,12 +19,11 @@ function send() {
     let link = 'http://localhost:8091/?personal';
     
     //конфигурируем объект
-    requestObj.open('POST', link, true);
+    requestObj.open('POST', link, false);
     
     // отправляем запрос
     requestObj.send(data);
 
-    console.log(requestObj.send(data));
 }
 
 
