@@ -155,22 +155,25 @@ if (isset($_GET['sale'])) {
     
 }
 
-<<<<<<< HEAD
-if (isset($_GET['personal'])) {
+$json = file_get_contents('php://input');
 
-    
+print_r ($json);
+
+if(isset($_POST['name']) && isset($_POST['e-mail']) && isset($_POST['login']) && isset($_POST['password'])) {
 
     //запрос на создание пользователя
     $name = $_POST['name'];
     $e_mail = $_POST['e-mail'];
     $login = $_POST['login'];
     $password = $_POST['password'];
+
     $sql_ins = " INSERT INTO Users (`name`, `e-mail`, `login`, `password`) VALUES('$name', '$e_mail', '$login', '$password') ";
     
     $pdo->query($sql_ins);
     
-    
-    }
+}
+
+    /*
 =======
 //получение данных для акций ПОКА НЕ РАБОТАЕТ
 
@@ -200,4 +203,5 @@ if (isset($_GET['sale'])) {
     
 }
 >>>>>>> e81fa4af04df9ec5677e28a9ce2eb570ee42d73f
+*/
 ?>

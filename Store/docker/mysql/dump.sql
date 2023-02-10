@@ -77,4 +77,17 @@ INSERT INTO `goods` (`id`, `name`, `description`, `category`, `price`, `consist`
 (26,	'Фигура фольга \"Скай,щенячий патруль\"',	'Размер: 81 см',	'3D Сферы',	900,	'',	'https://shariki.ru/files/products/skaj-81sm.602x655.jpg?60194ec0bb03f1458c6ba65ae488f265',	10),
 (27,	'Фигура фольга \"Кошка голова,black\"',	'Размер: 48 см',	'3D Сферы',	500,	'',	'https://shariki.ru/files/products/golova-chernaya.602x655.jpg?8e396e8de770b7fc1425f0f6d401d531',	2);
 
--- 2023-02-10 09:35:54
+DROP TABLE IF EXISTS `Users`;
+CREATE TABLE `Users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `e-mail` varchar(50) NOT NULL,
+  `login` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO `Users` (`id`, `name`, `e-mail`, `login`, `password`) VALUES
+(1,	'Родион',	'rodion@bk.ru',	'rodion',	'strong');
+
+-- 2023-02-10 20:55:28

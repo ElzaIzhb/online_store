@@ -24,7 +24,7 @@
 				<div><a href="#" class="nav-item" onclick="renderCont()">Контакты</a></div>
 				<div><a href="#" class="nav-item" onclick="renderReviews()">Отзывы</a></div>
 				<div class="customer-icons flex aic">
-					<div class="icon log-in-icon"></div>
+					<div class="icon log-in-icon" onclick="renderPerson()"></div>
 					<div class="icon favourite-icon"></div>
 					<div class="icon basket-icon" onclick="renderBasket()">
 						<div id="counter" class="counter hidden">0</div>
@@ -352,6 +352,23 @@
 			<div class="delete-goods" onclick="delFromBasket('${goods_name}')">&#10006;</div>
 		</div>
 		<div class="separating-line"></div>
+	</template>
+
+	<template id="tmpl-person">
+		<div id="tmpl-request">
+			<h1 class="text-request">Регистрация</h1>
+		<div class="form">
+				<div class="form-text">Имя<span>*</span></div><br>
+				<input class="form-area" id="name" type="text" name="name" autocomplete="off" required>
+				<div class="form-text">E-mail<span>*</span></div><br>
+				<input class="form-area" id="e-mail" type="e-mail" name="e-mail" autocomplete="off" required>
+				<div class="form-text">Логин</div><br>
+				<input class="form-area" id="login" type="text" name="login" autocomplete="off" required><br>
+				<div class="form-text">Пароль</div><br>
+				<input class="form-area" id="password" type="text" name="password" autocomplete="off" required><br>
+				<button class="form-submit" type="submit" onclick="send()">Sign up</button>
+			</div>
+		</div>
 	</template>
 
     <!--создаем блок для "акции"-->
