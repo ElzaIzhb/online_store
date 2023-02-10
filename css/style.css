@@ -49,6 +49,10 @@ header {
     flex-wrap: wrap;
 }
 
+.fdc {
+    flex-direction: column;
+}
+
 .jcspa {
     justify-content: space-around;
 }
@@ -158,11 +162,28 @@ input:focus::-webkit-input-placeholder {
     margin-left: 5px;
 }
 
-.cart-icon {
+.basket-icon {
     background-image: url('../img/cart-icon3cropped.png');
     width: 23px;
     height: 25px;
     margin-left: 5px;
+    position: relative;
+}
+
+.counter {
+    position: absolute;
+    margin-top: -2;
+    bottom: -5px;
+    right: -5px;
+    background-color: #F9CFFA;
+    color: #794479;
+    font-size: 10px;
+    padding: 1px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 50%;
+    text-align: center;
 }
 
 .categories {
@@ -725,21 +746,24 @@ iframe {
 }
 
 /* Корзина */
-.chosen-goods_container {
-    
+.chosen-goods_container .breadcrumbs-list {
+    gap: 50px;
 }
 
 .chosen-goods-cards {
     margin: 30px 0;
-    position: relative;
 }
 
 .chosen-goods {
-
+    position: relative;
+    margin: 30px 0;
+    gap: 50px;
 }
 
-.bsk-goods-info {
-    padding: 0 30px;
+.chosen-goods .price-line {
+    align-items: flex-end;
+    min-width: 150px;
+    flex: 1;
 }
 
 .vertical-flex {
@@ -751,25 +775,65 @@ iframe {
     background-size: cover;
     background-position: center;
     border-radius: 18px;
-    width: 160px;
-    height: 160px;
+    min-width: 130px;
+    height: 130px;
+}
+
+.bsk-goods-info {
+    min-width: 150px;
 }
 
 .bsk-goods-title {
     font-size: 18px;
 }
 
+.bsk-goods-title > p {
+    text-align: left;
+}
+
+.qnt {
+    border: 1px solid #000000;
+    border-radius: 6px;
+    padding: 3px 5px;
+    width: fit-content;
+}
+
+.qnt > button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+.disabled {
+    color: #8b8b8b82;
+}
+
+.quantity-in-card {
+    padding: 0 7px;
+}
+
 .delete-goods {
     font-size: 16px;
+    color: #8b8b8b82;
     position: absolute;
     top: 0;
     right: 0;
     cursor: pointer;
+    transition: all 0.5s;
+}
+
+.delete-goods:hover {
+    color: #000000;
+}
+
+.separating-line {
+    border: 1px dotted #8b8b8b82;
+    margin: 15px 0;
 }
 
 .order-frame_container {
-    min-width: 215px;
-    width: 320px;
+    width: 250px;
     height: fit-content;
     border: 2px solid #000000;
     border-radius: 13px;
@@ -779,7 +843,8 @@ iframe {
 .order-details {
     margin-bottom: 40px;
 }
-.quantity > p {
+
+.quantity {
     margin: 15px 0;
 }
 
