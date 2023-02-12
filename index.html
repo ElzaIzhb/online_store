@@ -143,20 +143,17 @@
 		</div>
 
 		<div class="section4">
-			<form method="GET" action="https://api.telegram.org/bot5559440799:AAGmPpwU4j6JnaGWh-1YZFwV4r2fx-ar1EY/sendMessage" target="_blank">
+			<div id="sended">
 				<div class="title flex">
 					Скидка 5% <br>на первый заказ
 				</div>
 				<div>
-					<input name="chat_id" type="hidden" value="1028368132" placeholder="Введите ID юзера">
+					<input id="discount" name="text" type="text" placeholder="Введите номер телефона">
 				</div>
 				<div>
-					<input name="text" type="text" placeholder="Введите номер телефона">
+					<button class="but4" onclick="sendTelegram()">Получить скидку</button>
 				</div>
-				<div>
-					<button class="but4">Получить скидку</button>
-				</div>
-			</form>
+			</div>
 		</div>
 	</template>
 
