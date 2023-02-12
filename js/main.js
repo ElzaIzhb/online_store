@@ -887,7 +887,7 @@
         // отправляем запрос
        requestObj.send();
 
-       document.getElementById('sended').innerHTML = `<h1 class='title'>Ваша заявка отправлена.<h1>`;
+       document.getElementById('sended').innerHTML = `<div class='title'>Ваша заявка отправлена.</div>`;
 
     }
     
