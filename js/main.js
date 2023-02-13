@@ -865,7 +865,7 @@
         let link = 'http://localhost:8091';
         
         //конфигурируем объект
-        requestObj.open('POST', link, true);
+        requestObj.open('POST', link, false);
     
         requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     
@@ -873,6 +873,32 @@
         requestObj.send(data);
     
     }
+
+    
+    function sendTelegram() {
+
+        let discount = document.getElementById('discount').value;
+
+        console.log(discount);
+
+        // создаём объкт который умеет отправлять запросы
+        let requestObj = new XMLHttpRequest();
+
+        // собираем ссылку для запроса
+        let link = 'https://api.telegram.org/bot5521315588:AAHgmnzbi4_ZoHfiMiEi19zHWXAvcd_dmS4/sendMessage?chat_id=892205925&text=' + discount;
+
+        console.log(link);
+
+        //конфигурируем объект
+        requestObj.open('GET', link, false);
+            
+        // отправляем запрос
+       requestObj.send();
+
+       document.getElementById('sended').innerHTML = `<div class='title'>Ваша заявка отправлена.</div>`;
+
+    }
+    
 
     function renderAkc(sale) {
         //очищаем страницу
