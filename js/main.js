@@ -235,6 +235,14 @@
         main.style.padding = '40px';
     }
 
+    //функция фильтрации цены ОТ
+    function filterPriceFrom() {
+
+        //достаем введенное значение
+        let priceFrom = document.getElementById('price-from').innerHTML;
+        console.log("Введенная цена ОТ: " + priceFrom);
+    }
+
     //функция прибавления значения к total_quantity в хранилище
     function plusOne() {
 
