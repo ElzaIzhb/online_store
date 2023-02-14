@@ -99,6 +99,11 @@ header {
     background-color: #B566B6;
 }
 
+input {
+    border: 2px solid #A9A9A9;
+    border-radius: 13px;
+}
+
 .search {
     position: relative;
     padding: 15px 30px 15px 15px;
@@ -462,7 +467,8 @@ footer {
     font-family: 'Montserrat';
     font-style: normal;
     font-size: 50px;
-    padding: 150px 0 0 300px;
+    margin-bottom: 30px;
+    /* padding: 150px 0 0 300px; */
 }
 .but4 {
     border: 2.39494px solid;
@@ -474,16 +480,26 @@ footer {
     font-style: normal;
     font-size: 18px;
     background-color: #F188F2;
-    margin: 0 0 0 300px;
+    /* margin: 0 0 0 300px; */
     cursor: pointer;
+    color: black;
 }
- input {
-    margin: 15px 0 15px 300px;
+
+.discount-wrap {
+    padding: 150px 0 0 200px;
+}
+
+.phone-and-btn {
+    width: 250px;
+}
+
+ .discount {
+    /* margin: 15px 0 15px 300px; */
     background: transparent;
-    border-radius: 25.1468px;
+    /* border-radius: 25.1468px; */
     border: 2.39494px solid #F188F2;
-    height: 30px;
-    width: 240px;
+    /* height: 30px; */
+    /* width: 240px; */
 }
 .main-container {
     padding: 30px;
@@ -899,8 +915,12 @@ select {
     padding: 12px 30px 12px 15px;
     border: 1px solid #484848;
     border-radius: 13px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     width: -webkit-fill-available;
+}
+
+.user-phone:hover {
+    border-color: #000000;
 }
 
 .user-phone::placeholder {
