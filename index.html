@@ -381,8 +381,22 @@
 					</li>
 				</ul>
 			</div>
-			<div>
-				<!-- сформировать запрос к бд и отрисовывать карточки только те у кого есть скидка -->
+			<div class="filter aic">
+				<div class="filter_price aic">
+					<p>Цена</p>
+					<input id="price-from" type="number" placeholder="от" onclick="filterPriceFrom()">
+					<input id="price-to" type="number" placeholder="до">
+				</div>
+				<div class="filter_sort-by aic">
+					<p>Сортировать:</p>
+					<select name="sort-type" id="sort-by">
+						<option value="default">По умолчанию</option>
+						<option value="price-up">По возрастанию цены</option>
+						<option value="price-down">По убыванию цены</option>
+						<option value="popular">По популярности</option>
+						<option value="rating">По рейтингу</option>
+					</select>
+				</div>
 			</div>
         </div>
     </template>

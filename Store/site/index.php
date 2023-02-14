@@ -135,7 +135,7 @@ if (isset($_GET['sale'])) {
     $sql = "SELECT * FROM goods AS g
                 LEFT JOIN categories AS c
                 ON g.category = c.category
-                WHERE sale != NULL";
+                WHERE sale  IS NOT NULL";
     $result = $pdo->query($sql);
     
     //создаём пустой массив
@@ -173,35 +173,5 @@ if(isset($_POST['name']) && isset($_POST['e-mail']) && isset($_POST['login']) &&
     
 }
 
-    /*
-=======
-//получение данных для акций ПОКА НЕ РАБОТАЕТ
 
-if (isset($_GET['sale'])) {
-    // $sale = $_GET['sale'];
-    //достаём данные из бд
-    $sql = "SELECT * FROM goods AS g
-                LEFT JOIN categories AS c
-                ON g.category = c.category
-                WHERE sale != NULL";
-    $result = $pdo->query($sql);
-    
-    //создаём пустой массив
-    $array = array();
-    
-    //с помощью цикла перебираем каждую строчку массива с данными из бд
-    while($row = $result->fetch()){
-    
-        //записываем строчки в пустой массив
-        array_push($array, $row);
-    }
-    
-    //кодируем данные в json
-    $data = json_encode($array, JSON_UNESCAPED_UNICODE);
-    
-    print_r($data);
-    
-}
->>>>>>> e81fa4af04df9ec5677e28a9ce2eb570ee42d73f
-*/
 ?>

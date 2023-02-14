@@ -805,34 +805,6 @@
         
     }
 
-        /*
-        //отправляем запрос на сервер и получаем данные по добавленным в корзину товарам (СНАЧАЛА ПРОПИСАТЬ ФУНКЦИЮ addToBasket)
-        let json = sendRequestGET('http://localhost:8091/basket/get/?id=' + goods_id);
-
-        //раскодируем данные
-        let data = JSON.parse(json);
-
-        console.log();
-
-
-        //отрисовываем в main шаблон Карточки
-        for (let i = 0; i < data.length; i++)
-        main.innerHTML += templateBasket.replace('${goods_img_mini}', data[i]['goods_img'])
-                                      .replace('${bsk-goods-title}', data[i]['goods_name'])
-                                      .replace('${price}', Math.round(parseInt(data[goods_id]['price']) - (parseInt(data[goods_id]['price']) * (data[goods_id]['sale'] ? (parseInt(data[goods_id]['sale']) / 100) : 0 / 100))))
-                                      .replace('${crssd}', data[goods_id]['price'])
-                                      .replace('${sale}', (data[goods_id]['sale']) ? data[goods_id]['sale'] : '0')
-                                     
-            //если скидки нет
-            if (main.getElementsByClassName('sale-num bigger')[0].innerHTML === '-0%') {
-                document.getElementsByClassName('crossed-out-price')[0].style.display = 'none';
-                document.getElementsByClassName('sale-num')[0].style.display = 'none';
-            }
-        */
-        //отрисовываем в main шаблон Корзины (ПОКА БЕЗ ДОБАВЛЕННЫХ ТОВАРОВ)
-        //main.innerHTML += templateBasket;
-
-        
 
     //функция очистки страницы
     function clearPage() {
@@ -900,7 +872,7 @@
     }
     
 
-    function renderAkc(sale) {
+    function renderAkc() {
         //очищаем страницу
         clearPage();
 
@@ -909,9 +881,33 @@
         //раскодируем данные
         let data = JSON.parse(json);
 
-        console.log(sale);
-
         main.innerHTML += document.getElementById('akc').innerHTML;
+
+        let flexFrameContainer = document.createElement('div');
+        flexFrameContainer.classList.add('frame__flex-wrap');
+        main.appendChild(flexFrameContainer);
+        // main.style.padding = '40px';
+
+        //рисуем данные на экран
+        for (let i = 0; i < data.length; i++) {
+            //выводим данные шаблона
+            flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data[i]['category_id'])
+                                                            .replace('${goods_id}', i)
+                                                            .replace('${bsk_goods_id}', data[i]['id'])
+                                                            .replace('${goods_img}', data[i]['photo'])
+                                                            .replace('${goods_title}', data[i]['name'])
+                                                            .replace('${price}', Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))))
+                                                            .replace('${crssd}', data[i]['price'])
+                                                            .replace('${sale}', (data[i]['sale']) ? data[i]['sale'] : '0')
+                                                            .replace('${category_id}', data[i]['category_id'])
+                                                            .replace('${goods_id}', i)
+                                                            .replace('${goods_title}', data[i]['name']);
+        
+            if (main.getElementsByClassName('sale-num')[i].innerHTML === '-0%') {
+                document.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
+                document.getElementsByClassName('sale-num')[i].style.display = 'none';
+            }
+        }
     }
 
     function renderDelivery() {
