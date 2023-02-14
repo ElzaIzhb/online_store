@@ -9,6 +9,8 @@
     <script src="main.js"></script>
 </head>
 <body>
+
+    <div class="wrapper">
         <div class="chat-box">
             
             <div id="chat-box__body">
@@ -32,8 +34,23 @@
             <div class="chat-box__footer">
                 <textarea required id="msg" type="text" value="" placeholder="Введите сообщение"></textarea>
 
-                <div class="send-btn" onclick="sendMessage()">&#10148;</div>
+                <div class="send-btn" onclick="sendRequest()">&#10148;</div>
             </div>
         </div>
+    </div>
+
+        <template id="tmpl_mes">
+            <div class="msg-sent ${style}">
+                <div class="name">
+                    ${name}
+                </div>
+                <div class="message">
+                    ${message}
+                </div>
+                <div class="date">
+                    ${date}
+                </div>
+            </div>
+        </template>
 </body>
 </html>

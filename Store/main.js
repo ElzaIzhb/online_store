@@ -1,27 +1,28 @@
-function send() {
+let container = '';
 
-    let name = document.getElementById('name').value;
-    let e_mail = document.getElementById('e-mail').value;
-    let login = document.getElementById('login').value;
-    let password = document.getElementById('password').value;
+function sendRequest() {
 
-    let data = "name=" + encodeURIComponent(name) + "&e-mail=" + encodeURIComponent(e_mail) + "&login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password);
+    let msg = document.getElementById('msg').value;
 
-    // создаём объкт который умеет отправлять запросы
-    let requestObj = new XMLHttpRequest();
+    let tmpl_mes = document.getElementById('tmpl_mes');
 
-    // собираем ссылку для запроса
-    let link = 'http://localhost:8091';
+    // создаём переменную с текущем временем, датой, месяцем, годом
+    let today = new Date();
+
+    // создаём переменную, куда записываем только время и отрезаем секунды
+    let now = today.toLocaleTimeString().slice(0,-3);
+
+    container+= tmpl_mes.innerHTML.replace('${message}', msg)
+                                  .replace('${date}', now);
+
+    console.log(container);
+
+    document.getElementById('chat-box__body').innerHTML = container;     
     
-    //конфигурируем объект
-    requestObj.open('POST', link, true);
-
-    requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    // отправляем запрос
-    requestObj.send(data);
-
 }
+
+
+
 
 
 
