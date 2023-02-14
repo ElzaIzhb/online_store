@@ -4,24 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация</title>
+    <title>Отзывы</title>
     <link rel="stylesheet" href="style2.css">
     <script src="main.js"></script>
 </head>
 <body>
-    <div id="tmpl-request">
-        <h1 class="text-request">Регистрация</h1>
-       <div class="form">
-            <div class="form-text">Имя<span>*</span></div><br>
-            <input class="form-area" id="name" type="text" name="name" autocomplete="off" required>
-            <div class="form-text">E-mail<span>*</span></div><br>
-            <input class="form-area" id="e-mail" type="e-mail" name="e-mail" autocomplete="off" required>
-            <div class="form-text">Логин</div><br>
-            <input class="form-area" id="login" type="text" name="login" autocomplete="off" required><br>
-            <div class="form-text">Пароль</div><br>
-            <input class="form-area" id="password" type="text" name="password" autocomplete="off" required><br>
-            <button class="form-submit" type="submit" onclick="send()">Sign up</button>
+        <div class="chat-box">
+            
+            <div id="chat-box__body">
+
+            </div>
+
+            <template id="tmpl_mes">
+                <div class="msg-sent ${style}">
+                    <div class="name">
+                        ${name}
+                    </div>
+                    <div class="message">
+                        ${message}
+                    </div>
+                    <div class="date">
+                        ${date}
+                    </div>
+                </div>
+            </template>
+
+            <div class="chat-box__footer">
+                <textarea required id="msg" type="text" value="" placeholder="Введите сообщение"></textarea>
+
+                <div class="send-btn" onclick="sendMessage()">&#10148;</div>
+            </div>
         </div>
-    </div>
 </body>
 </html>
