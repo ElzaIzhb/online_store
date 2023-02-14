@@ -143,15 +143,13 @@
 		</div>
 
 		<div class="section4">
-			<div id="sended">
+			<div id="sended" class="discount-wrap flex fdc">
 				<div class="title flex">
 					Скидка 5% <br>на первый заказ
 				</div>
-				<div>
-					<input id="discount" name="text" type="text" placeholder="Введите номер телефона">
-				</div>
-				<div>
-					<button class="but4" onclick="sendTelegram()">Получить скидку</button>
+				<div class="phone-and-btn flex fdc">
+					<input class="discount user-phone" id="discount" name="text" type="text" placeholder="+7 (999) 999-99-99">
+					<button class="but4 btn-order" onclick="sendTelegram()">Получить скидку</button>
 				</div>
 			</div>
 		</div>
@@ -200,17 +198,17 @@
 			</ul>
 		</div>
 		<h2>${category_title}</h2>
-		<div class="filter">
-			<div class="filter_price">
+		<div class="filter aic">
+			<div class="filter_price aic">
 				<p>Цена</p>
-				<input id="price-from" type="number" placeholder="от">
+				<input id="price-from" type="number" placeholder="от" onclick="filterPriceFrom()">
 				<input id="price-to" type="number" placeholder="до">
 			</div>
-			<div class="filter_with-discount">
+			<div class="filter_with-discount aic">
 				<p>Товары со скидкой</p>
 				<input type="checkbox">
 			</div>
-			<div class="filter_sort-by">
+			<div class="filter_sort-by aic">
 				<p>Сортировать:</p>
 				<select name="sort-type" id="sort-by">
 					<option value="default">По умолчанию</option>
@@ -228,7 +226,7 @@
 
 		<!-- Базовый фильтр товаров -->
 			<div class="card-in-category">
-				<div class="card-in-category_img" onclick="renderCard(${category_id},${goods_id})" style="background-image: url('${goods_img}');">
+				<div class="card-in-category_img" style="background-image: url('${goods_img}');">
 					<button class="btn-add-to-basket" onclick="addToBasket(${bsk_goods_id},'${goods_title}')">Добавить в корзину</button>
 				</div>
 				<div class="info-under-img">
@@ -383,8 +381,22 @@
 					</li>
 				</ul>
 			</div>
-			<div>
-				<!-- сформировать запрос к бд и отрисовывать карточки только те у кого есть скидка -->
+			<div class="filter aic">
+				<div class="filter_price aic">
+					<p>Цена</p>
+					<input id="price-from" type="number" placeholder="от" onclick="filterPriceFrom()">
+					<input id="price-to" type="number" placeholder="до">
+				</div>
+				<div class="filter_sort-by aic">
+					<p>Сортировать:</p>
+					<select name="sort-type" id="sort-by">
+						<option value="default">По умолчанию</option>
+						<option value="price-up">По возрастанию цены</option>
+						<option value="price-down">По убыванию цены</option>
+						<option value="popular">По популярности</option>
+						<option value="rating">По рейтингу</option>
+					</select>
+				</div>
 			</div>
         </div>
     </template>
