@@ -26,6 +26,7 @@
     let templateGoodsInBasket = document.getElementById('tmpl_goods-in-basket').innerHTML;
 
     //получем данные шаблона личного кабинета
+    let templatePerson1 = document.getElementById('tmpl-person1').innerHTML;
     let templatePerson = document.getElementById('tmpl-person').innerHTML;
 
     //очищение хранилища для тестов
@@ -59,9 +60,34 @@
         clearPage();
 
         //отрисовываем в main шаблон личного кабинета
+        main.innerHTML += templatePerson1;
+    }
+
+    function registration() {
+        //очищаем страницу
+        clearPage();
+
         main.innerHTML += templatePerson;
     }
 
+    function entrance() {
+        //очищаем страницу
+        clearPage();
+
+        //проверка есть ли этот пользователь в бд - верно ли все ввел
+
+        //если да, то отрисовываем дальше страницу кабинета
+        personalaccount();
+    }
+
+    function personalaccount(){
+        //очищаем страницу
+        clearPage();
+
+        main.innerHTML += document.getElementById('personalaccount').innerHTML;
+        main.style.padding = '40px';
+        
+    }
 
     //функция отрисовки Главной страницы
     function renderHomePage() {

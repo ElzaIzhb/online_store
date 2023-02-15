@@ -361,7 +361,63 @@
 				<input class="form-area" id="login" type="text" name="login" autocomplete="off" required><br>
 				<div class="form-text">Пароль</div><br>
 				<input class="form-area" id="password" type="text" name="password" autocomplete="off" required><br>
-				<button class="form-submit" type="submit" onclick="send()">Sign up</button>
+				<button class="form-submit" type="submit" onclick="send()">Зарегистрироваться</button>
+			</div>
+		</div>
+	</template>
+
+	<template id="tmpl-person1">
+		<div id="tmpl-request">
+			<h1 class="text-request">Личный кабинет</h1>
+			<div class="form">
+				<div class="form-text">Логин</div><br>
+				<input class="form-area" id="login" type="text" name="login" autocomplete="off" required><br>
+				<div class="form-text">Пароль</div><br>
+				<input class="form-area" id="password" type="text" name="password" autocomplete="off" required><br>
+				<button class="form-submit" type="submit" onclick="entrance()">Войти</button>
+			</div>
+			<button class="form-reg" type="submit" onclick="registration()">Зарегистрироваться</button>
+		</div>
+	</template>
+
+	<template id="personalaccount">
+		<h1 class="">Личный кабинет</h1>
+		<div class="flex">
+			<div>
+				<button style="display: block;">Личные данные</button>
+				<button style="display: block;">Заказы</button>
+				<button style="display: block;">Избранное</button>
+				<button style="display: block;">Отзывы</button>
+				<button style="display: block;">Оплата</button>
+				<button style="display: block;">Стать продавцом</button>
+				<button style="display: block;">Удалить аккаунт</button>
+			</div>
+			<div>
+				<div>
+					фото
+				</div>
+				<div>
+					изменить фото
+				</div>
+			</div>
+			<div>
+				<div class="form-text">Имя</div><br>
+				<input class=""  type="text"  autocomplete="off" required>
+				<div class="form-text">Фамилия</div><br>
+				<input class=""  type="text"  autocomplete="off" required>
+				<div class="form-text">Телефон</div><br>
+				<input class=""  type="text"  autocomplete="off" required>
+				<div class="form-text">E-mail</div><br>
+				<input class="" id="e-mail" type="e-mail" name="e-mail" autocomplete="off" required>
+				<div class="form-text">Адрес</div><br>
+				<input class=""  type="text"  autocomplete="off" required>
+			</div>
+			<div class="">
+				<div class="form-text">Логин</div><br>
+				<input class="" id="login" type="text" name="login" autocomplete="off" required><br>
+				<div class="form-text">Пароль</div><br>
+				<input class="" id="password" type="text" name="password" autocomplete="off" required><br>
+				<button class="form-reg" type="submit" >Сменить логин/пароль</button>
 			</div>
 		</div>
 	</template>
