@@ -869,6 +869,8 @@
     
         // отправляем запрос
         requestObj.send(data);
+
+        personalaccount();
     
     }
 
