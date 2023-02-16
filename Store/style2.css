@@ -8,56 +8,42 @@ html,body {
   box-sizing: border-box;
 }
 
-.wrapper {
-  width: 100%;
-  height: 100%;
-}
-
-.chat-box {
- display: flex;
- flex-direction: column;
- height: 100%;
- box-shadow: 0 0 12px 0 black;
- overflow: hidden;
- position: relative;
-}
-
-#chat-box__body {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+#box__body {
+  display: inline-block;
+  height: 90.3%;
   overflow-y: auto;
   overflow-x: hidden;
-  /* background-color: antiquewhite; */
   color: white;
   padding: 4px 10px;
   font-size: 2rem;
+  
 }
 
-#chat-box__body::-webkit-scrollbar {
+#box__body::-webkit-scrollbar {
   width: 10px;
   background-color: transparent;
 }
 
-#chat-box__body::-webkit-scrollbar-thumb {
+#box__body::-webkit-scrollbar-thumb {
   background-color: #c1c1c1;
   border-radius: 10px;
 }
 
-#chat-box__body::-webkit-scrollbar-track {
+#box__body::-webkit-scrollbar-track {
   -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
   background-color: transparent;
   border-radius: 10px;
 }
 
-.chat-box__footer {
+.box__footer {
   display: flex;
   justify-content: space-between;
   background-color: rgb(210, 210, 210);
   backdrop-filter: blur(5px);
   height: fit-content;
-  padding: 10px;
+  padding: 15px;
   width: -webkit-fill-available;
+  height: 60px;
 }
 
 .send-btn {
@@ -72,7 +58,7 @@ html,body {
   scale: 0.8;
 }
 
-textarea {
+.request {
   width: -webkit-fill-available;
   min-height: 37px;
   max-height: 82px;
@@ -82,44 +68,56 @@ textarea {
   border-color: transparent;
 }
 
-textarea:focus, input:focus {
+.request:focus, input:focus {
   outline: none;
 }
 
-textarea::placeholder {
+.request::placeholder {
   color: rgba(255, 255, 255, 0.642);
 }
 
-textarea:focus::placeholder { 
+.request:focus::placeholder { 
   color:transparent; 
 }
 
-textarea::-webkit-scrollbar {
+.request::-webkit-scrollbar {
   width: 2px;
   background-color: transparent;
 }
 
-textarea::-webkit-scrollbar-thumb {
+.request::-webkit-scrollbar-thumb {
   background-color: #c1c1c1;
 }
 
-textarea::-webkit-scrollbar-track {
+.request::-webkit-scrollbar-track {
   -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
   background-color: transparent;
 }
 
-.msg-sent {
-  border: 1px solid #d0d0d0;
-  border-radius: 5px;
-  background-color: beige;
-  margin: 4px 0;
-  padding: 10px;
-  font-size: 17px;
+.slider-card {
   display: inline-block;
-  min-width: 120px;
-  width: fit-content;
-  overflow-wrap: anywhere;
+  vertical-align: top;
+  width: 250px;
+  margin: 45px;
+  margin-right: 35px;
+  color: black;
+  background-color: rgb(240, 240, 240);
+  border-radius: 8px;
 }
+
+.name {
+  font-size: 18px;
+  text-align: left;
+  padding-left: 20px;
+  margin-bottom: 2px;
+}
+
+.message {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  padding:  0px 20px 20px 20px;
+}
+
 
 
 
