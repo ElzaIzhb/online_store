@@ -869,6 +869,8 @@
     
         // отправляем запрос
         requestObj.send(data);
+
+        personalaccount();
     
     }
 
@@ -935,6 +937,61 @@
             }
         }
     }
+
+
+    
+    //Функция для поиска 
+
+        function searchGoods() {
+
+           
+
+            //Находим поиск в html и его значение 
+            let textSearch = document.getElementById('input-search-top').value;
+
+            //Находим контейнер для поиска 
+            let containerSearch = document.getElementById('container-search');
+
+            //Находим шаблон результата поиска
+            let resultSearch = document.getElementById('search-tmpl').innerHTML;
+
+            
+            if (textSearch == '') {
+                //очищаем контейнер
+                containerSearch.innerHTML = '';
+                //убрать класс block если есть 
+                document.getElementById('container-search').classList.toggle('container-search-block');
+
+                return;
+                
+            }else{
+
+                //добавить класс block если нет 
+                document.getElementById('container-search').classList.toggle('container-search-block');
+
+                //очистить контейнер 
+                
+                  containerSearch.innerHTML = '';
+        
+                  //Отправляем GET заспрос на поиск товара 
+                  let json = sendRequestGET("http://localhost:8091/search/search.php?name=" + textSearch);
+
+                  //Раскодируем JSON
+                  let data = JSON.parse(json);
+                  
+  
+                  //рисуем данные на экран
+                  for (let i = 0; i < 5; i++) {
+                      containerSearch.innerHTML += resultSearch.replace('${category_search}', data[i]["category"])
+                                                                  .replace('${photo_search}', data[i]['photo'])
+                                                                  .replace('${name_search}', data[i]['name'])
+                                                                  .replace('${price_search}', data[i]['price']);
+                  }
+          
+                
+                }
+
+        }
 
     function renderDelivery() {
         //очищаем страницу

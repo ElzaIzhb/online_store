@@ -17,8 +17,12 @@
 				<div class="logo-co" onclick="renderHomePage()">ART<br><i>Colibri</i></div>
 				<div class="catalog" onclick="renderCatalog()">Каталог</div>
 				<div id="search" class="search">
-					<input class="input-search" type="text" placeholder="Поиск">
+					<input pattern="[А-Яа-яЁё ]+" id="input-search-top" class="input-search" type="text" oninput="searchGoods()" placeholder="Поиск">
+					<div id="container-search">
+
+					</div>
 				</div>
+				
 				<div><a href="#" class="nav-item" onclick="renderAkc()">Акции</a></div>
 				<div><a href="#" class="nav-item" onclick="renderDelivery()">Доставка</a></div>
 				<div><a href="#" class="nav-item" onclick="renderCont()">Контакты</a></div>
@@ -386,24 +390,10 @@
 			<div>
 				<button style="display: block;">Личные данные</button>
 				<button style="display: block;">Заказы</button>
-				<button style="display: block;">Избранное</button>
-				<button style="display: block;">Отзывы</button>
-				<button style="display: block;">Оплата</button>
-				<button style="display: block;">Стать продавцом</button>
 				<button style="display: block;">Удалить аккаунт</button>
 			</div>
 			<div>
-				<div>
-					фото
-				</div>
-				<div>
-					изменить фото
-				</div>
-			</div>
-			<div>
 				<div class="form-text">Имя</div><br>
-				<input class=""  type="text"  autocomplete="off" required>
-				<div class="form-text">Фамилия</div><br>
 				<input class=""  type="text"  autocomplete="off" required>
 				<div class="form-text">Телефон</div><br>
 				<input class=""  type="text"  autocomplete="off" required>
@@ -558,6 +548,27 @@
 			</div>
         </div>
     </template>
+
+
+	<!-- шаблон результатов поиска  -->
+	<template id="search-tmpl">
+		<div class="box-search" >
+			<div >
+				<img class="photo-search" src="${photo_search}" alt="">
+			</div>
+			<div class="box-search2" >
+				<div class="text1-search">
+					${name_search}
+				</div>
+				<div class="text2-search" >
+					${category_search}
+				</div>
+				<div class="text3-search">
+					${price_search} ₽
+				</div>
+			</div>
+		</div>
+	</template>
 
 
 
