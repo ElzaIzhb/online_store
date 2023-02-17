@@ -172,6 +172,8 @@
 
         //раскодируем данные
         let data2 = JSON.parse(json2);  
+
+        localStorage.setItem('goods_on_page', json2);
         
         //создаем флекс-контейнер ВНУТРИ main, куда будет отрисовываться содержимое (если отрисовывать сразу в main, верстка слетит)
         let flexFrameContainer = document.createElement('div');
@@ -198,7 +200,9 @@
                 document.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
                 document.getElementsByClassName('sale-num')[i].style.display = 'none';
             }
+
         }
+
     }
 
     //функция отрисовки Карточки
@@ -235,13 +239,300 @@
         main.style.padding = '40px';
     }
 
-    //функция фильтрации цены ОТ
-    function filterPriceFrom() {
+    //функция фильтрации цены ОТ и ДО
+    function filterByPrice() {
 
-        //достаем введенное значение
-        let priceFrom = document.getElementById('price-from').innerHTML;
+        //достаем введенное значение ОТ
+        let priceFrom = document.getElementById('price-from').value;
         console.log("Введенная цена ОТ: " + priceFrom);
+
+        //достаем введенное значение ДО
+        let priceTo = document.getElementById('price-to').value;
+        console.log("Введенная цена ДО: " + priceTo);
+
+        //если есть хотя бы одно введенное значение ДО или ПОСЛЕ
+        if (priceFrom > 0 || priceTo > 0) {
+
+            //если значение ДО не введено, 0 или отрицательное, присвоить ему 1
+            if (!priceFrom || priceFrom <= 0) {
+                priceFrom = 1;
+
+            //если значение ПОСЛЕ не введено или отрицательное, присвоить ему 1 000 000 000
+            } else if (!priceTo || priceTo < 0) {
+                priceTo = 1000000000;
+            }
+
+            //достаем из хранилища массив со всей инфой обо всех карточках на данной странице
+            let data2 = JSON.parse(localStorage.getItem('goods_on_page'));
+
+            console.log(data2);
+
+            //находим флекс-контейнер ВНУТРИ main, где отрисовываются карточки
+            let flexFrameContainer = document.querySelector('.frame__flex-wrap');
+
+            flexFrameContainer.innerHTML = '';
+
+            for (let i = 0; i < data2.length; i++) {
+
+                //если цена товара вписывается в выбранный диапазон
+                if ((Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100)))) >= priceFrom && (Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100)))) <= priceTo) {
+                    
+                    //заново отрисовываем этот товар
+                    flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data2[i]['category_id'])
+                                                                    .replace('${goods_id}', i)
+                                                                    .replace('${bsk_goods_id}', data2[i]['id'])
+                                                                    .replace('${goods_img}', data2[i]['photo'])
+                                                                    .replace('${goods_title}', data2[i]['name'])
+                                                                    .replace('${price}', Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100))))
+                                                                    .replace('${crssd}', data2[i]['price'])
+                                                                    .replace('${sale}', (data2[i]['sale']) ? data2[i]['sale'] : '0')
+                                                                    .replace('${category_id}', data2[i]['category_id'])
+                                                                    .replace('${goods_id}', i)
+                                                                    .replace('${goods_title}', data2[i]['name']);
+                    
+                    for (let j = 0; j < flexFrameContainer.children.length; j++) {
+                        //если нет скидки, не показываем ее                              
+                        if (document.getElementsByClassName('sale-num')[j].innerHTML === '-0%') {
+                            document.getElementsByClassName('crossed-out-price')[j].style.display = 'none';
+                            document.getElementsByClassName('sale-num')[j].style.display = 'none';
+                        }
+
+                    }
+                    
+                    
+                }
+                
+            }
+
+            /*
+            //находим флекс-контейнер ВНУТРИ main, где отрисовываются карточки
+            let flexFrameContainer = document.querySelector('.frame__flex-wrap');
+            //console.log(flexFrameContainer);
+            //flexFrameContainer.innerHTML = '';
+            //console.log(flexFrameContainer);
+
+            //собираем в массив все товары из данной категории
+            let allTheseGoods = flexFrameContainer.getElementsByClassName('card-in-category');
+            console.log(allTheseGoods);
+
+            for (let i = 0; i < allTheseGoods.length; i++) {
+                let actualPrice = allTheseGoods[i].querySelector('.actual-price').innerHTML.replace(' р.', '');
+                console.log(i);
+                console.log(actualPrice);
+                data['goods'][i]['price'] = actualPrice;
+                console.log(data);
+            }
+            */
+
+            //let data = flexFrameContainer.getElementsByClassName('actual-price');
+
+            /*
+            //отправляем отдельный запрос для получения данных из сджойненных таблиц goods и categories, выстроенных по category id
+            let json = sendRequestGET("http://localhost:8091/?category_id=" + category_id + "&&price_from=" + priceFrom + "&&price_to=" + priceTo);
+
+            //раскодируем данные
+            let data = JSON.parse(json);  
+            */
+
+            
+            //если по результатам запроса ничего не найдено, вывести соответствующую надпись
+            if (flexFrameContainer.children.length === 0) {
+                console.log(flexFrameContainer.children.length);
+
+                flexFrameContainer.innerHTML = 'По Вашему запросу ничего не найдено';
+                // flexFrameContainer.style.display = "inline";
+                // flexFrameContainer.style.textAlign = "left";
+            }
+            
+            
+            //else {
+
+                //рисуем данные на экран
+                //for (let i = 0; i < data.length; i++) {
+                    // let actualPrice = parseInt(data[i].innerHTML.replace(' р.', ''));
+
+                    // if (!(actualPrice >= priceFrom && actualPrice <= priceTo)) {
+                    //     console.log('Товар ' + i + ' с ' + actualPrice + ' должен быть скрыт');
+                    //     console.log(flexFrameContainer.getElementsByClassName('card-in-category')[i].innerHTML);
+                    //     flexFrameContainer.getElementsByClassName('card-in-category')[i].style.display = 'none';
+                        
+                    // }
+
+                    
+                    /*
+                    //выводим данные шаблона
+                    flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data[i]['category_id'])
+                                                                    .replace('${goods_id}', i)
+                                                                    .replace('${bsk_goods_id}', data[i]['id'])
+                                                                    .replace('${goods_img}', data[i]['photo'])
+                                                                    .replace('${goods_title}', data[i]['name'])
+                                                                    .replace('${price}', Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))))
+                                                                    .replace('${crssd}', data[i]['price'])
+                                                                    .replace('${sale}', (data[i]['sale']) ? data[i]['sale'] : '0')
+                                                                    .replace('${category_id}', data[i]['category_id'])
+                                                                    .replace('${goods_id}', i)
+                                                                    .replace('${goods_title}', data[i]['name']);
+                
+                    if (main.getElementsByClassName('sale-num')[i].innerHTML === '-0%') {
+                        document.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
+                        document.getElementsByClassName('sale-num')[i].style.display = 'none';
+                    }
+                    */
+                //}
+
+                //если активен также фильтр select, применяем его
+                if (document.getElementById('sort-by').value !== 'default') {
+                    sortBySelect();
+                }  
+
+
+        }
+
     }
+
+
+    //функция фильтрации по скидке
+    function filterWithDiscount() {
+
+         //достаем из хранилища массив со скидками, содержащимися в карточках на данной странице
+         //let allPricesInCards = JSON.parse(localStorage.getItem('goods_info'));
+         //console.log(allPricesInCards);
+
+        //находим флекс-контейнер ВНУТРИ main, где отрисовываются карточки
+        let flexFrameContainer = document.querySelector('.frame__flex-wrap');
+
+        //если галочка поставлена
+        if (document.getElementById('checkbox-sale').checked) {
+
+            for (let i = 0; i < flexFrameContainer.children.length; i++) {
+                
+                //если у товара нет скидки
+                if (flexFrameContainer.getElementsByClassName('sale-num')[i].innerHTML === '-0%') {
+                    //скрываем этот товар
+                    //console.log('Товар ' + i + ' с ' + allPricesInCards[i]['sale'] + ' должен быть скрыт');
+                    flexFrameContainer.getElementsByClassName('card-in-category')[i].style.display = 'none'; 
+                }
+            }
+
+        //если галочка снята
+        } else {
+
+            for (let i = 0; i < flexFrameContainer.children.length; i++) {
+                //возвращаем видимость всем товарам
+                flexFrameContainer.getElementsByClassName('card-in-category')[i].style.display = 'block';
+            }
+
+        }
+
+    }
+
+    //функция сортировки по select
+    function sortBySelect() {
+
+        //достаем из хранилища массив с информацией, содержащейся в карточках на данной странице
+        //let allPricesInCards = JSON.parse(localStorage.getItem('goods_info'));
+        //console.log(allPricesInCards);
+
+        //находим флекс-контейнер ВНУТРИ main, где отрисовываются карточки (это РОДИТЕЛЬ)
+        let flexFrameContainer = document.querySelector('.frame__flex-wrap');
+
+        //если выбрана опция "ПО УМОЛЧАНИЮ"
+        if (document.getElementById('sort-by').value === 'default') {
+
+            //нужно вытащить id элемента, но он только в хранилище
+            //достаем из хранилища массив со всей инфой обо всех карточках на данной странице
+            let data = JSON.parse(localStorage.getItem('goods_on_page'));
+            console.log(data);
+            console.log(flexFrameContainer.children);
+
+            //для удобства назначаем товарам атрибут, содержащий их id из хранилища (= из БД)
+            for (let j = 0; j < flexFrameContainer.children.length; j++) {
+                for (let k = 0; k < data.length; k++)
+                if (flexFrameContainer.children[j].querySelector('h4').innerHTML === data[k]['name']) {
+                    console.log(flexFrameContainer.children[j].querySelector('h4').innerHTML + ' = ' + data[k]['name']);
+                    flexFrameContainer.children[j].setAttribute('form-id', data[k]['id']);
+                    console.log(flexFrameContainer.children[j].getAttribute('form-id'));
+                }
+            }
+
+            //возвращаем товарам исходную сортировку (взяв за основу ту же функцию, что и в сортировке по убыванию/возрастанию цены)
+            for (let i = 0; i < flexFrameContainer.children.length; i++) {
+                for (let m = i; m < flexFrameContainer.children.length; m++) {
+                    if (parseInt(flexFrameContainer.children[i].getAttribute('form-id')) > parseInt(flexFrameContainer.children[m].getAttribute('form-id'))) {
+                        replacedNode = flexFrameContainer.replaceChild(flexFrameContainer.children[m], flexFrameContainer.children[i]);
+                        insertAfter(replacedNode, flexFrameContainer.children[i]);
+                    } 
+                }
+            }
+
+            function insertAfter(elem, refElem) {
+                return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
+            } 
+        }
+
+
+        //если выбрана опция "ПО ВОЗРАСТАНИЮ ЦЕНЫ"
+        if (document.getElementById('sort-by').value === 'price-up') {
+
+            console.log(flexFrameContainer.children.length);
+
+        for (let i = 0; i < flexFrameContainer.children.length; i++) {
+            for (let j = i; j < flexFrameContainer.children.length; j++) {
+        
+                //сравниваем между собой цены внутри карточек товаров
+                if (parseInt(flexFrameContainer.children[i].querySelector('.actual-price').innerHTML.replace('/\D/g', '')) > parseInt(flexFrameContainer.children[j].querySelector('.actual-price').innerHTML.replace('/\D/g', ''))) {
+                    //console.log(flexFrameContainer.children[j]);
+                    //console.log(flexFrameContainer.children[i]);
+                    //заменяем бОльший элемент (i) меньшим (j) и записываем вытесненный (i) в переменную
+                    replacedNode = flexFrameContainer.replaceChild(flexFrameContainer.children[j], flexFrameContainer.children[i]);
+                    //console.log(replacedNode);
+                    //console.log(flexFrameContainer);
+                    //console.log(flexFrameContainer.children[i]);
+                    //console.log(flexFrameContainer.children[i].parentNode);
+                    //с помощью доп. функции встраиваем вытесненный элемент перед следующим за ним в дефолтной иерархии айдишников
+                    insertAfter(replacedNode, flexFrameContainer.children[i]);
+                    //flexFrameContainer.insertBefore(replacedNode, flexFrameContainer.children[i].nextSibling);
+                }
+            }
+        }
+
+        //функция для встраивания вытесненного элемента в нужное место
+        function insertAfter(elem, refElem) {
+            return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
+        }
+
+        /*
+            //replaceNode = parentNode.replaceChild(newChild, oldChild);
+            replaceNode = flexFrameContainer.replaceChild(flexFrameContainer.children[1], flexFrameContainer.children[0]);
+            console.log(replaceNode);
+            flexFrameContainer.appendChild(replaceNode);
+        */
+
+        //если выбрана опция "ПО УБЫВАНИЮ ЦЕНЫ"  
+        } else if (document.getElementById('sort-by').value === 'price-down') {
+
+            for (let i = 0; i < flexFrameContainer.children.length; i++) {
+                for (let j = i; j < flexFrameContainer.children.length; j++) {
+                    //сравниваем между собой цены внутри карточек товаров
+                    if (parseInt(flexFrameContainer.children[i].querySelector('.actual-price').innerHTML.replace('/\D/g', '')) < parseInt(flexFrameContainer.children[j].querySelector('.actual-price').innerHTML.replace('/\D/g', ''))) {
+
+                        //заменяем меньший элемент (i) бОльшим (j) и записываем вытесненный (i) в переменную
+                        replacedNode = flexFrameContainer.replaceChild(flexFrameContainer.children[j], flexFrameContainer.children[i]);
+
+                        //с помощью доп. функции встраиваем вытесненный элемент перед следующим за ним в дефолтной иерархии айдишников
+                        insertAfter(replacedNode, flexFrameContainer.children[i]);
+                        //flexFrameContainer.insertBefore(replacedNode, flexFrameContainer.children[i].nextSibling);
+                    }
+                }
+            }
+    
+            //функция для встраивания вытесненного элемента в нужное место
+            function insertAfter(elem, refElem) {
+                return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
+            }
+        }    
+    }
+    
 
     //функция прибавления значения к total_quantity в хранилище
     function plusOne() {
@@ -878,6 +1169,9 @@
 
         let json = sendRequestGET("http://localhost:8091/?sale");
 
+        //делаем копию в хранилище для фильтрации
+        localStorage.setItem('goods_on_page', json);
+
         //раскодируем данные
         let data = JSON.parse(json);
 
@@ -887,6 +1181,9 @@
         flexFrameContainer.classList.add('frame__flex-wrap');
         main.appendChild(flexFrameContainer);
         // main.style.padding = '40px';
+
+        //создаем пустой массив, чтобы собрать данные для фильтрации
+        //let goodsInfoArr = [];
 
         //рисуем данные на экран
         for (let i = 0; i < data.length; i++) {
@@ -903,11 +1200,22 @@
                                                             .replace('${goods_id}', i)
                                                             .replace('${goods_title}', data[i]['name']);
         
-            if (main.getElementsByClassName('sale-num')[i].innerHTML === '-0%') {
-                document.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
-                document.getElementsByClassName('sale-num')[i].style.display = 'none';
-            }
+            //записываем нужные для фильтрации данные по всем отрисованным карточкам
+            // let goods = {
+            //     'price': Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))),
+            //     'sale': (data[i]['sale']) ? data[i]['sale'] : '0'
+            //     }
+            
+            //помещаем их в созданный выше массив
+            //goodsInfoArr.push(goods);
+            
         }
+
+        //кодируем массив для фильтрации в json и кладем в local storage
+        // let goodsInfo = JSON.stringify(goodsInfoArr);
+        // localStorage.setItem('goods_info', goodsInfo);
+        // console.log(localStorage.getItem('goods_info'));
+        // console.log(goodsInfoArr);
     }
 
     function renderDelivery() {

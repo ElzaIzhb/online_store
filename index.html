@@ -201,21 +201,22 @@
 		<div class="filter aic">
 			<div class="filter_price aic">
 				<p>Цена</p>
-				<input id="price-from" type="number" placeholder="от" onclick="filterPriceFrom()">
+				<input id="price-from" type="number" placeholder="от">
 				<input id="price-to" type="number" placeholder="до">
+				<button class="price-btn" onclick="filterByPrice()">Найти</button>
 			</div>
 			<div class="filter_with-discount aic">
 				<p>Товары со скидкой</p>
-				<input type="checkbox">
+				<input id="checkbox-sale" type="checkbox" onclick="filterWithDiscount()">
 			</div>
 			<div class="filter_sort-by aic">
 				<p>Сортировать:</p>
-				<select name="sort-type" id="sort-by">
+				<select name="sort-type" id="sort-by" onchange="sortBySelect()">
 					<option value="default">По умолчанию</option>
 					<option value="price-up">По возрастанию цены</option>
 					<option value="price-down">По убыванию цены</option>
-					<option value="popular">По популярности</option>
-					<option value="rating">По рейтингу</option>
+					<!-- <option value="popular">По популярности</option> -->
+					<!-- <option value="rating">По рейтингу</option> -->
 				</select>
 			</div>
 		</div>
@@ -384,17 +385,18 @@
 			<div class="filter aic">
 				<div class="filter_price aic">
 					<p>Цена</p>
-					<input id="price-from" type="number" placeholder="от" onclick="filterPriceFrom()">
+					<input id="price-from" type="number" placeholder="от">
 					<input id="price-to" type="number" placeholder="до">
+					<button class="price-btn" onclick="filterByPrice()">Найти</button>
 				</div>
 				<div class="filter_sort-by aic">
 					<p>Сортировать:</p>
-					<select name="sort-type" id="sort-by">
+					<select name="sort-type" id="sort-by" onclick="sortBySelect()">
 						<option value="default">По умолчанию</option>
 						<option value="price-up">По возрастанию цены</option>
 						<option value="price-down">По убыванию цены</option>
-						<option value="popular">По популярности</option>
-						<option value="rating">По рейтингу</option>
+						<!-- <option value="popular">По популярности</option> -->
+						<!-- <option value="rating">По рейтингу</option> -->
 					</select>
 				</div>
 			</div>
