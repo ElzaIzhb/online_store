@@ -26,6 +26,7 @@
     let templateGoodsInBasket = document.getElementById('tmpl_goods-in-basket').innerHTML;
 
     //получем данные шаблона личного кабинета
+    let templatePerson1 = document.getElementById('tmpl-person1').innerHTML;
     let templatePerson = document.getElementById('tmpl-person').innerHTML;
 
     //очищение хранилища для тестов
@@ -59,9 +60,34 @@
         clearPage();
 
         //отрисовываем в main шаблон личного кабинета
+        main.innerHTML += templatePerson1;
+    }
+
+    function registration() {
+        //очищаем страницу
+        clearPage();
+
         main.innerHTML += templatePerson;
     }
 
+    function entrance() {
+        //очищаем страницу
+        clearPage();
+
+        //проверка есть ли этот пользователь в бд - верно ли все ввел
+
+        //если да, то отрисовываем дальше страницу кабинета
+        personalaccount();
+    }
+
+    function personalaccount(){
+        //очищаем страницу
+        clearPage();
+
+        main.innerHTML += document.getElementById('personalaccount').innerHTML;
+        main.style.padding = '40px';
+        
+    }
 
     //функция отрисовки Главной страницы
     function renderHomePage() {
@@ -1134,6 +1160,8 @@
     
         // отправляем запрос
         requestObj.send(data);
+
+        personalaccount();
     
     }
 
@@ -1217,6 +1245,61 @@
         // console.log(localStorage.getItem('goods_info'));
         // console.log(goodsInfoArr);
     }
+
+
+    
+    //Функция для поиска 
+
+        function searchGoods() {
+
+           
+
+            //Находим поиск в html и его значение 
+            let textSearch = document.getElementById('input-search-top').value;
+
+            //Находим контейнер для поиска 
+            let containerSearch = document.getElementById('container-search');
+
+            //Находим шаблон результата поиска
+            let resultSearch = document.getElementById('search-tmpl').innerHTML;
+
+            
+            if (textSearch == '') {
+                //очищаем контейнер
+                containerSearch.innerHTML = '';
+                //убрать класс block если есть 
+                document.getElementById('container-search').classList.toggle('container-search-block');
+
+                return;
+                
+            }else{
+
+                //добавить класс block если нет 
+                document.getElementById('container-search').classList.toggle('container-search-block');
+
+                //очистить контейнер 
+                
+                  containerSearch.innerHTML = '';
+        
+                  //Отправляем GET заспрос на поиск товара 
+                  let json = sendRequestGET("http://localhost:8091/search/search.php?name=" + textSearch);
+
+                  //Раскодируем JSON
+                  let data = JSON.parse(json);
+                  
+  
+                  //рисуем данные на экран
+                  for (let i = 0; i < 5; i++) {
+                      containerSearch.innerHTML += resultSearch.replace('${category_search}', data[i]["category"])
+                                                                  .replace('${photo_search}', data[i]['photo'])
+                                                                  .replace('${name_search}', data[i]['name'])
+                                                                  .replace('${price_search}', data[i]['price']);
+                  }
+          
+                
+                }
+
+        }
 
     function renderDelivery() {
         //очищаем страницу

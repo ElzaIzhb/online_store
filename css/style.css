@@ -112,6 +112,53 @@ input {
     font-size: 9px;
 }
 
+#container-search{
+    position: absolute;
+    width: 350px;
+    height: auto;
+    top: 52px;
+    left: -2px;
+    border-radius: 13px;
+    background-color: white;
+    border: 2px solid #A9A9A9;
+    display: none;
+}
+
+
+.container-search-block {
+    display: block !important;
+}
+
+.box-search {
+    display: flex;
+}
+
+.box-search {
+   padding: 10px;
+}
+
+.photo-search {
+    width: 50px;
+    height: 50px;
+    border-radius: 13px;
+    margin-right: 10px;
+}
+
+.text1-search {
+    font-size: 18px;
+}
+
+.text2-search {
+    color: #8B8B8B;
+    font-size: 12px;
+    padding:3px 3px 3px 0;
+}
+
+.text3-search {
+    color: #FF32A1;
+    font-size: 16px;
+}
+
 .input-search {
     padding-left: 7px;
     outline: none;
@@ -965,7 +1012,7 @@ input:focus::-webkit-input-placeholder {
 
 /* форма регистрации */
 
-.text-request {
+    .text-request {
     font-family: Arial;
       color: #3c393c;
       border-bottom: 3px solid #F188F2;
@@ -980,7 +1027,7 @@ input:focus::-webkit-input-placeholder {
       width: 50%;
       position: relative;
       left: 25%;
-      margin-top: 2%; 
+      margin-top: 2%;
     }
     
     .form-area {
@@ -1006,8 +1053,9 @@ input:focus::-webkit-input-placeholder {
     
     .form-submit {
       position: relative;
-      left: 40.5%;
-      width: 9vw;
+      left: 50%;
+      transform: translate(-50%, 0);
+      display: inline-block;
       height: 5vh;
       background-color: #F188F2;
       color: #3c393c;
@@ -1020,5 +1068,21 @@ input:focus::-webkit-input-placeholder {
     
     .form-submit:hover {
       background-color: #d506d8;
+    }
+
+    .form-reg {
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, 0);
+        height: 5vh;
+        font-size: 16px;
+        border: none;
+        transition: 0.3s;
+        cursor: pointer;
+        background: none;
+	    color: inherit;
+    }
+    .form-reg:hover {
+        text-decoration: underline;
     }
     
