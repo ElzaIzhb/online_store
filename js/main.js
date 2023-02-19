@@ -29,6 +29,12 @@
     let templatePerson1 = document.getElementById('tmpl-person1').innerHTML;
     let templatePerson = document.getElementById('tmpl-person').innerHTML;
 
+    //получем данные шаблона отзывов
+    let templateReviews = document.getElementById('tmpl_reviews').innerHTML;
+
+    //получем данные шаблона карточки отзывов
+    let templateCardReview = document.getElementById('tmpl_card_review').innerHTML;
+
     //очищение хранилища для тестов
     //localStorage.clear();
 
@@ -1013,3 +1019,70 @@
 
         main.innerHTML += document.getElementById('reviews').innerHTML;
     }
+
+
+
+//script для отзывов
+
+
+
+
+let container_review = '';
+
+function sendReview() {
+
+    let review = document.getElementById('msg').value;
+
+    if (review !== '') {
+        let tmpl_card_review = document.getElementById('tmpl_card_review');
+        
+        container_review+= tmpl_card_review.innerHTML.replace('${message}', review)
+                                       .replace('${name}', 'Гость');
+            
+        document.getElementById('box__body').innerHTML = container_review;    
+    
+        let name = document.getElementById('name');
+    
+        let username = name.innerText;
+    
+        let data = "username=" + encodeURIComponent(username) + "&review=" + encodeURIComponent(review);
+        
+        // создаём объкт который умеет отправлять запросы
+        let requestObj = new XMLHttpRequest();
+        
+        // собираем ссылку для запроса
+        let link = 'http://localhost:8091/?review';
+            
+        //конфигурируем объект
+        requestObj.open('POST', link, false);
+        
+        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+        // отправляем запрос
+        requestObj.send(data);
+                
+        document.getElementById('msg').value = '';
+    }
+
+}
+
+function renderReviews() {
+
+    //очищаем страницу
+    clearPage();
+
+    main.innerHTML += document.getElementById('tmpl_reviews').innerHTML;
+
+    let json = sendRequestGET("http://localhost:8091/?reviewGet");
+
+    let data = JSON.parse(json); 
+
+        for (let i = 0; i < data.length; i++) {
+
+        container_review += tmpl_card_review.innerHTML.replace('${message}', data[i]['review'])
+                                                .replace('${name}', data[i]['username']);
+                
+        document.getElementById('box__body').innerHTML = container_review;
+    }
+
+}
