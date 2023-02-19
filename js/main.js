@@ -67,6 +67,7 @@
 
         //отрисовываем в main шаблон личного кабинета
         main.innerHTML += templatePerson1;
+        
     }
 
     function registration() {
@@ -1322,21 +1323,10 @@
         main.innerHTML += document.getElementById('contacts').innerHTML;
     }
 
-    function renderReviews() {
-        //очищаем страницу
-        clearPage();
-
-        main.innerHTML += document.getElementById('reviews').innerHTML;
-    }
-
 
 
 //script для отзывов
 
-
-
-
-let container_review = '';
 
 function sendReview() {
 
@@ -1375,6 +1365,9 @@ function sendReview() {
 
 }
 
+
+let container_review = '';
+
 function renderReviews() {
 
     //очищаем страницу
@@ -1386,12 +1379,15 @@ function renderReviews() {
 
     let data = JSON.parse(json); 
 
-        for (let i = 0; i < data.length; i++) {
+    container_review = '';
 
-        container_review += tmpl_card_review.innerHTML.replace('${message}', data[i]['review'])
-                                                .replace('${name}', data[i]['username']);
-                
-        document.getElementById('box__body').innerHTML = container_review;
+    for (let i = 0; i < data.length; i++) {
+
+    container_review += tmpl_card_review.innerHTML.replace('${message}', data[i]['review'])
+                                            .replace('${name}', data[i]['username']);
+            
+    document.getElementById('box__body').innerHTML = container_review;
     }
 
 }
+
