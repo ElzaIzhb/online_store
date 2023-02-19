@@ -173,6 +173,39 @@ if(isset($_POST['name']) && isset($_POST['e-mail']) && isset($_POST['login']) &&
     
 }
 
+
+/*
+if (isset($_GET['category_id']) && isset($_GET['price_from']) && isset($_GET['price_to'])) {
+    $categoryId = $_GET['category_id'];
+    $priceFrom = $_GET['price_from'];
+    $priceTo = $_GET['price_to'];
+    //достаём данные из бд
+    $sql = "SELECT * FROM goods AS g
+                LEFT JOIN categories AS c
+                ON g.category = c.category
+                    WHERE (category_id = $categoryId AND price - (price * (sale/ 100)) BETWEEN $priceFrom AND $priceTo)
+                    OR (category_id = $categoryId AND sale IS NULL AND price BETWEEN $priceFrom AND $priceTo)";
+
+    $result = $pdo->query($sql);
+    
+    //создаём пустой массив
+    $array = array();
+    
+    //с помощью цикла перебираем каждую строчку массива с данными из бд
+    while($row = $result->fetch()){
+    
+        //записываем строчки в пустой массив
+        array_push($array, $row);
+    }
+    
+    //кодируем данные в json
+    $data = json_encode($array, JSON_UNESCAPED_UNICODE);
+    
+    print_r($data);
+    
+}
+*/
+
 if (isset($_GET['review'])) {
 
     $json = file_get_contents('php://input');

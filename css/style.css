@@ -121,6 +121,7 @@ input {
     border-radius: 13px;
     background-color: white;
     border: 2px solid #A9A9A9;
+    z-index: 5;
     display: none;
 }
 
@@ -131,6 +132,7 @@ input {
 
 .box-search {
     display: flex;
+    cursor: pointer;
 }
 
 .box-search {
@@ -646,6 +648,22 @@ iframe {
     gap: 15px;
 }
 
+.price-btn {
+    color: white;
+    border: 2px solid #F188F2;
+    font-weight: 600;
+    border-radius: 7px;
+    padding: 5px 0;
+    background-color: #F188F2;
+    width: 80px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.price-btn:hover {
+    background-color: #B566B6;
+}
+
 .filter_with-discount {
     display: flex;
     position: relative;
@@ -695,6 +713,7 @@ input[type="number"]:focus {
 select {
     border-radius: 6px;
     padding: 5px;
+    cursor: pointer;
 }
 
 /* Карточка ТОВАРА ВНУТРИ КАТЕГОРИИ (на странице с названием категории)*/
@@ -709,7 +728,6 @@ select {
     border-radius: 18px;
     width: 318px;
     height: 276px;
-    cursor: pointer;
 }
 
 .card-in-category_img:hover .btn-add-to-basket {

@@ -19,6 +19,33 @@ $opt = [
 //создание объекта для подключения к БД
 $pdo = new PDO($dsn, $user, $pass, $opt);
 
+//получение данных о всех goods
+if (isset($_GET['goods_in_basket'])) {
+
+   //достаём данные из бд
+   $sql = "SELECT * FROM basket;";
+
+   $result = $pdo->query($sql);
+
+   //создаём пустой массив
+   $arrGoods = [];
+
+   //с помощью цикла перебираем каждую строчку массива с данными из бд
+   while($row = $result->fetch()){
+
+       //записываем строчки в пустой массив
+       $arrGoods[] = $row;
+   }
+
+   //print_r($arrGoods);
+
+   //кодируем в виде джейсона все необходимые данные по товару
+   $json = json_encode($arrGoods, JSON_UNESCAPED_UNICODE);
+
+   print_r($json);
+
+}
+
 //получение данных о выбранном товаре из таблицы goods
 if (isset($_GET['id'])) {
      $id =  $_GET['id'];
@@ -41,9 +68,9 @@ if (isset($_GET['id'])) {
     //print_r($arrGoods);
 
     //кодируем в виде джейсона все необходимые данные по товару
-    $chosenGoods = json_encode($arrGoods, JSON_UNESCAPED_UNICODE);
+    $json = json_encode($arrGoods, JSON_UNESCAPED_UNICODE);
 
-    print_r($chosenGoods);
+    print_r($json);
 
 
         
@@ -182,4 +209,4 @@ if (isset($_GET['id'])) {
     */ //!!!!!!!!!!!!!!!!!!!!!!!!! ОКОНЧАНИЕ КОДА, КОТОРЫЙ ПРИГОДИТСЯ ПОЗЖЕ
         
 
-} //echo 'Никаких пост-параметров не передано';
+} 

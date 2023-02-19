@@ -37,7 +37,10 @@ if (isset($_GET['decription'])) {
 
 
 //считываем данные достаем из БД
-$sqlText = 'SELECT * FROM `goods` WHERE id > 0 '.$filter;
+$sqlText = 'SELECT * FROM goods AS g
+                LEFT JOIN categories AS c
+                ON g.category = c.category
+                WHERE id > 0 '.$filter;
 $result = $pdo->query($sqlText);
 //отрезаем по одной строчке из результата и показываем в виде массива
 $goods = [];
