@@ -22,7 +22,7 @@ $pdo = new PDO($dsn, $user, $pass, $opt);
 if (isset($_POST['id'])) {
      $id =  $_POST['id'];
     //достаём данные из бд
-    $sql = "SELECT id, name, price, photo, sale FROM goods
+    $sql = "SELECT id, name, price, photo, sale, quantity FROM goods
                 WHERE id = $id;";
 
     $result = $pdo->query($sql);
@@ -47,8 +47,13 @@ if (isset($_POST['id'])) {
 
     $arrValues = array_values($arrGoods[0]);
 
+    for ($i = 0; $i < count($arrValues); $i++) {
+        if ($arrValues[$i]['sale'] == null) {
+            $arrValues[$i]['sale'] = 0;
+        }
+    }
     //ВРЕМЕННО исключаем 1 последний элемент - sale ?????
-    array_pop($arrValues);
+    //array_pop($arrValues);
 
     print_r($arrValues);
 
@@ -79,8 +84,8 @@ if (isset($_POST['id'])) {
         $fields[] = $row['Field'];
     }
     //ВРЕМЕННО исключаем 2 последних элемента - sale и quantity ?????
-    array_pop($fields);
-    array_pop($fields);
+    //array_pop($fields);
+    //array_pop($fields);
 
     print_r($fields);
 
