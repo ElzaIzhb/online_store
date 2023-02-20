@@ -85,6 +85,8 @@
 
         //если да, то отрисовываем дальше страницу кабинета
         personalaccount();
+
+        document.getElementById('lk').classList.add('butpers1');
     }
 
     function personalaccount(){
@@ -93,7 +95,25 @@
 
         main.innerHTML += document.getElementById('personalaccount').innerHTML;
         main.style.padding = '40px';
-        
+        document.getElementById('lk').classList.add('butpers1');
+    }
+
+    function renderOrders() {
+        //очищаем страницу
+        clearPage();
+
+        main.innerHTML += document.getElementById('personalorders').innerHTML;
+        main.style.padding = '40px';
+        document.getElementById('zak').classList.add('butpers1');
+    }
+
+    function deleteAccount(){
+        alert( "Вы уверены,что хотите удалить аккаунт?" );
+        // if () {
+
+        // }else {
+
+        // }
     }
 
     //функция отрисовки Главной страницы
