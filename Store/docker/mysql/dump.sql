@@ -92,3 +92,16 @@ INSERT INTO `goods` (`id`, `name`, `description`, `category`, `price`, `consist`
 (27,	'Фигура фольга \"Кошка голова,black\"',	'Размер: 48 см',	'3D Сферы',	500,	'',	'https://shariki.ru/files/products/golova-chernaya.602x655.jpg?8e396e8de770b7fc1425f0f6d401d531',	2,	NULL);
 
 -- 2023-02-18 08:16:18
+
+
+DROP TABLE IF EXISTS `reviews`;
+CREATE TABLE `reviews` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `review` varchar(600) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO `reviews` (`id`, `username`, `review`) VALUES
+(1,	'Гость',	'Лучшие шары ever!!!!!!!\n'),
+(2,	'Гость',	'Всё круто )');

@@ -1,29 +1,55 @@
-let container = '';
+let container_request = '';
 
 function sendRequest() {
 
-    let msg = document.getElementById('msg').value;
+    let request = document.getElementById('msg').value;
 
-    let array = Array.from(msg);
-
-    console.log(array);
-
-    let tmpl_card = document.getElementById('tmpl_card');
+    if (request !== '') {
+        let tmpl_card = document.getElementById('tmpl_card');
         
-    container+= tmpl_card.innerHTML.replace('${message}', msg);
-        
-    console.log(container);
-        
-    document.getElementById('box__body').innerHTML = container;    
+        container_request+= tmpl_card.innerHTML.replace('${message}', request)
+                                       .replace('${name}', 'Гость');
             
-    document.getElementById('msg').value = '';
+        document.getElementById('box__body').innerHTML = container_request;    
+    
+        let name = document.getElementById('name');
+    
+        let username = name.innerText;
+    
+        let data = "username=" + encodeURIComponent(username) + "&request=" + encodeURIComponent(request);
+        
+        // создаём объкт который умеет отправлять запросы
+        let requestObj = new XMLHttpRequest();
+        
+        // собираем ссылку для запроса
+        let link = 'http://localhost:8091/?request';
+            
+        //конфигурируем объект
+        requestObj.open('POST', link, false);
+        
+        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+        // отправляем запрос
+        requestObj.send(data);
+                
+        document.getElementById('msg').value = '';
+    }
 
 }
 
+function renderRequests() {
 
+    let json = sendRequestGET("http://localhost:8091/?requestGet");
 
+    let data = JSON.parse(json); 
 
+    console.log(data);
 
+    container_request+= tmpl_card.innerHTML.replace('${message}', data['request'])
+                                       .replace('${name}', data['username']);
+            
+    document.getElementById('box__body').innerHTML = container_request;
+}
 
 
 

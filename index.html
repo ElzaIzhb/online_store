@@ -589,8 +589,32 @@
 	</template>
 
 
+	<template id="tmpl_reviews">
+		<div class="main_reviews">
 
+			<div id="box__body">
+				
+			</div>
+		
+			<div class="box__footer">
+				<textarea class="review" required class="send" id="msg" type="text" placeholder="Ваш отзыв" required></textarea>
+		
+				<div class="send-btn" onclick="sendReview()">&#10148;</div>
+			</div>
+		</div>
+	</template>
+	
 
+	<template id="tmpl_card_review">
+		<div class="slider-card">
+			<div id="name">
+				${name}
+			</div>
+			<div id="message">
+				${message}
+			</div>
+		</div>
+	</template>
 
 
 	<footer class="flex jcspa">

@@ -1,12 +1,11 @@
-html,body {
+.main_requests {
   margin: 0;
-  height: 100%;
-  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-* {
-  box-sizing: border-box;
-}
 
 #box__body {
   display: inline-block;
@@ -16,7 +15,7 @@ html,body {
   color: white;
   padding: 4px 10px;
   font-size: 2rem;
-  
+  flex-grow: 1;
 }
 
 #box__body::-webkit-scrollbar {
@@ -44,6 +43,7 @@ html,body {
   padding: 15px;
   width: -webkit-fill-available;
   height: 60px;
+  flex-shrink: 0;
 }
 
 .send-btn {
@@ -105,14 +105,14 @@ html,body {
   border-radius: 8px;
 }
 
-.name {
+#name {
   font-size: 18px;
   text-align: left;
   padding-left: 20px;
   margin-bottom: 2px;
 }
 
-.message {
+#message {
   font-size: 14px;
   overflow-wrap: anywhere;
   padding:  0px 20px 20px 20px;
