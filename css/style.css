@@ -77,6 +77,10 @@ header {
     align-items: baseline;
 }
 
+.aife {
+    align-items: flex-end;
+}
+
 .frame__flex-wrap {
     display: flex;
     flex-wrap: wrap;
@@ -861,6 +865,57 @@ select {
 .goods-description p {
     font-size: 20px;
     margin-bottom: 15px;
+}
+
+/* Рейтинг */
+.rating {
+    font-size: 32px;
+    line-height: 0.75;
+}
+
+.rating-body {
+    position: relative;
+    color: #ad9c4866;
+    margin-left: 13px;
+}
+
+.rating-active {
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.rating-active::before {
+    position: absolute;
+    content: '★★★★★';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    color: #ffd300;
+}
+
+.rating-body::before {
+    content: '★★★★★';
+    display: block;
+}
+
+.rating-items {
+    position: absolute;
+    width: 69%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.rating-item {
+    flex: 0 0 20%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }
 
 /* Корзина */

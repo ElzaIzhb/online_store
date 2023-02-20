@@ -241,6 +241,22 @@
 						<div class="sale-num">-${sale}%</div>
 					</div>
 					<h4 onclick="renderCard(${category_id},${goods_id})">${goods_title}</h4>
+					<!-- рейтинг из 5 звезд -->
+					<div class="rating rating_set flex aife">
+						<div class="rating-body">
+							<!-- полоса, которая заполняется в % соотношении в зависимости от оценки -->
+							<div class="rating-active"></div>
+							<div class="rating-items flex">
+								<input type="radio" class="rating-item" value="1" name="rating">
+								<input type="radio" class="rating-item" value="2" name="rating">
+								<input type="radio" class="rating-item" value="3" name="rating">
+								<input type="radio" class="rating-item" value="4" name="rating">
+								<input type="radio" class="rating-item" value="5" name="rating">
+							</div>
+						</div>
+						<div class="rating-value hidden">0</div>
+					</div>
+					
 				</div>
 			</div>
 	</template>

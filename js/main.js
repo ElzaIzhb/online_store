@@ -233,6 +233,98 @@
 
         }
 
+        //РЕЙТИНГ
+        const ratings = document.querySelectorAll('.rating');
+        //console.log(document.querySelectorAll('.rating'));
+        
+        if (ratings.length > 0) {
+            showRatings();
+        }
+        
+        //основная функция по рейтингам
+        function showRatings() {
+            let ratingActive;
+            let ratingValue;
+            //бегаем по всем рейтингам на странице
+            for (let i = 0; i < ratings.length; i++) {
+                const rating = ratings[i];
+                //console.log(rating);
+        
+                //запускаем функцию для каждого из рейтингов
+                showRating(rating);
+            }
+            
+            //функция для конкретного рейтинга
+            function showRating(rating) {
+                initRatingInfo(rating);
+                setRatingActiveWidth();
+
+                if (rating.classList.contains('rating_set')) {
+                    setRating(rating);
+                }
+            }
+            
+            //функция присваивания рейтингу переменных с данными самого рейтинга (из активной полосы и из value)
+            function initRatingInfo(rating) {
+                ratingActive = rating.querySelector('.rating-active');
+                ratingValue = rating.querySelector('.rating-value');
+                //console.log(ratingActive);
+                //console.log(ratingValue);
+        
+            }
+        
+            //функция изменения ширины активных звезд
+            function setRatingActiveWidth(i = ratingValue.innerHTML) {
+                const ratingActiveWidth = i / 0.05;
+                ratingActive.style.width = `${ratingActiveWidth}%`;
+            }
+
+            //функция, дающая возможность указывать оценку
+            function setRating(rating) {
+
+                //собираем все рейтинги на странице
+                const ratingItems = rating.querySelectorAll('.rating-item');
+                console.log(ratingItems);
+
+                //собираем все звездные рейтинги
+                for (let i = 0; i < ratingItems.length; i++) {
+
+                    //получаем каждый из рейтингов на странице
+                    const ratingItem = ratingItems[i];
+                    console.log(ratingItem);
+
+                    //событие при хождении мыши по звездам
+                    ratingItem.addEventListener('mouseenter', function (e) {
+                        //обновление переменных
+                        initRatingInfo(rating);
+                        //обновление активной полосы путем передачи в нее value того объекта, на который наведена мышь
+                        setRatingActiveWidth(ratingItem.value);
+                    });
+
+                    //сообытие при уходе мыши со звезд
+                    ratingItem.addEventListener('mouseleave', function (e) {
+                        //активная полоса пеерсчитывается и остается на последнем установленном значении, которое берется из цифры, указанной в value
+                        setRatingActiveWidth();
+                    });
+                    //сообытие при клике на звезду
+                    ratingItem.addEventListener('click', function (e) {
+                        //обновление переменных
+                        initRatingInfo(rating);
+
+                        if (rating.dataset.ajax) {
+                            //отправить на сервер
+
+                        //просто отобразить на фронте указанную оценку
+                        } else {
+                            ratingValue.innerHTML = i + 1;
+                            setRatingActiveWidth();
+                        }
+                    });
+                }
+            }
+        
+        }
+
     }
 
     //функция отрисовки Карточки
@@ -1322,3 +1414,6 @@
 
         main.innerHTML += document.getElementById('reviews').innerHTML;
     }
+
+
+
