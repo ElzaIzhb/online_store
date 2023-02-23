@@ -78,15 +78,55 @@
     }
 
     function entrance() {
-        //очищаем страницу
-        clearPage();
 
-        //проверка есть ли этот пользователь в бд - верно ли все ввел
+        let login = document.getElementById('login_entrance').value;
+        let password = document.getElementById('password_entrance').value;
 
-        //если да, то отрисовываем дальше страницу кабинета
-        personalaccount();
+        if (login !='' || password !='') {
 
-        document.getElementById('lk').classList.add('butpers1');
+            let data = "login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password);
+    
+                // создаём объкт который умеет отправлять запросы
+                let requestObj = new XMLHttpRequest();
+            
+                // собираем ссылку для запроса
+                let link = 'http://localhost:8091/?logIn';
+                
+                //конфигурируем объект
+                requestObj.open('POST', link, false);
+            
+                requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            
+                // отправляем запрос
+                requestObj.send(data);
+
+
+            let json = sendRequestGET("http://localhost:8091/?logIn");
+
+            //раскодируем данные
+            let date = JSON.parse(json);  
+
+            console.log(date);
+
+            if (date['success'] == false) {
+
+                alert('Такого пользователя нет');
+            }
+
+
+            if (date['success'] == true) {
+
+            //очищаем страницу
+            clearPage();
+
+            //проверка есть ли этот пользователь в бд - верно ли все ввел
+
+            //если да, то отрисовываем дальше страницу кабинета
+            personalaccount();
+
+            document.getElementById('lk').classList.add('butpers1');
+            }
+          }
     }
 
     function personalaccount(){
@@ -1250,24 +1290,52 @@
         let e_mail = document.getElementById('e-mail').value;
         let login = document.getElementById('login').value;
         let password = document.getElementById('password').value;
-    
-        let data = "name=" + encodeURIComponent(name) + "&e-mail=" + encodeURIComponent(e_mail) + "&login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password);
-    
-        // создаём объкт который умеет отправлять запросы
-        let requestObj = new XMLHttpRequest();
-    
-        // собираем ссылку для запроса
-        let link = 'http://localhost:8091';
-        
-        //конфигурируем объект
-        requestObj.open('POST', link, false);
-    
-        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    
-        // отправляем запрос
-        requestObj.send(data);
+        let password2 = document.getElementById('password2').value;
 
-        personalaccount();
+        if (password != password2) {
+            alert('Пароли не совпадают');
+            document.getElementById('password').value = '';
+            document.getElementById('password2').value = '';
+        } else {
+
+            if (name !='' || e_mail !='' || login !='' || password !='') {
+
+                let data = "name=" + name + "&e-mail=" + e_mail + "&login=" + login + "&password=" + password;
+    
+                // создаём объкт который умеет отправлять запросы
+                let requestObj = new XMLHttpRequest();
+            
+                // собираем ссылку для запроса
+                let link = 'http://localhost:8091/?createUser';
+                
+                //конфигурируем объект
+                requestObj.open('POST', link, false);
+            
+                requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            
+                // отправляем запрос
+                requestObj.send(data);
+
+            //     let json = sendRequestGET("http://localhost:8091/?createUser");
+
+            //     //раскодируем данные
+            //     let date = JSON.parse(json);  
+
+            //     if (date == "Юзер уже есть") {
+
+            //         alert('Уже есть пользователь с данной почтой');
+
+            //     } 
+
+            //     if (date == "Юзер записан") {
+
+            //         personalaccount();
+
+            //     } 
+                
+            }
+            
+        }
     
     }
 
