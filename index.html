@@ -397,7 +397,9 @@
 				<input class="form-area" id="login" type="text" name="login" autocomplete="off" required><br>
 				<div class="form-text">Пароль</div><br>
 				<input class="form-area" id="password" type="text" name="password" autocomplete="off" required><br>
-				<button class="form-submit" type="submit" onclick="send()">Зарегистрироваться</button>
+				<div class="form-text">Подтвердите пароль</div><br>
+				<input class="form-area" id="password2" type="text" name="password2" autocomplete="off" required><br>
+				<button class="form-submit" type="submit" onclick="send(); getSend();">Зарегистрироваться</button>
 			</div>
 		</div>
 	</template>
@@ -407,9 +409,9 @@
 			<h1 class="text-request">Личный кабинет</h1>
 			<div class="form">
 				<div class="form-text">Логин</div><br>
-				<input class="form-area" id="login" type="text" name="login" autocomplete="off" required><br>
+				<input class="form-area" id="login_entrance" type="text" name="login" autocomplete="off" required><br>
 				<div class="form-text">Пароль</div><br>
-				<input class="form-area" id="password" type="text" name="password" autocomplete="off" required><br>
+				<input class="form-area" id="password_entrance" type="text" name="password" autocomplete="off" required><br>
 				<button class="form-submit" type="submit" onclick="entrance()">Войти</button>
 			</div>
 			<button class="form-reg" type="submit" onclick="registration()">Зарегистрироваться</button>

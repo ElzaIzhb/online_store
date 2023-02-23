@@ -49,5 +49,5 @@ while ($row = $result->fetch()) {
     $goods[] = $row;
 }
 
-//закодируем полученные данные в JSON
-echo json_encode($goods, JSON_UNESCAPED_UNICODE);
+// //закодируем полученные данные в JSON
+// echo json_encode($goods, JSON_UNESCAPED_UNICODE);
