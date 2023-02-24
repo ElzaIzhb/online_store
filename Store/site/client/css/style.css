@@ -255,13 +255,9 @@ input:focus::-webkit-input-placeholder {
     text-align: center;
 }
 
-.second-nav-line {
+.category-items {
     padding: 25px 0;
     font-weight: 700;
-    gap: 20px;
-}
-
-.categories {
     gap: 20px;
 }
 
@@ -1433,7 +1429,7 @@ input:focus::-webkit-input-placeholder {
     .slider {
         padding: 0;
     }
-    .second-nav-line {
+    .categories {
         gap: 0;
     }
     .discount-wrap {
