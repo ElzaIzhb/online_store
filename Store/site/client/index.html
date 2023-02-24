@@ -6,11 +6,11 @@
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 	<title>Интернет-магазин группа 1</title>
 	<!-- App favicon -->
-    <link rel="shortcut icon" href="admin/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="magaz/magaz/assets/images/favicon.ico">
 	<!-- Daterangepicker css -->
-	<link rel="stylesheet" href="admin/assets/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" href="magaz/magaz/assets/vendor/daterangepicker/daterangepicker.css">
 	<!-- Vector Map css -->
-	<link rel="stylesheet" href="admin/assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css">
+	<link rel="stylesheet" href="magaz/magaz/assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css">
 	<!-- App css -->
 	<!-- <link href="admin/assets/css/app-saas.min.css" rel="stylesheet" type="text/css" id="app-style" /> -->
 	<!-- Icons css -->
@@ -23,20 +23,28 @@
 <body>
 	<header class="header">
 		<div class="container">
-			<div class="navigation flex jcspb aic">
-				<div class="logo-co" onclick="renderHomePage()"></div>
-				<div class="catalog" onclick="renderCatalog()">Каталог</div>
-				<div id="search" class="search">
-					<input pattern="[А-Яа-яЁё ]+" id="input-search-top" class="input-search" type="text" oninput="searchGoods()" placeholder="Поиск">
-					<div id="container-search">
+			<div class="navigation flex aic">
+				<div class="nav1 flex jcspb aic">
+					<div class="logo-co" onclick="renderHomePage()"></div>
+					<div class="catalog" onclick="renderCatalog()">Каталог</div>
+					<div id="search" class="search">
+						<input pattern="[А-Яа-яЁё ]+" id="input-search-top" class="input-search" type="text" oninput="searchGoods()" placeholder="Поиск">
+						<div id="container-search">
 
+						</div>
 					</div>
+					
+					<div class="menu-burger__header">
+						<span></span>
+					</div>
+
 				</div>
-				<div class="nav-items flex jcspa">
+				<div class="nav2 flex jcspb aic">
 					<div><a href="#" class="nav-item" onclick="renderAkc()">Акции</a></div>
 					<div><a href="#" class="nav-item" onclick="renderDelivery()">Доставка</a></div>
 					<div><a href="#" class="nav-item" onclick="renderCont()">Контакты</a></div>
 					<div><a href="#" class="nav-item" onclick="renderReviews()">Отзывы</a></div>
+				
 				</div>
 				
 				<div class="customer-icons flex aic">
@@ -47,14 +55,12 @@
 					</div>
 				</div>
 			</div>
-			<div class="second-nav-line flex jcspb aic">
-				<div class="categories flex jcs">
+			<div class="category-items flex jcspb aic">
 					<div class="category-item" onclick="renderCardsInCategory(1)">Латексные шары</div>
 					<div class="category-item" onclick="renderCardsInCategory(2)">Фольгированные шары</div>
 					<div class="category-item" onclick="renderCardsInCategory(3)">Цифры</div>
 					<div class="category-item" onclick="renderCardsInCategory(4)">3D Сферы</div>
 					<div class="category-item" onclick="renderCardsInCategory(5)">Хромовые шары</div>
-				</div>
 				<div class="menu-contacts flex">
 					<!-- <div>
 						<a class="phone" href="tel:+7 495-369-56-79">+7 495-369-56-79</a>
@@ -89,7 +95,7 @@
 			</div>
 			<div class="flex butdiv">
 				<button class="but1" onclick="renderAkc()">
-					Все акции
+					<b>Все акции</b>
 				</button>
 				<button class="but2" onclick="renderCatalog()">
 					Подробнее
@@ -415,7 +421,6 @@
 				<div class="form-text">Подтвердите пароль</div><br>
 				<input class="form-area" id="password2" type="password" name="password2" autocomplete="off" required><br>
 				<button class="form-submit" type="submit" onclick="send()">Зарегистрироваться</button>
-
 			</div>
 		</div>
 	</template>
@@ -502,7 +507,6 @@
     <!--создаем блок для "акции"-->
     <template id="akc">
         <div class="main-container">
-            <h2>Акции</h2>
 			<!-- "хлебные крошки" - навигация внутри каталога -->
 			<div class="breadcrumbs-container">
 				<ul class="breadcrumbs-list">
@@ -514,6 +518,7 @@
 					</li>
 				</ul>
 			</div>
+			<h2>Акции</h2>
 			<div class="filter aic">
 				<div class="filter_price aic">
 					<p>Цена</p>
@@ -538,7 +543,6 @@
 	<!--создаем блок для "доставка"-->
 	<template id="delivery">
 		<div class="main-container">
-			<h2>Доставка</h2>
 			<!-- "хлебные крошки" - навигация внутри каталога -->
 			<div class="breadcrumbs-container">
 				<ul class="breadcrumbs-list">
@@ -550,6 +554,7 @@
 					</li>
 				</ul>
 			</div>
+			<h2>Доставка</h2>
 			<div class="conteiners flex">
 				Круглосуточная доставка по Москве и Московской области.<br>
 
@@ -575,7 +580,6 @@
 	<!--создаем блок для "контакты"-->
     <template id="contacts">
         <div class="main-container">
-            <h2>Контакты</h2>
 			<!-- "хлебные крошки" - навигация внутри каталога -->
 			<div class="breadcrumbs-container">
 				<ul class="breadcrumbs-list">
@@ -587,6 +591,7 @@
 					</li>
 				</ul>
 			</div>
+			<h2>Контакты</h2>
 			<div class="conteiners">
 				<div class="flex" style="justify-content: space-around; margin-bottom: 15px; flex-wrap: wrap">
 					<div>
@@ -618,7 +623,6 @@
 
 	<!--создаем блок для "отзывы"-->
     <template id="reviews">
-        <div class="main-container">
             <h2>Отзывы</h2>
 			<!-- "хлебные крошки" - навигация внутри каталога -->
 			<div class="breadcrumbs-container">
@@ -634,7 +638,6 @@
 			<div class="conteiners flex">
 				<!-- содержимое -->
 			</div>
-        </div>
     </template>
 
 
@@ -691,9 +694,9 @@
 		<div>
 			<h3>Контакты</h3>
 			<p>+ 7 999 999 99 99</p><br>
-			<div class="flex jcspa">
+			<div class="flex ">
 				<div>
-					<a class="logo telegram-logo" href="https://t.me/Elza_Izh" target="_blank"></a>
+					<a class="logo telegram-logo mr" href="https://t.me/Elza_Izh" target="_blank"></a>
 					<!-- <p>Telegram</p> -->
 				</div>
 				<div>
@@ -705,7 +708,7 @@
 
 		<div>
 			<h3>Адрес</h3>
-			<p>Звездный берег, д. 77</p><br>
+			<p>Улица Фрунзе, 1к4</p><br>
 			<div class="work-hours">
 				Режим работы<br><b>Круглосуточно</b>
 			</div>
@@ -718,7 +721,7 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="slick-slider/js/slick.min.js"></script>
 	<!-- Theme Config Js -->
-	<script src="admin/assets/js/hyper-config.js"></script>
+	<script src="magaz/magaz/assets/js/hyper-config.js"></script>
 	<!-- <script src="slick-slider/js/main.js"></script> -->
 	<script src="main.js"></script>
 	<script src="js/main.js"></script>

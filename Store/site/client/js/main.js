@@ -1599,7 +1599,7 @@
         let flexFrameContainer = document.createElement('div');
         flexFrameContainer.classList.add('frame__flex-wrap');
         main.appendChild(flexFrameContainer);
-        // main.style.padding = '40px';
+        main.style.padding = '40px';
 
         //создаем пустой массив, чтобы собрать данные для фильтрации
         //let goodsInfoArr = [];
@@ -1788,3 +1788,36 @@ function renderReviews() {
 
 }
 
+$(document).ready(function() {
+    $('.menu-burger__header').click(function() {
+        $('.menu-burger__header').toggleClass('open-menu');
+        $('.catalog').toggleClass('open-menu');
+        $('.nav2').toggleClass('open-menu');
+        $('.category-items').toggleClass('open-menu');
+    });
+});
+
+$(document).ready(function() {
+    $('.catalog').click(function(event) {
+        $('.menu-burger__header').removeClass('open-menu');
+        $('.catalog').removeClass('open-menu');
+        $('.nav2').removeClass('open-menu');
+        $('.category-items').removeClass('open-menu');
+    });
+});
+$(document).ready(()=> {
+    $(document).on('click', '.nav2 div a', e => { 
+        $('.menu-burger__header').removeClass('open-menu');
+        $('.catalog').removeClass('open-menu');
+        $('.nav2').removeClass('open-menu');
+        $('.category-items').removeClass('open-menu');
+    });
+});
+$(document).ready(()=> {
+    $(document).on('click', '.category-items div', e => { 
+        $('.menu-burger__header').removeClass('open-menu');
+        $('.catalog').removeClass('open-menu');
+        $('.nav2').removeClass('open-menu');
+        $('.category-items').removeClass('open-menu');
+    });
+});
