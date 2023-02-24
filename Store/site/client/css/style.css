@@ -1344,7 +1344,29 @@ input:focus::-webkit-input-placeholder {
     
 }
 
-
+@media (max-width: 1500px) {
+    .goods-img {
+        height: auto;
+        background-position: center center;
+        width: 50%;
+    }
+    .huge {
+        font-size: 30px;
+    }
+    .bigger {
+        font-size: 20px;
+    }
+    .btn-to-basket {
+        padding: 20px 50px;
+        font-size: 20px;
+    }
+    .goods-description p {
+        font-size: 18px;
+    }
+    .goods-info {
+        width: 30%;
+    }
+}
 @media (max-width: 1075px) {
     .wrapper {
       padding: 0;
@@ -1360,6 +1382,15 @@ input:focus::-webkit-input-placeholder {
     }
     .texth1 {
         font-size: 20px;
+    }
+    .dotted-line {
+        width: auto;
+    }
+    footer div h1{
+        font-size: 20px;
+    }
+    .goods-title h3 {
+        font-size: 30px;
     }
   }
   @media (max-width: 970px) {
@@ -1380,10 +1411,36 @@ input:focus::-webkit-input-placeholder {
     main {
         padding: 0;
     }
+    .horizontal-wrap {
+        display: block;
+    }
+    .goods-img {
+        display: block;
+        margin: 0 auto;
+        height: 610px;
+        width: 100%;
+    }
+    .goods-info {
+        width: 100%;
+        text-align: center;
+    }
+    .price-line {
+        justify-content: center;
+    }
   }
   @media (max-width: 725px) {
     .filter {
         flex-wrap: wrap;
         justify-content: center;
+    }
+  }
+  @media (max-width: 500px) {
+  footer {
+        width: 100%;
+        display: inline-block !important;
+        text-align: center;
+    }
+    .discount-wrap {
+        padding: 150px 0 0 50px;
     }
   }
