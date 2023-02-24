@@ -1535,7 +1535,7 @@
         let flexFrameContainer = document.createElement('div');
         flexFrameContainer.classList.add('frame__flex-wrap');
         main.appendChild(flexFrameContainer);
-        // main.style.padding = '40px';
+        main.style.padding = '40px';
 
         //создаем пустой массив, чтобы собрать данные для фильтрации
         //let goodsInfoArr = [];
