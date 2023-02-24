@@ -42,7 +42,7 @@ abstract class Unit
     //получение всех данных из таблицы categories
 
         //достаём данные из бд
-        $sql = "SELECT * FROM " . static::TABLE . ";";
+        $sql = "SELECT * FROM " . static::TABLE2 . ";";
         $result = $pdo->query($sql);
 
         //создаём пустой массив

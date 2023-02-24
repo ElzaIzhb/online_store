@@ -154,16 +154,56 @@
     //вызываем функцию при загрузке страницы
     renderHomePage();
 
+    let hash = localStorage.getItem('token');
+
     //функция отрисовки личного кабинета
     function renderPerson() {
+
+        if (hash !='') {
+
+        let data = "token=" + encodeURIComponent(hash);
+
+        // создаём объкт который умеет отправлять запросы
+        let requestObj = new XMLHttpRequest();
+
+        requestObj.onreadystatechange = function() {
+            if (requestObj.readyState == XMLHttpRequest.DONE) {
+                let date = JSON.parse(requestObj.responseText);
+
+                if (date['success'] == true) {
+
+                    //если да, то отрисовываем дальше страницу кабинета
+                    personalaccount();
+
+                }
+
+             }
+        }
+
+        //собираем ссылку для запроса
+        let link = 'http://localhost:8091/?check';
+        
+        //конфигурируем объект
+        requestObj.open('POST', link, false);
+                                
+        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                
+        // отправляем запрос
+        requestObj.send(data);
+
+        } 
+        
+        if (hash==null) {
 
         //очищаем страницу
         clearPage();
 
         //отрисовываем в main шаблон личного кабинета
         main.innerHTML += templatePerson1;
-        
+
     }
+
+}
 
     function registration() {
         //очищаем страницу
@@ -183,6 +223,40 @@
     
                 // создаём объкт который умеет отправлять запросы
                 let requestObj = new XMLHttpRequest();
+
+
+                requestObj.onreadystatechange = function() {
+                    if (requestObj.readyState == XMLHttpRequest.DONE) {
+                        let date = JSON.parse(requestObj.responseText);
+
+                        if (date['success'] == false) {
+
+                            alert('Такого пользователя нет');
+                        }
+            
+            
+                        if (date['success'] == true) {
+
+                        let token = date['token'];
+
+                        console.log(token);
+
+                        localStorage.setItem('token', token);
+
+
+            
+                        //очищаем страницу
+                        clearPage();
+            
+                        //проверка есть ли этот пользователь в бд - верно ли все ввел
+            
+                        //если да, то отрисовываем дальше страницу кабинета
+                        personalaccount();
+            
+                        document.getElementById('lk').classList.add('butpers1');
+                        }
+                    }
+                }
             
                 // собираем ссылку для запроса
                 let link = 'http://localhost:80/?logIn';
@@ -194,34 +268,46 @@
             
                 // отправляем запрос
                 requestObj.send(data);
-
-
-            let json = sendRequestGET("http://localhost:80/?logIn");
-
-            //раскодируем данные
-            let date = JSON.parse(json);  
-
-            console.log(date);
-
-            if (date['success'] == false) {
-
-                alert('Такого пользователя нет');
-            }
-
-
-            if (date['success'] == true) {
-
-            //очищаем страницу
-            clearPage();
-
-            //проверка есть ли этот пользователь в бд - верно ли все ввел
-
-            //если да, то отрисовываем дальше страницу кабинета
-            personalaccount();
-
-            document.getElementById('lk').classList.add('butpers1');
-            }
           }
+    }
+
+    function exit() {
+
+        localStorage.removeItem('token');
+
+        //отрисовываем в main шаблон личного кабинета
+        main.innerHTML = templatePerson1;
+
+    }
+
+    function deleteAccount(){
+
+        confirm('Вы уверены,что хотите удалить аккаунт?');
+
+        if (confirm) {
+
+            let data = "token=" + encodeURIComponent(hash);
+
+            // создаём объкт который умеет отправлять запросы
+            let requestObj = new XMLHttpRequest();
+
+            // собираем ссылку для запроса
+            let link = 'http://localhost:80/?deleteUser';
+                
+            //конфигурируем объект
+            requestObj.open('POST', link, false);
+        
+            requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+            // отправляем запрос
+            requestObj.send(data);
+
+            localStorage.removeItem('token');
+
+            //отрисовываем в main шаблон личного кабинета
+            main.innerHTML = templatePerson1;
+
+        }
     }
 
     function personalaccount(){
@@ -240,15 +326,6 @@
         main.innerHTML += document.getElementById('personalorders').innerHTML;
         main.style.padding = '40px';
         document.getElementById('zak').classList.add('butpers1');
-    }
-
-    function deleteAccount(){
-        alert( "Вы уверены,что хотите удалить аккаунт?" );
-        // if () {
-
-        // }else {
-
-        // }
     }
 
     //функция отрисовки Главной страницы
@@ -1438,13 +1515,33 @@
 
             if (name !='' || e_mail !='' || login !='' || password !='') {
 
-                let data = "name=" + name + "&e-mail=" + e_mail + "&login=" + login + "&password=" + password;
+                let data = "name=" + encodeURIComponent(name) + "&e-mail=" + encodeURIComponent(e_mail) + "&login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password);
     
                 // создаём объкт который умеет отправлять запросы
                 let requestObj = new XMLHttpRequest();
+
+                requestObj.onreadystatechange = function() {
+                    if (requestObj.readyState == XMLHttpRequest.DONE) {
+                        let date = JSON.parse(requestObj.responseText);
+
+                        if (date["success"]) {
+        
+                            personalaccount();
+        
+                        }
+                        else if (date["reason"] == "already exist") {
+
+                            alert('Уже есть пользователь с данной почтой');
+        
+                        }
+                        else {
+                            console.log(date);
+                        }
+                    }
+                }
             
                 // собираем ссылку для запроса
-                let link = 'http://localhost:8091/?createUser';
+                let link = 'http://localhost:80/?createUser';
                 
                 //конфигурируем объект
                 requestObj.open('POST', link, false);
@@ -1453,39 +1550,6 @@
             
                 // отправляем запрос
                 requestObj.send(data);
-
-                // let json = sendRequestGET("http://localhost:80/auth/signup/index.php");
-
-                // //раскодируем данные
-                // let resp = JSON.parse(json); 
-                // console.log(resp);
-
-                /*
-                fetch('Store\site\auth\signup\index.php')
-                    .then(res => res.json())
-                    .then((out) => {
-                        console.log('Output: ' + out);
-                }).catch(err => console.error(err));
-                */
-                /*
-
-                let json = sendRequestGET("http://localhost:80/auth/signup/?userResult");
-
-                //раскодируем данные
-                let date = JSON.parse(json);  
-
-                if (date == "Юзер уже есть") {
-
-                    alert('Уже есть пользователь с данной почтой');
-
-                } 
-
-                if (date == "Юзер записан") {
-
-                    personalaccount();
-
-                } 
-             */ 
             }
             
         }
