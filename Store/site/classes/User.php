@@ -11,6 +11,9 @@ final class User extends AbstractClasses\Unit
     
     public static function check() : bool
     {
+        
+        error_reporting(0);
+        
          //заходим в базу смотрим сколько у нас юзеров с таким паролем и логинов
          $pdo = \Connection::getConnection();
          $result = $pdo->query(" SELECT COUNT(*) as num FROM " . static::TABLE . " WHERE user_hash =  '" . $_POST['token'] . "'");

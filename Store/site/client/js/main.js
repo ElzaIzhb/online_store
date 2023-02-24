@@ -181,7 +181,7 @@
         }
 
         //собираем ссылку для запроса
-        let link = 'http://localhost:8091/?check';
+        let link = 'http://localhost:80/?check';
         
         //конфигурируем объект
         requestObj.open('POST', link, false);
@@ -259,7 +259,7 @@
                 }
             
                 // собираем ссылку для запроса
-                let link = 'http://localhost:80/?logIn';
+                let link = 'http://localhost/?login';
                 
                 //конфигурируем объект
                 requestObj.open('POST', link, false);
@@ -1684,7 +1684,7 @@
                 for (let i = 0; i < 5; i++) {
                     //console.log(document.getElementsByClassName[i].getAttribute('data-ind_id'));
                     containerSearch.innerHTML += resultSearch.replace('${category_id}', data[i]["category_id"])
-                                                            .replace('${goods_id}', document.getElementsByClassName[i].getAttribute('data-ind_id'))
+                                                            .replace('${goods_id}', i)
                                                             .replace('${category_search}', data[i]["category"])
                                                             .replace('${photo_search}', data[i]['photo'])
                                                             .replace('${name_search}', data[i]['name'])
