@@ -28,10 +28,6 @@
     </head>
 
     <body>
-
-    <?php 
-    var_dump($_SESSION);
-    ?>
     
         <!-- Begin page -->
         <div class="wrapper">
