@@ -2,11 +2,6 @@
 //чтобы получить доступ из нашей странички
 header('Access-Control-Allow-Origin: *');
 
-require_once('/var/www/classes/autoload.php');
-
-//создание объекта для подключения к БД
-$pdo = Connection::getConnection();
-
 if (User::check()) {
     $response = [
         'success' => true
@@ -18,5 +13,5 @@ if (User::check()) {
     ];
 }
 
-echo json_encode($response, JSON_UNESCAPED_UNICODE);
+print(json_encode($response, JSON_UNESCAPED_UNICODE));
 

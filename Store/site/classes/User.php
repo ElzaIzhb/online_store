@@ -36,10 +36,6 @@ final class User extends AbstractClasses\Unit
 
         error_reporting(0);
 
-        $json = file_get_contents('php://input');
-
-        print_r ($json);
-
         //получаем логин и смотрим есть ли юзер с таким логином или имейлом
         $login = $_POST['login'];
 
@@ -112,6 +108,15 @@ final class User extends AbstractClasses\Unit
         
         $pdo->query($sql_ins);
     
+
+    }
+
+
+    public static function deleteUser() {
+
+    //заходим в базу смотрим сколько у нас юзеров с таким паролем и логинов
+    $pdo = \Connection::getConnection();
+    $result = $pdo->query(" DELETE FROM " . static::TABLE . " WHERE user_hash = '" . $_POST['token'] . "'");
 
     }
 }

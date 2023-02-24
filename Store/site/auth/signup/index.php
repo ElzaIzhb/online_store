@@ -3,15 +3,20 @@
 header('Access-Control-Allow-Origin: *');
 
  if (User::exists()) {
-    echo json_encode("Юзер уже есть", JSON_UNESCAPED_UNICODE);
+   $response = [
+      'success' => false,
+      'reason' => 'already exist'
+  ];
+  print_r(json_encode($response));
     exit(0);
     
  }
 
 User::createUser();
 
-$res = json_encode("Юзер записан", JSON_UNESCAPED_UNICODE);
+$response = [
+   'success' => true,
+   'reason' => 'created'
+];
 
-echo $res;
-
-
+print_r(json_encode($response));

@@ -10,25 +10,25 @@ Good::getGoods();
 
 if (isset($_GET['allcategories'])) {
 
-Categories::getAllCategories();
+Category::getAllCategories();
 
 }
 
 if (isset($_GET['category_id'])) {
 
-CategoryId::getAllCategoriesId();
+Category::getAllCategoriesId();
 
 } 
 
 if (isset($_GET['category'])) {
 
-Category::getCategory();
+Category_filter::getCategory();
 
 }
 
 if (isset($_GET['sale'])) {
 
-Sale::getSale();
+Category::getSale();
 
 }
 
@@ -56,4 +56,16 @@ if (isset($_GET['createUser'])) {
 
 include_once 'auth/signup/index.php';
     
+}
+
+if (isset($_GET['check'])) {
+
+include_once 'auth/check/index.php';
+        
+}
+
+if (isset($_GET['deleteUser'])) {
+
+User::deleteUser();
+            
 }
