@@ -2,12 +2,13 @@ body {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Nunito Sans', sans-serif;
 }
 
 a {
     text-decoration: none;
     color: black;
+    /* color: #6c757d; */
 }
 
 ul {
@@ -91,28 +92,28 @@ header {
 
 .catalog {
     padding: 15px 30px;
-    border-radius: 13px;
     color: white;
-    background-color: #F188F2;
+    background-color: #727cf5;
+    border-radius: 0.15rem;
     font-weight: 700;
     transition: all 0.3s;
     cursor: pointer;
 }
 
 .catalog:hover {
-    background-color: #B566B6;
+    background-color: #5b63c4;
 }
 
 input {
-    border: 2px solid #A9A9A9;
-    border-radius: 13px;
+    background-color: #f0f3f8;
+    border-radius: 0px;
 }
 
 .search {
     position: relative;
+    background-color: #f0f3f8;
     padding: 15px 30px 15px 15px;
-    border: 2px solid #A9A9A9;
-    border-radius: 13px;
+    border-radius: 0px;
     font-size: 9px;
 }
 
@@ -176,7 +177,7 @@ input {
     display: inline-block;
     width: 11px;
     height: 11px;
-    background-image: url(../img/icons-search.png);
+    background-image: url('../img/icons-search.png');
     background-size: cover;
 }
 
@@ -188,14 +189,19 @@ input:focus::-webkit-input-placeholder {
     color:transparent; 
 }
 
+.nav-items {
+    gap: 15px;
+}
+
 .nav-item {
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s;
 }
 
 .nav-item:hover {
-    color: #FC42FF;
+    color: #6c757d;
+    /* color: #727cf5; */
 }
 
 .customer-icons {
@@ -233,8 +239,8 @@ input:focus::-webkit-input-placeholder {
     margin-top: -2;
     bottom: -5px;
     right: -5px;
-    background-color: #F9CFFA;
-    color: #794479;
+    background-color: #f67e97;
+    color: white;
     font-size: 10px;
     padding: 1px;
     width: 16px;
@@ -244,8 +250,13 @@ input:focus::-webkit-input-placeholder {
     text-align: center;
 }
 
-.categories {
+.second-nav-line {
     padding: 25px 0;
+    font-weight: 700;
+    gap: 20px;
+}
+
+.categories {
     gap: 20px;
 }
 
@@ -256,8 +267,8 @@ input:focus::-webkit-input-placeholder {
 }
 
 .category-item:hover {
-    color: rgb(67, 67, 67);
-    text-decoration: underline;
+    color: #f67e97;
+    /* text-decoration: underline; */
 }
 
 .menu-contacts {
@@ -303,7 +314,6 @@ input:focus::-webkit-input-placeholder {
 .texth1 {
     width: 50%;
     padding: 100px 0 20px 50px;
-    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 200;
     font-size: 28px;
@@ -320,7 +330,6 @@ input:focus::-webkit-input-placeholder {
     top: 546px;
     background: linear-gradient(0deg, #F188F2, #F188F2), linear-gradient(0deg, #F188F2, #F188F2);
     border-radius: 13px;
-    font-family: 'Montserrat';
     font-style: normal;
     margin-right: 20px;
     cursor: pointer;
@@ -336,7 +345,6 @@ input:focus::-webkit-input-placeholder {
     border: 2px solid #FFFFFF;
     border-radius: 13px;
     background: transparent;
-    font-family: 'Montserrat';
     font-style: normal;
     cursor: pointer;
     font-size: 18px;
@@ -370,7 +378,9 @@ h1 {
     margin-bottom: 30px;
 }
 footer {
-    margin: 0 20px 30px 20px;
+    padding: 30px 20px;
+    background-color: #313a46;
+    color: white;
 }
 
 /* слайдер */
@@ -517,7 +527,6 @@ footer {
     border: 1px solid #000000;
 }
 .title {
-    font-family: 'Montserrat';
     font-style: normal;
     font-size: 50px;
     margin-bottom: 30px;
@@ -529,7 +538,6 @@ footer {
     background: transparent;
     padding: 10px;
     width: 250px;
-    font-family: 'Montserrat';
     font-style: normal;
     font-size: 18px;
     background-color: #F188F2;
@@ -558,10 +566,13 @@ footer {
     padding: 30px;
 }
 .logo-co {
+    background-image: url('../img/logo2.png');
+    width: 60px;
+    height: 60px;
+    background-size: cover; 
     cursor: pointer;
 }
 .conteiners {
-    font-family: 'Montserrat';
     font-style: normal;
     font-size: 20px;
     line-height: 1.5;
@@ -1274,7 +1285,6 @@ input:focus::-webkit-input-placeholder {
     font-size: 18px;
     cursor: pointer;
     transition: all 0.3s;
-    font-family: 'Montserrat', sans-serif;
     width: 100%;
     text-align: left;
     color: white;
@@ -1308,7 +1318,6 @@ input:focus::-webkit-input-placeholder {
 .form-text1 {
     color: #3c393c;
     font-size: 18px;
-    font-family: 'Montserrat', sans-serif;
     text-align: center;
     margin-bottom: 10px;
 }
@@ -1352,7 +1361,7 @@ input:focus::-webkit-input-placeholder {
     .slider {
         padding: 0;
     }
-    .categories {
+    .second-nav-line {
         gap: 0;
     }
     .discount-wrap {

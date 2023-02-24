@@ -5,16 +5,26 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 	<title>Интернет-магазин группа 1</title>
+	<!-- App favicon -->
+    <link rel="shortcut icon" href="admin/assets/images/favicon.ico">
+	<!-- Daterangepicker css -->
+	<link rel="stylesheet" href="admin/assets/vendor/daterangepicker/daterangepicker.css">
+	<!-- Vector Map css -->
+	<link rel="stylesheet" href="admin/assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css">
+	<!-- App css -->
+	<!-- <link href="admin/assets/css/app-saas.min.css" rel="stylesheet" type="text/css" id="app-style" /> -->
+	<!-- Icons css -->
+	<!-- <link href="admin/assets/css/icons.min.css" rel="stylesheet" type="text/css" /> -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="css/style.css"> </link>
 </head>
 <body>
 	<header class="header">
 		<div class="container">
 			<div class="navigation flex jcspb aic">
-				<div class="logo-co" onclick="renderHomePage()">ART<br><i>Colibri</i></div>
+				<div class="logo-co" onclick="renderHomePage()"></div>
 				<div class="catalog" onclick="renderCatalog()">Каталог</div>
 				<div id="search" class="search">
 					<input pattern="[А-Яа-яЁё ]+" id="input-search-top" class="input-search" type="text" oninput="searchGoods()" placeholder="Поиск">
@@ -22,11 +32,13 @@
 
 					</div>
 				</div>
+				<div class="nav-items flex jcspa">
+					<div><a href="#" class="nav-item" onclick="renderAkc()">Акции</a></div>
+					<div><a href="#" class="nav-item" onclick="renderDelivery()">Доставка</a></div>
+					<div><a href="#" class="nav-item" onclick="renderCont()">Контакты</a></div>
+					<div><a href="#" class="nav-item" onclick="renderReviews()">Отзывы</a></div>
+				</div>
 				
-				<div><a href="#" class="nav-item" onclick="renderAkc()">Акции</a></div>
-				<div><a href="#" class="nav-item" onclick="renderDelivery()">Доставка</a></div>
-				<div><a href="#" class="nav-item" onclick="renderCont()">Контакты</a></div>
-				<div><a href="#" class="nav-item" onclick="renderReviews()">Отзывы</a></div>
 				<div class="customer-icons flex aic">
 					<div class="icon log-in-icon" onclick="renderPerson()"></div>
 					<div class="icon favourite-icon"></div>
@@ -35,13 +47,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="categories flex jcspb aic">
-				<div class="category-item" onclick="renderCardsInCategory(1)">Латексные шары</div>
-				<div class="category-item" onclick="renderCardsInCategory(2)">Фольгированные шары</div>
-				<div class="category-item" onclick="renderCardsInCategory(3)">Цифры</div>
-				<div class="category-item" onclick="renderCardsInCategory(4)">3D Сферы</div>
-				<div class="category-item" onclick="renderCardsInCategory(5)">Хромовые шары</div>
-
+			<div class="second-nav-line flex jcspb aic">
+				<div class="categories flex jcs">
+					<div class="category-item" onclick="renderCardsInCategory(1)">Латексные шары</div>
+					<div class="category-item" onclick="renderCardsInCategory(2)">Фольгированные шары</div>
+					<div class="category-item" onclick="renderCardsInCategory(3)">Цифры</div>
+					<div class="category-item" onclick="renderCardsInCategory(4)">3D Сферы</div>
+					<div class="category-item" onclick="renderCardsInCategory(5)">Хромовые шары</div>
+				</div>
 				<div class="menu-contacts flex">
 					<!-- <div>
 						<a class="phone" href="tel:+7 495-369-56-79">+7 495-369-56-79</a>
@@ -674,24 +687,24 @@
 
 	<footer class="flex jcspa">
 		<div>
-			<h2>Контакты</h2>
-			<h1>+ 7 999 999 99 99</h1><br>
+			<h3>Контакты</h3>
+			<p>+ 7 999 999 99 99</p><br>
 			<div class="flex jcspa">
 				<div>
 					<a class="logo telegram-logo" href="https://t.me/Elza_Izh" target="_blank"></a>
-					<p>Telegram</p>
+					<!-- <p>Telegram</p> -->
 				</div>
 				<div>
 					<a class="logo whatsapp-logo" href="https://api.whatsapp.com/send/?phone=79082535423" target="_blank"></a>
-					<p>WhatsApp</p>
+					<!-- <p>WhatsApp</p> -->
 				</div>
 			</div>
 		</div>
 
 		<div>
-			<h2>Адрес</h2>
-			<h1>Звездный берег, д. 77</h1><br>
-			<div>
+			<h3>Адрес</h3>
+			<p>Звездный берег, д. 77</p><br>
+			<div class="work-hours">
 				Режим работы<br><b>Круглосуточно</b>
 			</div>
 		</div>
@@ -702,6 +715,8 @@
 	
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="slick-slider/js/slick.min.js"></script>
+	<!-- Theme Config Js -->
+	<script src="admin/assets/js/hyper-config.js"></script>
 	<!-- <script src="slick-slider/js/main.js"></script> -->
 	<script src="main.js"></script>
 	<script src="js/main.js"></script>
