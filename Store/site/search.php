@@ -50,4 +50,4 @@ while ($row = $result->fetch()) {
 }
 
 // //закодируем полученные данные в JSON
-// echo json_encode($goods, JSON_UNESCAPED_UNICODE);
+echo json_encode($goods, JSON_UNESCAPED_UNICODE);
