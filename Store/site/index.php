@@ -69,3 +69,9 @@ if (isset($_GET['deleteUser'])) {
 User::deleteUser();
             
 }
+
+if (isset($_POST['updateField'])) {
+    $field = $_POST['updateField'];
+    Good::updateLine()[$field]; //???
+                
+    }

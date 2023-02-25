@@ -26,7 +26,7 @@
 			<div class="navigation flex aic">
 				<div class="nav1 flex jcspb aic">
 					<div class="logo-co" onclick="renderHomePage()"></div>
-					<div class="catalog" onclick="renderCatalog()">Каталог</div>
+					<div class="catalog box-shadow" onclick="renderCatalog()">Каталог</div>
 					<div id="search" class="search">
 						<input pattern="[А-Яа-яЁё ]+" id="input-search-top" class="input-search" type="text" oninput="searchGoods()" placeholder="Поиск">
 						<div id="container-search">
@@ -94,10 +94,10 @@
 				<h1><b>Распродажа в честь</b> <br>предстоящих праздников!</h1>
 			</div>
 			<div class="flex butdiv">
-				<button class="but1" onclick="renderAkc()">
+				<button class="but1 box-shadow" onclick="renderAkc()">
 					<b>Все акции</b>
 				</button>
-				<button class="but2" onclick="renderCatalog()">
+				<button class="but2 box-shadow" onclick="renderCatalog()">
 					Подробнее
 				</button>
 			</div>
@@ -172,7 +172,7 @@
 				</div>
 				<div class="phone-and-btn flex fdc">
 					<input class="discount user-phone" id="discount" name="text" type="text" placeholder="+7 (999) 999-99-99">
-					<button class="but4 btn-order" onclick="sendTelegram()">Получить скидку</button>
+					<button class="but4 btn-order box-shadow" onclick="sendTelegram()">Получить скидку</button>
 				</div>
 			</div>
 		</div>
@@ -226,7 +226,7 @@
 				<p>Цена</p>
 				<input id="price-from" type="number" placeholder="от">
 				<input id="price-to" type="number" placeholder="до">
-				<button class="price-btn" onclick="filterByPrice()">Найти</button>
+				<button class="price-btn box-shadow" onclick="filterByPrice()">Найти</button>
 			</div>
 			<div class="filter_with-discount aic">
 				<p>Товары со скидкой</p>
@@ -301,8 +301,9 @@
 					</li>
 				</ul>
 			</div>
-			<!-- рейтинг из 5 звезд -->
-			<div class="rating flex aife">
+			<div class="leave-review-offer flex" onclick="showRatings(${goods_id})">
+				<!-- рейтинг из 5 звезд -->
+			<div class="rating rating_set flex aife">
 				<div class="rating-body">
 					<!-- полоса, которая заполняется в % соотношении в зависимости от оценки -->
 					<div class="rating-active"></div>
@@ -317,10 +318,14 @@
 				<div class="rating-value hidden">${rating}</div>
 				<div class="popularity-value hidden">${popularity}</div>
 			</div>
+			<div class="review-suggestion">
+				<p>Оценить</p>
+			</div>
+			</div>
+			
 			<div class="goods-title" data-cat="${category_id}" data-ind_id="${ind_goods_id}">
 				<h3>${goods_title}</h3>
 			</div>
-
 			<div class="horizontal-wrap">
 				<div class="goods-img" style="background-image: url('${goods_img_big}');">
 				</div>
@@ -330,7 +335,7 @@
 						<div class="crossed-out-price bigger">${crssd} р.</div>
 						<div class="sale-num bigger">-${sale}%</div>
 					</div>
-					<button class="btn-to-basket popularity-counter" onclick="addToBasket(${bsk_goods_id},'${goods_title}'); popularityCounter(0);">В корзину</button>
+					<button class="btn-to-basket popularity-counter box-shadow" onclick="addToBasket(${bsk_goods_id},'${goods_title}'); popularityCounter(0);">В корзину</button>
 					<div class="dotted-line"></div>
 					<div class="goods-description">
 						<p><b>Состав:</b></p>
@@ -376,7 +381,7 @@
 				</div>
 				<div class="order-form">
 					<input class="user-phone" id="userPhone" type="tel" placeholder="+7 (999) 999-99-99">
-					<div id="btn-order" class="btn-order">Заказать</div>
+					<div id="btn-order" class="btn-order box-shadow">Заказать</div>
 				</div>
 			</div>
 		</div>
@@ -669,8 +674,8 @@
 				
 			</div>
 		
-			<div class="box__footer">
-				<textarea class="review" required class="send" id="msg" type="text" placeholder="Ваш отзыв" required></textarea>
+			<div class="box__footer box-shadow">
+				<textarea class="review" required class="send" id="msg" type="text" placeholder="Напишите Ваш отзыв..." required></textarea>
 		
 				<div class="send-btn" onclick="sendReview()">&#10148;</div>
 			</div>

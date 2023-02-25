@@ -65,7 +65,8 @@
         
 
     //основная функция по рейтингам
-    function showRatings() {
+    function showRatings(goods_id) {
+        let id = goods_id;
         let ratingActive;
         let ratingValue;
         const ratings = document.querySelectorAll('.rating');
@@ -138,7 +139,27 @@
                     initRatingInfo(rating);
 
                     if (rating.dataset.ajax) {
+
+                        console.log(id);
+                        console.log(ratingValue.innerHTML);
+                        console.log(rating);
+
                         //отправить на сервер
+                        let data = "id=" + encodeURIComponent(id) + "&rating=" + encodeURIComponent(ratingValue);
+
+                        // создаём объкт который умеет отправлять запросы
+                        let requestObj = new XMLHttpRequest();
+
+                        // собираем ссылку для запроса
+                        let link = 'http://localhost:80/api/update/index.php';
+                            
+                        //конфигурируем объект
+                        requestObj.open('POST', link, false);
+                    
+                        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    
+                        // отправляем запрос
+                        requestObj.send(data);
 
                     //просто отобразить на фронте указанную оценку
                     } else {
@@ -336,15 +357,15 @@
         //чтобы слайдер не ломался
         $(function(){
             $('.slider').slick({
-                arrows: true, //отображение стрелок
-                dots: true, //отображение точек
+                arrows: false, //отображение стрелок
+                dots: false, //отображение точек
                 adaptiveHeight: false, //слайдер подстраивается по высоте под высоту активного слайда
                 slidesToShow: 2, //сколько слайдов будет показано в одном ряду
                 slidesToScroll: 1, //сколько слайдов пролистывается по одному нажатию на стрелку
-                speed: 1000, //скорость прокрутки (в мс)
+                speed: 2000, //скорость прокрутки (в мс)
                 easing: 'linear', //тип анимации
                 infinite: true, //будет ли слайдер пролистываться бесконечно
-                autoplay: false, //автоматическое пролистывание
+                autoplay: true, //автоматическое пролистывание
                 autoplaySpeed: 1000, //интервал автопролистывания
                 pauseOnFocus: true, //прекращение автопролистывания при focus
                 pauseOnHover: true, //прекращение автопролистывания при hover
@@ -373,26 +394,6 @@
 
         //рисуем постоянную базу домашней страницы
         main.innerHTML += templateHomePage;
-
-        // //получаем данные о категориях
-        // let json = sendRequestGET("http://localhost:80/?allcategories");
-
-        // //раскодируем данные
-        // let data = JSON.parse(json);    
-
-        // let containerPop = document.getElementById('slider1');
-
-  
-        // let templatePop = document.getElementById('pop-category-in-slider1').innerHTML;
-        
-        // containerPop.innerHTML = '';
-
-        // for (let i = 0; i < data.length; i++) {
-
-        //     containerPop.innerHTML += templatePop.replace('${category_id}', i)
-        //                                          .replace('${category_img}', data[i]['category_img']);
-        // }
-        
 
         main.style.padding = '0';
 
@@ -482,9 +483,6 @@
                                                             .replace('${rating}', data2[i]['rating'] ? data2[i]['rating'] : '0')
                                                             .replace('${popularity}', data2[i]['popularity'] ? data2[i]['popularity'] : '0');
 
-            //записываем локальный id карточки товара в хранилище, чтобы на нее можно было перейти через поиск
-            //localStorage.setItem('local-' + data2[i]['id'] + '-id', i);
-
             if (main.getElementsByClassName('sale-num')[i].innerHTML === '-0%') {
                 document.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
                 document.getElementsByClassName('sale-num')[i].style.display = 'none';
@@ -525,6 +523,7 @@
                                       .replace('${category_title}', data[goods_id]['category'])
                                       .replace('${goods_title}', data[goods_id]['name'])
                                       .replace('${rating}', data[goods_id]['rating'])
+                                      .replace('${goods_id}', data[goods_id]['id'])
                                       .replace('${popularity}', data[goods_id]['popularity'])
                                       .replace('${category_id}', category_id)
                                       .replace('${ind_goods_id}', data[goods_id]['id'])
@@ -746,10 +745,6 @@
 
     //функция сортировки по select
     function sortBySelect() {
-
-        //достаем из хранилища массив с информацией, содержащейся в карточках на данной странице
-        //let allPricesInCards = JSON.parse(localStorage.getItem('goods_info'));
-        //console.log(allPricesInCards);
 
         //находим флекс-контейнер ВНУТРИ main, где отрисовываются карточки (это РОДИТЕЛЬ)
         let flexFrameContainer = document.querySelector('.frame__flex-wrap');
@@ -1636,22 +1631,9 @@
                                                             .replace('${goods_id}', i)
                                                             .replace('${goods_title}', data[i]['name']);
         
-            //записываем нужные для фильтрации данные по всем отрисованным карточкам
-            // let goods = {
-            //     'price': Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))),
-            //     'sale': (data[i]['sale']) ? data[i]['sale'] : '0'
-            //     }
-            
-            //помещаем их в созданный выше массив
-            //goodsInfoArr.push(goods);
             
         }
 
-        //кодируем массив для фильтрации в json и кладем в local storage
-        // let goodsInfo = JSON.stringify(goodsInfoArr);
-        // localStorage.setItem('goods_info', goodsInfo);
-        // console.log(localStorage.getItem('goods_info'));
-        // console.log(goodsInfoArr);
     }
 
 
