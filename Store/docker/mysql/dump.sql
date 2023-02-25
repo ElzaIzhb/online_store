@@ -12,6 +12,7 @@ CREATE TABLE `Users` (
   `e_mail` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `login` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
+  `user_hash` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
