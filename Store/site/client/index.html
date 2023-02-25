@@ -23,19 +23,29 @@
 <body>
 	<header class="header">
 		<div class="container">
-			<div class="navigation flex jcspb aic">
-				<div class="logo-co" onclick="renderHomePage()"></div>
-				<div class="catalog" onclick="renderCatalog()">Каталог</div>
-				<div id="search" class="search">
-					<input pattern="[А-Яа-яЁё ]+" id="input-search-top" class="input-search" type="text" oninput="searchGoods()" placeholder="Поиск">
-					<div id="container-search">
+			<div class="navigation flex aic">
+				<div class="nav1 flex jcspb aic">
+					<div class="logo-co" onclick="renderHomePage()"></div>
+					<div class="catalog" onclick="renderCatalog()">Каталог</div>
+					<div id="search" class="search">
+						<input pattern="[А-Яа-яЁё ]+" id="input-search-top" class="input-search" type="text" oninput="searchGoods()" placeholder="Поиск">
+						<div id="container-search">
 
+						</div>
 					</div>
+					
+					<div class="menu-burger__header">
+						<span></span>
+					</div>
+
 				</div>
+				<div class="nav2 flex jcspb aic">
 					<div><a href="#" class="nav-item" onclick="renderAkc()">Акции</a></div>
 					<div><a href="#" class="nav-item" onclick="renderDelivery()">Доставка</a></div>
 					<div><a href="#" class="nav-item" onclick="renderCont()">Контакты</a></div>
 					<div><a href="#" class="nav-item" onclick="renderReviews()">Отзывы</a></div>
+				
+				</div>
 				
 				<div class="customer-icons flex aic">
 					<div class="icon log-in-icon" onclick="renderPerson()"></div>
@@ -85,7 +95,7 @@
 			</div>
 			<div class="flex butdiv">
 				<button class="but1" onclick="renderAkc()">
-					Все акции
+					<b>Все акции</b>
 				</button>
 				<button class="but2" onclick="renderCatalog()">
 					Подробнее
@@ -102,31 +112,29 @@
 					<div class="slider">
 						<div class="slider-cards">
 							<div class="slider-card" id="slider1">
-								<template id="pop-category-in-slider1">
-									<div class="slider-card-img slider-item1" onclick="renderCardsInCategory(${category_id})" style="background-image: url('${category_img}')"></div>
-								</template>
-							</div>
-						</div>
-						<!-- <div class="slider-cards">
-							<div class="slider-card">
-								<div class="slider-card-img slider-item2" onclick="renderCardsInCategory(2)" style="background-image: url('${category_img}')"></div>
+								<div class="slider-card-img slider-item1" onclick="renderCardsInCategory(0)"></div>
 							</div>
 						</div>
 						<div class="slider-cards">
 							<div class="slider-card">
-								<div class="slider-card-img slider-item3" onclick="renderCardsInCategory(3)" style="background-image: url('${category_img}')"></div>
+								<div class="slider-card-img slider-item2" onclick="renderCardsInCategory(2)"></div>
 							</div>
 						</div>
 						<div class="slider-cards">
 							<div class="slider-card">
-								<div class="slider-card-img slider-item4" onclick="renderCardsInCategory(4)" style="background-image: url('${category_img}')"></div>
+								<div class="slider-card-img slider-item3" onclick="renderCardsInCategory(3)"></div>
 							</div>
 						</div>
 						<div class="slider-cards">
 							<div class="slider-card">
-								<div class="slider-card-img slider-item5" onclick="renderCardsInCategory(5)" style="background-image: url('${category_img}')"></div>
+								<div class="slider-card-img slider-item4" onclick="renderCardsInCategory(4)"></div>
 							</div>
-						</div> -->
+						</div>
+						<div class="slider-cards">
+							<div class="slider-card">
+								<div class="slider-card-img slider-item5" onclick="renderCardsInCategory(5)"></div>
+							</div>
+						</div>
 					</div>
 				</div>
 		</div>
@@ -686,7 +694,7 @@
 		<div>
 			<h3>Контакты</h3>
 			<p>+ 7 999 999 99 99</p><br>
-			<div class="flex jcs">
+			<div class="flex ">
 				<div>
 					<a class="logo telegram-logo mr" href="https://t.me/Elza_Izh" target="_blank"></a>
 					<!-- <p>Telegram</p> -->

@@ -3,11 +3,9 @@
 //чтобы получить доступ из нашей странички
 header('Access-Control-Allow-Origin: *');
 
-//создание объекта для подключения к БД
-$pdo = Connection::getConnection();
+require_once('/var/www/classes/autoload.php');
 
 $result = User::logIn();
-
 
 if ($result !== null) {
     $response = [

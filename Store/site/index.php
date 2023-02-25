@@ -46,7 +46,7 @@ Review::reviewsGet();
 
 }
 
-if (isset($_GET['logIn'])) {
+if (isset($_GET['login'])) {
 
 include_once 'auth/login/index.php';
 

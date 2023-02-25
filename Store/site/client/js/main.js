@@ -259,7 +259,7 @@
                 }
             
                 // собираем ссылку для запроса
-                let link = 'http://localhost:80/?logIn';
+                let link = 'http://localhost/?login';
                 
                 //конфигурируем объект
                 requestObj.open('POST', link, false);
@@ -371,8 +371,8 @@
             });
         });
 
-        // //рисуем постоянную базу домашней страницы
-        // main.innerHTML += templateHomePage;
+        //рисуем постоянную базу домашней страницы
+        main.innerHTML += templateHomePage;
 
         // //получаем данные о категориях
         // let json = sendRequestGET("http://localhost:80/?allcategories");
@@ -394,7 +394,7 @@
         // }
         
 
-        // main.style.padding = '0';
+        main.style.padding = '0';
 
         
 
@@ -1701,7 +1701,7 @@
                 for (let i = 0; i < 5; i++) {
                     //console.log(document.getElementsByClassName[i].getAttribute('data-ind_id'));
                     containerSearch.innerHTML += resultSearch.replace('${category_id}', data[i]["category_id"])
-                                                            .replace('${goods_id}', document.getElementsByClassName[i].getAttribute('data-ind_id'))
+                                                            .replace('${goods_id}', i)
                                                             .replace('${category_search}', data[i]["category"])
                                                             .replace('${photo_search}', data[i]['photo'])
                                                             .replace('${name_search}', data[i]['name'])
@@ -1805,3 +1805,36 @@ function renderReviews() {
 
 }
 
+$(document).ready(function() {
+    $('.menu-burger__header').click(function() {
+        $('.menu-burger__header').toggleClass('open-menu');
+        $('.catalog').toggleClass('open-menu');
+        $('.nav2').toggleClass('open-menu');
+        $('.category-items').toggleClass('open-menu');
+    });
+});
+
+$(document).ready(function() {
+    $('.catalog').click(function(event) {
+        $('.menu-burger__header').removeClass('open-menu');
+        $('.catalog').removeClass('open-menu');
+        $('.nav2').removeClass('open-menu');
+        $('.category-items').removeClass('open-menu');
+    });
+});
+$(document).ready(()=> {
+    $(document).on('click', '.nav2 div a', e => { 
+        $('.menu-burger__header').removeClass('open-menu');
+        $('.catalog').removeClass('open-menu');
+        $('.nav2').removeClass('open-menu');
+        $('.category-items').removeClass('open-menu');
+    });
+});
+$(document).ready(()=> {
+    $(document).on('click', '.category-items div', e => { 
+        $('.menu-burger__header').removeClass('open-menu');
+        $('.catalog').removeClass('open-menu');
+        $('.nav2').removeClass('open-menu');
+        $('.category-items').removeClass('open-menu');
+    });
+});
