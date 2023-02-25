@@ -2,7 +2,15 @@
 //подключаем базу
 include "config_db.php";
 
-$res = mysqli_query($db, "SELECT * FROM `goods`");
+//Получаем ID продукта из адресной строки
+$id = intval($_GET['id']);
+
+$product = mysqli_query($db, "SELECT * FROM `goods` WHERE `id` = '$id'");
+
+//Преобразовывем полученные данные в нормальный массив
+//Используя функцию mysqli_fetch_assoc массив будет иметь ключи равные названиям столбцов в таблице
+
+$product = mysqli_fetch_assoc($product)
 
 ?>
 
@@ -335,7 +343,7 @@ $res = mysqli_query($db, "SELECT * FROM `goods`");
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                                 <!-- item-->
                                 <div class=" dropdown-header noti-title">
-                                    <h6 class="text-overflow m-2"><a href="?logout">Выйти</a></h6>
+                                    <h6 class="text-overflow m-2"><a href="/magaz?logout">Выйти</a></h6>
                                 </div>
 
                                 <!-- item-->
@@ -431,7 +439,7 @@ $res = mysqli_query($db, "SELECT * FROM `goods`");
                             <div class="collapse" id="sidebarDashboards">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="/">Аналитика</a>
+                                        <a href="index.php">Аналитика</a>
                                     </li>
                                     <li>
                                         <a href="price.php">Цены</a>
@@ -500,76 +508,77 @@ $res = mysqli_query($db, "SELECT * FROM `goods`");
                                     <div class="card-body">
 
                                     
-                                    <form action="add_bd_prod.php" method="post">                                    
+                                    <form action="edit_bd_prod.php" method="post" enctype="multipart/form-data">                                    
 
                                         <div class="row">
                                         
                                             <div class="col-xl-6">
                                                 <div class="mb-3">
+                                                    <input type="hidden" name="id" value="<?= $product['id'] ?>">
                                                     <label for="projectname" class="form-label">Имя</label>
-                                                    <input type="text" id="projectname" name="name" class="form-control" placeholder="Введите имя товара">
+                                                    <input type="text" id="projectname" value="<?= $product['name'] ?>" name="name" class="form-control" placeholder="Введите имя товара">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="project-overview" class="form-label">Описание</label>
-                                                    <textarea class="form-control" name="description" id="project-overview" rows="5" placeholder="Введите описание товара"></textarea>
+                                                    <textarea class="form-control" name="description" id="project-overview" rows="5" placeholder="Введите описание товара"><?= $product['description'] ?>"</textarea>
                                                 </div>
                                                 
                                                 <div class="mb-3 position-relative" id="datepicker1">
                                                     <label class="form-label">Цена</label>
-                                                    <input type="number" class="form-control" data-provide="datepicker" data-date-container="#datepicker1" name="price">
+                                                    <input type="number" value="<?= $product['price'] ?>" class="form-control" data-provide="datepicker" data-date-container="#datepicker1" name="price">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="project-budget" class="form-label">Скидка</label>
-                                                    <input type="number" id="project-budget" class="form-control" name="sale" placeholder="Введите скидку на товар">
+                                                    <input type="number" value="<?= $product['sale'] ?>" id="project-budget" class="form-control" name="sale" placeholder="Введите скидку на товар">
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="project-budget" class="form-label">Состав товара</label>
-                                                    <input type="text" id="project-budget" class="form-control" name="consist" placeholder="Введите состав товара">
+                                                    <input type="text" value="<?= $product['consist'] ?>" id="project-budget" class="form-control" name="consist" placeholder="Введите состав товара">
                                                 </div>
 
                                                 <div class="mb-0">
                                                     <label for="project-overview" class="form-label">Категория</label>
                                                     
-                                                    <select class="form-control select2" name="category" data-toggle="select2">
-                                                        <option>Выберете категорию товара</option>
+                                                    <select class="form-control select2" value="<?= $product['category'] ?>" name="category" data-toggle="select2">
+                                                        
                                                         <option value="Латексные шары">Латексные шары</option>
                                                         <option value="Фольгированные шары">Фольгированные шары</option>
                                                         <option value="Цифры">Цифры</option>
                                                         <option value="3D Сферы">3D Сферы</option>
                                                         <option value="Хромовые шары">Хромовые шары</option>                                                
                                                     </select>        
-                                                </div>                              
+                                                </div>    
+                                                
+                                                
+                                                <div class="mb-3 mt-3 mt-xl-0">
+                                                    <label for="projectname" class="mb-0 mt-3">Изображение</label>
+                                                    <img src="/magaz/uploads/<?php echo $product['photo']; ?>" alt="contact-img(c сервера)" title="contact-img" class="rounded me-3 mt-3" height="100" />
+                                                    <p class="text-muted font-14">Рекомендуемый размер изображения 800x400 (px).</p>
+                                                   
+                                                        <div class="fallback">
+                                                            <input type="file" name="picture">
+                                                        </div>
+
+                                                        <!-- <div class="dz-message needsclick">
+                                                            <i class="h3 text-muted ri-upload-cloud-2-line"></i>
+                                                            <h4>Перетащите файл для загрузки.</h4>
+                                                        </div> -->
+                                                 </div>
                                                 
                                                 <div class="mb-3 my-4">
-                                                    <button type="submit" class="btn btn-sm btn-success">Отправить</button>
+                                                    <button type="submit" class="btn btn-sm btn-success">Обновить</button>
                                                 </div>  
 
                                                 </form>                                     
 
-                                            </div> <!-- end col-->     
+                                            </div> <!-- end col--> 
+                                            </div>    
                                             
 
-                                            <div class="col-xl-6">
-                                                <div class="mb-3 mt-3 mt-xl-0">
-                                                    <label for="projectname" class="mb-0">Изображение (Это пока не работает)</label>
-                                                    <p class="text-muted font-14">Рекомендуемый размер изображения 800x400 (px).</p>
-
-                                                    <form action="/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
-                                                        data-upload-preview-template="#uploadPreviewTemplate">
-                                                        <div class="fallback">
-                                                            <input name="file" type="file" />
-                                                        </div>
-
-                                                        <div class="dz-message needsclick">
-                                                            <i class="h3 text-muted ri-upload-cloud-2-line"></i>
-                                                            <h4>Перетащите файл для загрузки.</h4>
-                                                        </div>
-
-                                                 
-                                                    </form>
+  
 
                                                     <!-- Preview -->
                                                     <div class="dropzone-previews mt-3" id="file-previews"></div>

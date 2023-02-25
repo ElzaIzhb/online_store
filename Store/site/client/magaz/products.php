@@ -335,7 +335,7 @@ $res = mysqli_query($db, "SELECT * FROM `goods`");
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                                 <!-- item-->
                                 <div class=" dropdown-header noti-title">
-                                    <h6 class="text-overflow m-2"><a href="?logout">Выйти</a></h6>
+                                    <h6 class="text-overflow m-2"><a href="/magaz?logout">Выйти</a></h6>
                                 </div>
 
                                 <!-- item-->
@@ -431,7 +431,7 @@ $res = mysqli_query($db, "SELECT * FROM `goods`");
                             <div class="collapse" id="sidebarDashboards">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="/">Аналитика</a>
+                                        <a href="index.php">Аналитика</a>
                                     </li>
                                     <li>
                                         <a href="price.php">Цены</a>
@@ -538,7 +538,7 @@ $res = mysqli_query($db, "SELECT * FROM `goods`");
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <img src="<?php echo $prod['photo']; ?>" alt="contact-img" title="contact-img" class="rounded me-3" height="48" />
+                                                            <img src="/magaz/uploads/<?php echo $prod['photo']; ?>" alt="contact-img(c сервера)" title="contact-img" class="rounded me-3" height="48" />
                                                             <p class="m-0 d-inline-block align-middle font-16">
                                                                 <a href="<?php echo $prod['photo']; ?>" class="text-body"><?php echo $prod['category']; ?></a>
                                                                 <br/>
@@ -567,8 +567,8 @@ $res = mysqli_query($db, "SELECT * FROM `goods`");
                                                         </td>
                     
                                                         <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                            <!-- <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a> -->
+                                                            <a href="edit.php?id=<?= $prod['id'] ?>" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
                                                             <a href="delete.php?id=<?= $prod['id'] ?>" class="action-icon"> <i class="mdi mdi-delete"></i></a>
                                                         </td>
                                                     </tr>

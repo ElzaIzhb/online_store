@@ -15,12 +15,12 @@ $pass= $_POST['pass'] ?? '';
 $_SESSION['message'] = [];
 if( !$email ) {
   $_SESSION['message'][] = 'Задайте корректный емейл для входа';  
-  header('Location: /');
+  header('Location: /magaz');
   exit;
 }
 if( !$pass ) {
   $_SESSION['message'][] = 'Задайте пароль для входа';
-  header('Location: /');
+  header('Location: /magaz');
   exit;
 }
 
@@ -35,17 +35,17 @@ if ($stmt = mysqli_prepare($db, $query)) {
   if( $verifiedDB == 'N' ){
     $_SESSION['message'][] = 'До входа подтвердите регистрацию -
    нажмите на ссылку в электронной почте';
-    header('Location: /');
+    header('Location: /magaz');
     exit;
   }
 
   if( password_verify($pass, $passDB)  ){
     $_SESSION['username'] = $email;
-    header('Location: /');
+    header('Location: /magaz');
     exit;    
   }
   $_SESSION['message'][] = 'Пароль неверный';
-  header('Location: /');
+  header('Location: /magaz');
   exit; 
 }
 

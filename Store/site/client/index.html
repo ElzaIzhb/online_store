@@ -6,11 +6,11 @@
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 	<title>Интернет-магазин группа 1</title>
 	<!-- App favicon -->
-    <link rel="shortcut icon" href="magaz/magaz/assets/images/favicon.ico">
+    <link rel="shortcut icon" href="magaz/assets/images/favicon.ico">
 	<!-- Daterangepicker css -->
-	<link rel="stylesheet" href="magaz/magaz/assets/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" href="magaz/assets/vendor/daterangepicker/daterangepicker.css">
 	<!-- Vector Map css -->
-	<link rel="stylesheet" href="magaz/magaz/assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css">
+	<link rel="stylesheet" href="magaz/assets/vendor/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css">
 	<!-- App css -->
 	<!-- <link href="admin/assets/css/app-saas.min.css" rel="stylesheet" type="text/css" id="app-style" /> -->
 	<!-- Icons css -->
@@ -101,30 +101,32 @@
 				<div class="wrapper">
 					<div class="slider">
 						<div class="slider-cards">
+							<div class="slider-card" id="slider1">
+								<template id="pop-category-in-slider1">
+									<div class="slider-card-img slider-item1" onclick="renderCardsInCategory(${category_id})" style="background-image: url('${category_img}')"></div>
+								</template>
+							</div>
+						</div>
+						<!-- <div class="slider-cards">
 							<div class="slider-card">
-								<div class="slider-card-img slider-item1" onclick="renderCardsInCategory(1)"></div>
+								<div class="slider-card-img slider-item2" onclick="renderCardsInCategory(2)" style="background-image: url('${category_img}')"></div>
 							</div>
 						</div>
 						<div class="slider-cards">
 							<div class="slider-card">
-								<div class="slider-card-img slider-item2" onclick="renderCardsInCategory(2)"></div>
+								<div class="slider-card-img slider-item3" onclick="renderCardsInCategory(3)" style="background-image: url('${category_img}')"></div>
 							</div>
 						</div>
 						<div class="slider-cards">
 							<div class="slider-card">
-								<div class="slider-card-img slider-item3" onclick="renderCardsInCategory(3)"></div>
+								<div class="slider-card-img slider-item4" onclick="renderCardsInCategory(4)" style="background-image: url('${category_img}')"></div>
 							</div>
 						</div>
 						<div class="slider-cards">
 							<div class="slider-card">
-								<div class="slider-card-img slider-item4" onclick="renderCardsInCategory(4)"></div>
+								<div class="slider-card-img slider-item5" onclick="renderCardsInCategory(5)" style="background-image: url('${category_img}')"></div>
 							</div>
-						</div>
-						<div class="slider-cards">
-							<div class="slider-card">
-								<div class="slider-card-img slider-item5" onclick="renderCardsInCategory(5)"></div>
-							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 		</div>
@@ -711,7 +713,7 @@
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="slick-slider/js/slick.min.js"></script>
 	<!-- Theme Config Js -->
-	<script src="magaz/magaz/assets/js/hyper-config.js"></script>
+	<script src="magaz/assets/js/hyper-config.js"></script>
 	<!-- <script src="slick-slider/js/main.js"></script> -->
 	<script src="main.js"></script>
 	<script src="js/main.js"></script>

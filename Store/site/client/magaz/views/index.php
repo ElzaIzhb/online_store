@@ -27,8 +27,7 @@
         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     </head>
 
-    <body>
-    
+    <body>    
         <!-- Begin page -->
         <div class="wrapper">
 
@@ -322,14 +321,14 @@
                                     <img src="assets/images/users/avatar-1.jpg" alt="user-image" width="32" class="rounded-circle">
                                 </span>
                                 <span class="d-lg-flex flex-column gap-1 d-none">
-                                    <h5 class="my-0"><?= $email = 'Ваше имя'; ?></h5>
+                                    <h5 class="my-0"><?php echo $_SESSION['username'] ?></h5>
                                     <h6 class="my-0 fw-normal">Меню</h6>
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
                                 <!-- item-->
                                 <div class=" dropdown-header noti-title">
-                                    <h6 class="text-overflow m-2"><a href="../?logout">Выйти</a></h6>
+                                    <h6 class="text-overflow m-2"><a href="?logout">Выйти</a></h6>
                                 </div>
 
                                 <!-- item-->

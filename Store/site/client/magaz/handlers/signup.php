@@ -60,7 +60,7 @@ if (mysqli_stmt_prepare($stmt, $query)) {
   $headers = "From: no-reply@{$_SERVER['SERVER_NAME']}";
   mail($to, $subject, $msg, $headers);
 
-  header('Location: /');
+  header('Location: /magaz');
 }
 
 }

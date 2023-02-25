@@ -12,9 +12,9 @@ if (mysqli_stmt_prepare($stmt, 'SELECT idusers FROM users WHERE confirmation_tok
     $query = "UPDATE users SET confirmation_token='', verified = 'Y' WHERE idusers=$idusers";
     mysqli_query($db, $query);
     $_SESSION['message'][] = 'Email подтверждён!';
-    header('Location: /');   
+    header('Location: /magaz');   
     exit; 
   }
   $_SESSION['message'][] = 'Некорректная ссылка';
-  header('Location: /');  
+  header('Location: /magaz');  
 }

@@ -26,11 +26,6 @@ define( 'DB_HOST', 'mysql');
 define( 'DB_USER', 'root');
 define( 'DB_PASS', 'test123');
 define( 'DB_NAME', 'inordic');
-// $host = 'mysql';
-// $db   = 'inordic';
-// $user = 'root';
-// $pass = 'test123';
-// $charset = 'utf8';
 
 $db = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME );
 

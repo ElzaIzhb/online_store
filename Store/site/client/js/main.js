@@ -181,7 +181,7 @@
         }
 
         //собираем ссылку для запроса
-        let link = 'http://localhost:8091/?check';
+        let link = 'http://localhost:80/?check';
         
         //конфигурируем объект
         requestObj.open('POST', link, false);
@@ -333,16 +333,6 @@
         //очищаем страницу
         clearPage();
 
-        //let json = sendRequestGET("http://localhost:8091/?all");
-
-        //раскодируем данные
-        //let data = JSON.parse(json);    
-
-        //отрисовываем в main шаблон шапки ОТДЕЛЬНО
-        main.innerHTML += templateHomePage;
-
-        main.style.padding = '0';
-
         //чтобы слайдер не ломался
         $(function(){
             $('.slider').slick({
@@ -380,6 +370,33 @@
                 ]
             });
         });
+
+        // //рисуем постоянную базу домашней страницы
+        // main.innerHTML += templateHomePage;
+
+        // //получаем данные о категориях
+        // let json = sendRequestGET("http://localhost:80/?allcategories");
+
+        // //раскодируем данные
+        // let data = JSON.parse(json);    
+
+        // let containerPop = document.getElementById('slider1');
+
+  
+        // let templatePop = document.getElementById('pop-category-in-slider1').innerHTML;
+        
+        // containerPop.innerHTML = '';
+
+        // for (let i = 0; i < data.length; i++) {
+
+        //     containerPop.innerHTML += templatePop.replace('${category_id}', i)
+        //                                          .replace('${category_img}', data[i]['category_img']);
+        // }
+        
+
+        // main.style.padding = '0';
+
+        
 
     }
 

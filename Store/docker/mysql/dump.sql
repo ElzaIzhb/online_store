@@ -130,4 +130,17 @@ INSERT INTO `reviews` (`id`, `username`, `review`) VALUES
 (1,	'Гость',	'Лучшие шары ever!!!!!!!\n'),
 (2,	'Гость',	'Всё круто )');
 
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `idusers` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) NOT NULL,
+  `pass` char(60) NOT NULL,
+  `verified` enum('N','Y') NOT NULL DEFAULT 'N',
+  `created_at` timestamp NOT NULL,
+  `confirmation_token` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idusers`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO `users` (`idusers`, `email`, `pass`, `verified`, `created_at`, `confirmation_token`) VALUES
+(1,	'test111@ya.ru',	'$2y$12$Ax.CCAHzDJVOkX/nc8FbtOQCYQVpRALZb0lummX60y7jhkcCBtC76',	'Y',	'2023-02-24 09:27:40',	'b0716dc0a1fcee4d80b5e60e68a327493db35676b6259cec2ce62131b0d43b54afeb2d14344b9506');
 -- 2023-02-24 03:05:53

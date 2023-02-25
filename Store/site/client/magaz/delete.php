@@ -3,10 +3,10 @@
 include "config_db.php";
 
 // считываем токен из куки и смотрем есть ли такой токен в б.д.
-$token_user = '' ;
-if ($token_user == $_COOKIE['token_user']) {
-    exit;
-}
+// $token_user = '' ;
+// if ($token_user == $_COOKIE['token_user']) {
+//     exit;
+// }
 
 
 //Удаление продукта
@@ -32,4 +32,4 @@ mysqli_query($db, "DELETE FROM `goods` WHERE `goods`.`id` = '$id'");
 
 // echo $id;
 
-header('Location: /products.php');
+header('Location: /magaz/products.php');

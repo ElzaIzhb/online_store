@@ -2,5 +2,5 @@
 
 session_regenerate_id();
 session_destroy();
-header('Location: admin/');
+header('Location: /magaz');
 exit;
