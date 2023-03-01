@@ -74,4 +74,16 @@ if (isset($_POST['updateField'])) {
     $field = $_POST['updateField'];
     Good::updateLine()[$field]; //???
                 
-    }
+}
+
+if (isset($_GET['select_phone'])) {
+
+User::select_phone();
+                
+}
+
+if (isset($_GET['select_adress'])) {
+
+    User::select_adress();
+                    
+}

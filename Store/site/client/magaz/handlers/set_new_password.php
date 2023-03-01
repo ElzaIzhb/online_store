@@ -10,12 +10,12 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
 
   if( !$pass1 || !$pass2 ) {
     $_SESSION['message'][] = 'Задайте пароль и подтверждение';
-    header('Location: /magaz');
+    header('Location: client/magaz');
     exit;
   }
   if( $pass1 != $pass2 ) {
     $_SESSION['message'][] = 'Укажите одинаковые пароли';
-    header('Location: /magaz');
+    header('Location: ckient/magaz');
     exit;
   }
   
@@ -27,7 +27,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
     mysqli_stmt_execute($stmt);
 
     $_SESSION['message'][] = 'Пароль изменён';
-    header('Location: /magaz');   
+    header('Location: client/magaz');   
     exit; 
   }
 

@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>Sergio@co | Личный кабинет магазина воздушных шаров</title>
+        <title>Личный кабинет магазина воздушных шаров</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -318,7 +318,7 @@
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <span class="account-user-avatar">
-                                    <img src="assets/images/users/avatar-1.jpg" alt="user-image" width="32" class="rounded-circle">
+                                    <img src="https://pibig.info/uploads/posts/2022-11/1668718677_32-pibig-info-p-chelovechki-instagram-35.png" alt="user-image" width="32" class="rounded-circle">
                                 </span>
                                 <span class="d-lg-flex flex-column gap-1 d-none">
                                     <h5 class="my-0"><?php echo $_SESSION['username'] ?></h5>
@@ -445,7 +445,7 @@
                             </a>
                             <img src="assets/images/svg/help-icon.svg" height="90" alt="Helper Icon Image" />
                             <h5 class="mt-3">Понравилась система?</h5>
-                            <p class="mb-3">Заказжите полную версию системы упрвления контентом админка@Sergio</p>
+                            <p class="mb-3">Заказжите полную версию системы упрвления контентом</p>
                             <a href="javascript: void(0);" class="btn btn-secondary btn-sm">Обновить</a>
                         </div>
                         <!-- end Help Box -->
@@ -746,7 +746,7 @@
                         </div>
                     </div>
                     <div class="footer footer-alt">
-                        <script>document.write(new Date().getFullYear())</script> админка@Sergio
+                        <script>document.write(new Date().getFullYear())</script> админка
                     </div>                    
                 </footer>
                 <!-- end Footer -->

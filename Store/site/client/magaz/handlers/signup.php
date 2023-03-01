@@ -16,17 +16,17 @@ $pass2= $_POST['pass2'] ?? '';
 $_SESSION['message'] = [];
 if( !$email ) {
   $_SESSION['message'][] = 'Задайте корректный емейл';  
-  header('Location: /?signup');
+  header('Location: ?signup');
   exit;
 }
 if( !$pass1 || !$pass2 ) {
   $_SESSION['message'][] = 'Задайте пароль и подтверждение';
-  header('Location: /?signup');
+  header('Location: ?signup');
   exit;
 }
 if( $pass1 != $pass2 ) {
   $_SESSION['message'][] = 'Укажите одинаковые пароли';
-  header('Location: /?signup');
+  header('Location: ?signup');
   exit;
 }
 
@@ -38,7 +38,7 @@ if (mysqli_stmt_prepare($stmt, 'SELECT idusers FROM users WHERE email=?')) {
   mysqli_stmt_fetch($stmt);
   if( $idusers ){
     $_SESSION['message'][] = 'Email уже занят';
-    header('Location: /?signup');
+    header('Location: ?signup');
     exit;
   }
   
@@ -60,7 +60,7 @@ if (mysqli_stmt_prepare($stmt, $query)) {
   $headers = "From: no-reply@{$_SERVER['SERVER_NAME']}";
   mail($to, $subject, $msg, $headers);
 
-  header('Location: /magaz');
+  header('Location: client/magaz');
 }
 
 }
