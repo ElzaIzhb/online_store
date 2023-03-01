@@ -12,37 +12,32 @@ CREATE TABLE `Users` (
   `e_mail` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `login` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `user_hash` varchar(50) NULL,
+  `user_hash` varchar(50) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `adress` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
-INSERT INTO `Users` (`id`, `name`, `e_mail`, `login`, `password`, `user_hash`) VALUES
-(1,	'Родион',	'rodion@bk.ru',	'rodion',	'strong',	NULL),
-(2,	'n',	'n@ya.ru',	'nn',	'1234',	NULL),
-(3,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(4,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(5,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(6,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(7,	'nnn',	'dshzrsnzd',	'xfdhnfngf',	'shCpKRzWWVSCI',	NULL),
-(8,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(9,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(10,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(11,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(12,	'test2',	'test22',	'uiioooooo',	'shPcCgnGWTEA2',	NULL),
-(13,	'',	'',	'',	'shAOeGVjpT2SA',	NULL),
-(14,	'test3',	'test3',	'kkkkkk',	'sh/97BLdMVV8Y',	NULL),
-(15,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL),
-(16,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL),
-(17,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL),
-(18,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL),
-(19,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL),
-(20,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL),
-(21,	'dgnghdmyg',	's5r',	'srthrtjn',	'inMemIhVJArEE',	NULL),
-(22,	'пвоаоа',	'testest',	'чарар',	'inMJtY1rNvcTI',	NULL),
-(23,	'xfbb',	'yyy',	'dbxdf',	'inuQi87XMNiac',	NULL),
-(24,	'ачпва',	'test55',	'авч',	'inpfdBMpN./GA',	NULL),
-(25,	'gngn',	'test56',	'gfdnxgf',	'inRH0.4x6/7UQ',	NULL),
-(26,	'gfxfg',	'test57',	'fxbf',	'innzwIUP3XZHg',	NULL);
+INSERT INTO `Users` (`id`, `name`, `e_mail`, `login`, `password`, `user_hash`, `phone`, `adress`) VALUES
+(1,	'Родион',	'rodion@bk.ru',	'rodion',	'strong',	NULL,	NULL,	NULL),
+(2,	'n',	'n@ya.ru',	'nn',	'1234',	NULL,	NULL,	NULL),
+(7,	'nnn',	'dshzrsnzd',	'xfdhnfngf',	'shCpKRzWWVSCI',	NULL,	NULL,	NULL),
+(12,	'test2',	'test22',	'uiioooooo',	'shPcCgnGWTEA2',	NULL,	NULL,	NULL),
+(14,	'test3',	'test3',	'kkkkkk',	'sh/97BLdMVV8Y',	NULL,	NULL,	NULL),
+(15,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
+(16,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
+(17,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
+(18,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
+(19,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
+(20,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
+(21,	'dgnghdmyg',	's5r',	'srthrtjn',	'inMemIhVJArEE',	NULL,	NULL,	NULL),
+(22,	'пвоаоа',	'testest',	'чарар',	'inMJtY1rNvcTI',	NULL,	NULL,	NULL),
+(23,	'xfbb',	'yyy',	'dbxdf',	'inuQi87XMNiac',	NULL,	NULL,	NULL),
+(24,	'ачпва',	'test55',	'авч',	'inpfdBMpN./GA',	NULL,	NULL,	NULL),
+(25,	'gngn',	'test56',	'gfdnxgf',	'inRH0.4x6/7UQ',	NULL,	NULL,	NULL),
+(26,	'gfxfg',	'test57',	'fxbf',	'innzwIUP3XZHg',	NULL,	NULL,	NULL),
+(29,	'test',	'test',	'ewferf',	'sh48AF4SplA/Q',	'shLSdxGW6z6/Q',	'24224244',	NULL),
+(31,	'1',	'1',	'1',	'shoAN5qc.L4Fs',	'shsxxXSvYpUHU',	'123113131',	'Арбат');
 
 DROP TABLE IF EXISTS `basket`;
 CREATE TABLE `basket` (
@@ -97,7 +92,7 @@ INSERT INTO `goods` (`id`, `name`, `description`, `category`, `price`, `consist`
 (4,	'Пламенное сердце',	'Шары в наборе связаны лентой другого цвета, и упакованы в прозрачный пакет. Вы можете распустить их под потолок или привязать композицию к предметам интерьера. ',	'Латексные шары',	2999,	'9 латексных красных сердец 30 см',	'https://shariki-v-butovo.ru/image/cache/catalog/shariki-pod-potolok/shar-lateks-serdce-krasnoe-700x700.jpg',	7,	NULL,	3,	NULL),
 (5,	'Мужчине',	'Шары в наборе связаны лентой другого цвета, и упакованы в прозрачный пакет. Вы можете распустить их под потолок или привязать композицию к предметам интерьера. ',	'Латексные шары',	2999,	'3 латексных камуфляжных шара 30 см 3 латексных прозрачных шара 30 см с золотым конфетти',	'http://i-am-balloon.by/image/cache/catalog/logos/475-1500x1500.jpg',	7,	NULL,	NULL,	NULL),
 (6,	'Шар цифра напольная ',	'Высота 81см. Наполняется воздухом',	'Цифры',	3550,	'10 шаров цифр',	'https://zatey.ru/upload/iblock/7e0/u8vxtl3y5d7uaqkkhhepp6w7mhfjazlj/tsifry_i_chisla_shar_tsifra_9_66sm_blue_1207_3686.jpg',	8,	NULL,	NULL,	NULL),
-(7,	'Шар 3D ЗВЕЗДА 64см Составная Light Pink',	'Объемная фольгированная звезда нежно розового цвета. Комплект содержит 13 элементов (конусов). Каждый элемент имеет встроенный клапан и надувается воздухом. ',	'3D Сферы',	500,	'Надутые элементы (12 штук) необходимо попарно связать между собой за хвосты и затем соединить пары друг с другом таким образом, чтобы получилась звезда. В комплект добавлен запасной, 13й элемент.',	'https://zatey.ru/upload/resize_cache/webp/iblock/478/kfs2e3l6r4eal7afjlvstqnhx2kmgsht/rozovaya_shar_3d_zvezda_64sm_sostavnaya_light_pink_1209_0439.webp',	NULL,	NULL,	NULL,	NULL),
+(7,	'Шар 3D ЗВЕЗДА 64см Составная Light Pink',	'Объемная фольгированная звезда нежно розового цвета. Комплект содержит 13 элементов (конусов). Каждый элемент имеет встроенный клапан и надувается воздухом. ',	'3D Сферы',	500,	'Надутые элементы (12 штук) необходимо попарно связать между собой за хвосты и затем соединить пары друг с другом таким образом, чтобы получилась звезда. В комплект добавлен запасной, 13й элемент.',	'https://zatey.ru/upload/resize_cache/webp/iblock/478/kfs2e3l6r4eal7afjlvstqnhx2kmgsht/rozovaya_shar_3d_zvezda_64sm_sostavnaya_light_pink_1209_0439.webp',	NULL,	NULL,	1,	NULL),
 (8,	'Шары Сердце 30см хром ассорти В.Затея',	'Шары в форме объемных сердец зеркально-блестящих оттенков (хром).',	'Хромовые шары',	562,	'Цвета: серебро, золото, розовый, розовое золото, синий, зеленый.',	'https://zatey.ru/upload/resize_cache/webp/iblock/3a3/dsf3kyodw3m7h3ofdt1uv2lrpvs2beoa/goryachie_serdtsa_shary_serdtse_30sm_khrom_assorti_v_zateya_1105_0440.webp',	5,	NULL,	NULL,	NULL),
 (9,	'Шары под потолок. Изумруд и Золото №2',	'  В Ассорти входит:  Шары Double staff изумруд.  Хром золото.  Прозрачные с золотыми конфетти',	'Хромовые шары',	154,	'',	'https://xn--80afdbdniqzql.xn--p1ai/d/img-20190125-wa0084.jpg',	NULL,	NULL,	NULL,	NULL),
 (10,	'Коробка сюрприз №5',	'Композиция 10шаров.',	'Фольгированные шары',	3905,	'Большая коробка 70х70х70 см с нанесенными поздравительными надписями',	'https://xn--80afdbdniqzql.xn--p1ai/d/korobka-sjurpriz-s-vozdushnymi-sharami-23-768x949jpg.webp',	5,	NULL,	NULL,	NULL),
@@ -143,5 +138,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 INSERT INTO `users` (`idusers`, `email`, `pass`, `verified`, `created_at`, `confirmation_token`) VALUES
-(1,	'test111@ya.ru',	'$2y$12$Ax.CCAHzDJVOkX/nc8FbtOQCYQVpRALZb0lummX60y7jhkcCBtC76',	'Y',	'2023-02-24 09:27:40',	'b0716dc0a1fcee4d80b5e60e68a327493db35676b6259cec2ce62131b0d43b54afeb2d14344b9506');
--- 2023-02-24 03:05:53
+(1,	'test111@ya.ru',	'$2y$12$Ax.CCAHzDJVOkX/nc8FbtOQCYQVpRALZb0lummX60y7jhkcCBtC76',	'Y',	'2023-02-24 09:27:40',	'b0716dc0a1fcee4d80b5e60e68a327493db35676b6259cec2ce62131b0d43b54afeb2d14344b9506'),
+(2,	'kalina123456789@inbox.ru',	'$2y$12$8T2Sx8RlzqGZZVHNxxCWiOHsWv93uHtpnOA4eyP1cvOhXsE0dQM8W',	'Y',	'2023-02-26 18:38:48',	'9ec542dffa86e73c8f927f6db0b5a1dc39975b2aacb3fb5b93a1f17a8fcfd99c5d41d4a3c3d73c26');
+
+-- 2023-03-01 22:20:13
