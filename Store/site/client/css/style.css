@@ -856,7 +856,8 @@ select {
     width: 13px;
     height: 20px;
     border-radius: 50px 50px 0 0;
-    background: #f67e97;
+    /* background: #f67e97; */
+    background-color: #ff1717;
   }
   
   .favourite-on-goods::before {
