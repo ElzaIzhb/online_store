@@ -1174,8 +1174,8 @@
 
         //console.log(localStorage.getItem('favourites'));
         //меняем пустые сердечки на розовые
-        event.target.closest('.card-in-category_img').querySelector('.favourite-on-goods').classList.add('favourite_active');
-        event.target.closest('.card-in-category_img').querySelector('.favourite-on-goods').style.display = 'inline';
+        event.target.closest('.card-in-category_img').querySelector('.favourite-on-goods').classList.toggle('visibility-important');
+        // event.target.closest('.card-in-category_img').querySelector('.favourite-on-goods').style.display = 'inline';
 
     }
 
