@@ -17,7 +17,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
  
     if( !$emailDB ){
       $_SESSION['message'][] = 'Неверная почта';
-      header('Location: /client/magaz/?recovery');
+      header('Location: /client/magaz/?recovery'); //не уверена
       exit;
     }
 

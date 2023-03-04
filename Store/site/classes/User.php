@@ -9,35 +9,81 @@ final class User extends AbstractClasses\Unit
 
     const TABLE = 'Users';
     
-    public static function check() : bool
+    public static function check() : array
     {
         
         error_reporting(0);
         
          //заходим в базу смотрим сколько у нас юзеров с таким паролем и логинов
          $pdo = \Connection::getConnection();
+
          $result = $pdo->query(" SELECT COUNT(*) as num FROM " . static::TABLE . " WHERE user_hash =  '" . $_POST['token'] . "'");
+
+         $person_data = $pdo->query(" SELECT * FROM " . static::TABLE . " WHERE user_hash = '" . $_POST['token'] . "' ");
+
          $row = $result->fetch();
+
+         $person_row = $person_data->fetch();
+
+            //возвращаем ответ в зависимости от цифры 0 или 1
+            if ($row['num'] > 0) {
+            $result = 'true';
+            } else {
+                $result = 'false';
+                }
+
+         $name = $person_row['name'];
+         $e_mail = $person_row['e_mail'];
+         $adress = $person_row['adress'];
+         $phone = $person_row['phone'];
  
-         //возвращаем ответ в зависимости от цифры 0 или 1
-         if ($row['num'] > 0) {
-             return true;
-         }
-         return false;
+         $array = array();
+ 
+         array_push($array, $result, $name, $e_mail, $phone, $adress);
+ 
+         //возвращаем token
+         return $array;
+
      }
     
 
-    public static function logOut() 
+    public static function select_phone() 
     {
+
+        $phone = $_POST['phone'];
+        $token = $_POST['token'];
+
         $pdo = \Connection::getConnection();
-        $pdo->query(" UPDATE " . static::TABLE . " SET user_hash = '' WHERE user_hash = '" . $_POST['token'] . "'");
+        $pdo->query(" UPDATE " . static::TABLE . " SET phone = '" . $phone . "' WHERE user_hash = '" . $token . "'");
+
+        $response = [
+            'succes' => true,
+            'phone' => $phone
+        ];
+
+        echo json_encode($response);
+    }
+
+    public static function select_adress() {
+
+        $adress = $_POST['adress'];
+        $token = $_POST['token'];
+
+        $pdo = \Connection::getConnection();
+        $pdo->query(" UPDATE " . static::TABLE . " SET adress = '" . $adress . "' WHERE user_hash = '" . $token . "'");
+
+        $response = [
+            'succes' => true,
+            'adress' => $adress
+        ];
+
+        echo json_encode($response, JSON_UNESCAPED_UNICODE);
+    
     }
 
     // final - значит м етод нельзя переопределить в наследниках 
-    final public static function logIn() : ?string
+    final public static function logIn() : array
     {
-
-        error_reporting(0);
 
         //получаем логин и смотрим есть ли юзер с таким логином или имейлом
         $login = $_POST['login'];
@@ -68,8 +114,17 @@ final class User extends AbstractClasses\Unit
         //записываем токен в бд
         $pdo->query(" UPDATE " . static::TABLE . " SET user_hash = '$token' WHERE id = " . $row['id'] );
 
+        $name = $row['name'];
+        $e_mail = $row['e_mail'];
+        $adress = $row['adress'];
+        $phone = $row['phone'];
+
+        $array = array();
+
+        array_push($array, $token, $name, $e_mail, $phone, $adress);
+
         //возвращаем token
-        return $token;
+        return $array;
     }
 
     public static function exists()  : bool

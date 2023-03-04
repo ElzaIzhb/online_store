@@ -217,13 +217,18 @@
                     //если да, то отрисовываем дальше страницу кабинета
                     personalaccount();
 
+                    document.getElementById('pers_name').value = date['name'];
+                    document.getElementById('pers_mail').value = date['e-mail'];
+                    document.getElementById('pers_phone').value = date['phone'];
+                    document.getElementById('pers_adress').value = date['adress'];
+
                 }
 
              }
         }
 
         //собираем ссылку для запроса
-        let link = 'http://localhost:80/?check';
+        let link = 'http://localhost/?check';
         
         //конфигурируем объект
         requestObj.open('POST', link, false);
@@ -281,21 +286,20 @@
 
                         let token = date['token'];
 
-                        console.log(token);
-
                         localStorage.setItem('token', token);
-
-
-            
                         //очищаем страницу
                         clearPage();
-            
-                        //проверка есть ли этот пользователь в бд - верно ли все ввел
             
                         //если да, то отрисовываем дальше страницу кабинета
                         personalaccount();
             
                         document.getElementById('lk').classList.add('butpers1');
+
+                        document.getElementById('pers_name').value = date['name'];
+                        document.getElementById('pers_mail').value = date['e-mail'];
+                        document.getElementById('pers_phone').value = date['phone'];
+                        document.getElementById('pers_adress').value = date['adress'];
+
                         }
                     }
                 }
@@ -324,9 +328,9 @@
 
     function deleteAccount(){
 
-        confirm('Вы уверены,что хотите удалить аккаунт?');
+        let result = confirm('Вы уверены,что хотите удалить аккаунт?');
 
-        if (confirm) {
+        if (result == true) {
 
             let data = "token=" + encodeURIComponent(hash);
 
@@ -349,7 +353,77 @@
             //отрисовываем в main шаблон личного кабинета
             main.innerHTML = templatePerson1;
 
+        } 
+    }
+
+    function select_phone() {
+
+        let phone = document.getElementById('pers_phone').value;
+
+        //1. записать в бд те данные, которые пользователь записал в первый раз или изменил адрес и телефон
+        let data = "phone=" + encodeURIComponent(phone) + "&token=" + encodeURIComponent(hash);
+    
+            // создаём объкт который умеет отправлять запросы
+            let requestObj = new XMLHttpRequest();
+
+            requestObj.onreadystatechange = function() {
+                if (requestObj.readyState == XMLHttpRequest.DONE) {
+                    let date = JSON.parse(requestObj.responseText);
+
+                    let response = date['phone'];
+
+                    phone = response;
+
+
+            }
         }
+
+        // собираем ссылку для запроса
+        let link = 'http://localhost/?select_phone';
+                
+        //конфигурируем объект
+        requestObj.open('POST', link, false);
+             
+        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+             
+        // отправляем запрос
+        requestObj.send(data);
+
+    }
+
+    function select_adress() {
+
+        let phone = document.getElementById('pers_adress').value;
+
+        //1. записать в бд те данные, которые пользователь записал в первый раз или изменил адрес и телефон
+        let data = "adress=" + encodeURIComponent(phone) + "&token=" + encodeURIComponent(hash);
+    
+            // создаём объкт который умеет отправлять запросы
+            let requestObj = new XMLHttpRequest();
+
+            requestObj.onreadystatechange = function() {
+                if (requestObj.readyState == XMLHttpRequest.DONE) {
+                    let date = JSON.parse(requestObj.responseText);
+
+                    let response = date['adress'];
+
+                    adress = response;
+
+                    
+            }
+        }
+
+        // собираем ссылку для запроса
+        let link = 'http://localhost/?select_adress';
+                
+        //конфигурируем объект
+        requestObj.open('POST', link, false);
+             
+        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+             
+        // отправляем запрос
+        requestObj.send(data);
+
     }
 
     function personalaccount(){
@@ -359,6 +433,7 @@
         main.innerHTML += document.getElementById('personalaccount').innerHTML;
         main.style.padding = '40px';
         document.getElementById('lk').classList.add('butpers1');
+
     }
 
     function renderOrders() {
@@ -1887,7 +1962,7 @@
 
                         if (date["success"]) {
         
-                            personalaccount();
+                            main.innerHTML = templatePerson1;
         
                         }
                         else if (date["reason"] == "already exist") {

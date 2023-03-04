@@ -499,36 +499,21 @@
 			<div>
 				<div class="form-text1">Имя</div>
 				<div class="flex">
-					<input class="form-area1"  type="text"  autocomplete="off" required>
-					<img class="imgg" src="img/84380.png">
+					<input class="form-area1" id="pers_name" type="text"  autocomplete="off" readonly>
 				</div>
 				<div class="form-text1">Телефон</div>
 				<div class="flex">
-					<input class="form-area1"  type="text"  autocomplete="off" required>
-					<img class="imgg" src="img/84380.png">
+					<input class="form-area1" id="pers_phone" type="text"  autocomplete="off" onchange="select_phone()">
 				</div>
 				<div class="form-text1">E-mail</div>
 				<div class="flex">
-					<input class="form-area1" id="e-mail" type="e-mail" name="e-mail" autocomplete="off" required>
-					<img class="imgg" src="img/84380.png">
+					<input class="form-area1" id="pers_mail" type="e-mail" name="e-mail" autocomplete="off"readonly>
 				</div>
 				<div class="form-text1">Адрес</div>
 				<div class="flex">
-					<input class="form-area1"  type="text"  autocomplete="off" required>
-					<img class="imgg" src="img/84380.png">
+					<input class="form-area1" id="pers_adress" type="text"  autocomplete="off" onchange="select_adress()">
 				</div>
-			</div>
-			<div class="">
-				<div class="form-text1">Логин</div>
-				<div class="flex">
-					<input class="form-area1" id="login" type="text" name="login" autocomplete="off" required>
-					<img class="imgg" src="img/84380.png">
-				</div>
-				<div class="form-text1">Пароль</div>
-				<div class="flex">
-					<input class="form-area1" id="password" type="text" name="password" autocomplete="off" required>
-					<img class="imgg" src="img/84380.png">
-				</div>
+				<button class="form-submit">Сохранить</button>
 			</div>
 		</div>
 	</template>

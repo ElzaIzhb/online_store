@@ -75,3 +75,16 @@ if (isset($_GET['deleteUser'])) {
 User::deleteUser();
             
 }
+
+
+if (isset($_GET['select_phone'])) {
+
+User::select_phone();
+                
+}
+
+if (isset($_GET['select_adress'])) {
+
+    User::select_adress();
+                    
+}
