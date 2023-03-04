@@ -1856,6 +1856,7 @@
             
 
                bskContainer.innerHTML += templateGoodsInBasket.replace('${goods_img_mini}', data[i]['photo'])
+                                                              .replace('${ind_goods_id}', data[i]['id'])
                                                               .replace('${bsk_goods_title}', data[i]['name'])
                                                               .replace('${bsk_goods_id}', i)
                                                               .replace('${N}', data[i]['quantity'])
