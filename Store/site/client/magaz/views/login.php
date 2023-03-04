@@ -40,13 +40,13 @@
                                 
                                 <div class="text-center w-75 m-auto">
                                     <h4 class="text-dark-50 text-center pb-0 fw-bold">Войти</h4>
-                                    <p class="text-muted mb-4">Пожалуйста введите логин и пароль.</p>
+                                    <p class="text-muted mb-4">Введите логин и пароль.</p>
                                 </div>
 
                                 <form method="POST" action="?login">
                                     <div class="mb-3">
-                                        <label for="emailaddress" class="form-label">Ваша почта</label>
-                                        <input class="form-control" type="email" name="email" autocomplete="on" id="emailaddress" required="" placeholder="Введите ваш email">
+                                        <label for="emailaddress" class="form-label">Логин</label>
+                                        <input class="form-control" type="email" name="email" autocomplete="on" id="emailaddress" required="" placeholder="Введите почту">
                                     </div>
 
                                     <div class="mb-3">

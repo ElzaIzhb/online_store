@@ -42,7 +42,7 @@
                                 <form method="POST" action="?recovery">
                                     <div class="mb-3">
                                         <label for="emailaddress" name="email" id="email" autocomplete="on" class="form-label">Почта</label>
-                                        <input class="form-control" type="email" id="emailaddress" required="" placeholder="Введите вашу почту">
+                                        <input class="form-control" type="email" id="emailaddress" required="" placeholder="Введите почту">
                                     </div>
 
                                     <div class="mb-0 text-center">
@@ -55,7 +55,7 @@
 
                         <div class="row mt-3">
                             <div class="col-12 text-center">
-                                <p class="text-muted">Перейти на страницу <a href="/" class="text-muted ms-1"><b>Авторизация</b></a></p>
+                                <p class="text-muted">Перейти на страницу <a href="/client/magaz/?signup" class="text-muted ms-1"><b>Авторизация</b></a></p>
                             </div> <!-- end col -->
                         </div>
                         <!-- end row -->

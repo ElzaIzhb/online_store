@@ -3,18 +3,18 @@
 //чтобы получить доступ из нашей странички
 header('Access-Control-Allow-Origin: *');
 
-/*
+
 require_once('../../classes/autoload.php');
 
-if (isset($_POST['popularity'])) {
-
-   //обновляем значение popularity у товара
-   $popularity =  $_POST['popularity'];
-   $goods = new Good($_POST['id']);
-   $goods->updateField($popularity);
+if (isset($_POST['popularity']) ) {
+    Good::updateLine();
 }
 
-*/
+if (isset($_POST['rating'])) {
+    Good::updateLine();
+}
+
+/*
 
 $host = 'mysql';
 $db   = 'inordic';
@@ -78,7 +78,7 @@ if (isset($_POST['popularity'])) {
 
             }
  
-            return true;
+            return $result;
 
          }
 
@@ -128,6 +128,8 @@ if (isset($_POST['popularity'])) {
 
             }
  
-            return true;
+            return $result;
 
          }
+
+         */

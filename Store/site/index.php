@@ -8,6 +8,12 @@ Good::getGoods();
 
 }
 
+if (isset($_GET['ids'])) {
+
+    Category::getGoodsWithCategories();
+    
+}
+
 if (isset($_GET['allcategories'])) {
 
 Category::getAllCategories();
@@ -69,9 +75,3 @@ if (isset($_GET['deleteUser'])) {
 User::deleteUser();
             
 }
-
-if (isset($_POST['updateField'])) {
-    $field = $_POST['updateField'];
-    Good::updateLine()[$field]; //???
-                
-    }

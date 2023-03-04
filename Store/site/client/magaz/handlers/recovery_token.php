@@ -7,6 +7,6 @@ if( $_SESSION['recovery_token'] == $_GET['recovery_token'] ){
   exit;
 } else {
   $_SESSION['message'][] = 'Некорректная ссылка восстановления';
-  header('Location: /?recovery');
+  header('Location: /client/magaz/?recovery');
   exit;    
 }
