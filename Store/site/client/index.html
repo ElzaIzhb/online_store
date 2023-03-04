@@ -255,7 +255,7 @@
 				<div class="card-in-category_img" style="background-image: url('${goods_img}');">
 					<div class="favourite-on-goods" onclick="addToFavourites(${ind_goods_id})"></div>
 					<div class="delete-goods delete-from-favs hidden" onclick="delFromFavourites(${ind_goods_id})">&#10006;</div>
-					<button class="btn-add-to-basket popularity-counter" onclick="addToBasket(${bsk_goods_id}); popularityCounter();">Добавить в корзину</button>
+					<button class="btn-add-to-basket popularity-counter" onclick="addToBasket(${category_id},${bsk_goods_id}); popularityCounter();">Добавить в корзину</button>
 				</div>
 				<div class="info-under-img">
 					<div class="price-line">
@@ -339,7 +339,7 @@
 						<div class="crossed-out-price bigger">${crssd} р.</div>
 						<div class="sale-num bigger">-${sale}%</div>
 					</div>
-					<button class="btn-to-basket popularity-counter box-shadow" onclick="addToBasket(${bsk_goods_id},'${goods_title}'); popularityCounter(0);">В корзину</button>
+					<button class="btn-to-basket popularity-counter box-shadow" onclick="addToBasket(${category_id},${bsk_goods_id},'${goods_title}'); popularityCounter(0);">В корзину</button>
 					<div class="dotted-line"></div>
 					<div class="goods-description">
 						<p><b>Состав:</b></p>
@@ -433,9 +433,9 @@
 	<!-- Шаблон для карточек товаров, добавленных в корзину -->
 	<template id="tmpl_goods-in-basket">
 		<div class="chosen-goods flex jcs">
-			<div class="bsk-goods-img" style="background-image: url('${goods_img_mini}');"></div>
+			<div class="bsk-goods-img" style="background-image: url('${goods_img_mini}');" onclick="renderCard(${category_id},${ind_goods_id})"></div>
 			<div class="bsk-goods-info flex vertical-flex">
-				<div class="bsk-goods-title" data-ind_id="${ind_goods_id}">
+				<div class="bsk-goods-title" data-ind_id="${ind_goods_id}" onclick="renderCard(${category_id},${ind_goods_id})">
 					<p>${bsk_goods_title}</p>
 				</div>
 				<div class="qnt flex aic">

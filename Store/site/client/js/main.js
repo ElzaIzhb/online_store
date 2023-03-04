@@ -567,6 +567,7 @@
             flexFrameContainer.innerHTML += templateCategory.replace('${goods_img}', data2[i]['photo'])
                                                             .replace('${ind_goods_id}', data2[i]['id'])
                                                             .replace('${ind_goods_id}', data2[i]['id'])
+                                                            .replace('${category_id}', data2[i]['category_id'])
                                                             .replace('${bsk_goods_id}', data2[i]['id'])
                                                             .replace('${price}', Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100))))
                                                             .replace('${crssd}', data2[i]['price'])
@@ -647,6 +648,7 @@
                                       .replace('${price}', Math.round(parseInt(data['price']) - (parseInt(data['price']) * (data['sale'] ? (parseInt(data['sale']) / 100) : 0 / 100))))
                                       .replace('${crssd}', data['price'])
                                       .replace('${sale}', (data['sale']) ? data['sale'] : '0')
+                                      .replace('${category_id}', data['category_id'])
                                       .replace('${bsk_goods_id}', data['id'])
                                       .replace('${goods_title}', data['name'])
                                       .replace('${goods_description}', data['consist']);
@@ -1037,14 +1039,15 @@
 
             //если популярность пустая, меняем на 1
            if (currentPopularity === 'null' || currentPopularity == 0) {
-                currentPopularity = newPopularity + 1;
+                event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML = newPopularity + 1;
+                console.log('популярность ' + event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML);
             
             //если уже есть числовое значение, достаем его и перезаписываем
             } else {
                 
                 newPopularity = parseInt(currentPopularity) + 1;
                 event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML = newPopularity;
-                console.log(event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML);
+                console.log('популярность ' + event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML);
             }
             
             //находим индивидуальный id товара из дата-атрибута
@@ -1074,13 +1077,13 @@
 
     //функция прибавления значения к total_quantity в хранилище
     function plusOne(l_c_cell, class_name) {
-        console.log(l_c_cell);
-        console.log(class_name);
+        //console.log(l_c_cell);
+        //console.log(class_name);
         let newValue = 0;
 
         //достаем сохраненное значение из хранилища
         let currentValue = parseInt(localStorage.getItem(l_c_cell));
-        console.log(localStorage.getItem(l_c_cell));
+        //console.log(localStorage.getItem(l_c_cell));
         console.log(currentValue);
 
         //и прибавляем 1 уже к нему, записывая в переменную
@@ -1180,7 +1183,7 @@
     }
 
     //функция добавления товаров в Корзину
-    function addToBasket(ind_goods_id) {
+    function addToBasket(category_id, ind_goods_id) {
         console.log(ind_goods_id);
 
         //для ОБЩЕГО СЧЕТЧИКА НА ИКОНКЕ КОРЗИНЫ проверяем, не было ли что-то уже добавлено в Корзину
@@ -1215,7 +1218,7 @@
         if (localStorage.getItem('basket') == null) {
 
             //передаем на сервер id выбранного товара, чтобы получить о нем нужные данные в виде jsona и положить в local storage
-            let jsonGoodsInBasket = sendRequestGET('http://localhost:80/basket/get/?id=' + ind_goods_id);
+            let jsonGoodsInBasket = sendRequestGET('http://localhost:80/?category_id=' + category_id + '&&id=' + ind_goods_id);
             //console.log(jsonGoodsInBasket);
 
             //помещаем данный товар в хранилище
@@ -1275,7 +1278,7 @@
 
                 let currentBasket = localStorage.getItem('basket');
 
-                //console.log(currentBasket);
+                console.log(currentBasket);
 
                 //console.log(localStorage.getItem('basket').includes(arr[i]['name']));
              
@@ -1283,7 +1286,7 @@
             } else if (!containsSpecific(arr, ind_goods_id)) {
 
                 //передаем на сервер id выбранного товара, чтобы получить о нем нужные данные в виде jsona и положить в local storage
-                let jsonGoodsInBasket = sendRequestGET('http://localhost:80/basket/get/?id=' + ind_goods_id);
+                let jsonGoodsInBasket = sendRequestGET('http://localhost:80/?category_id=' + category_id + '&&id=' + ind_goods_id);
 
                 //превращаем в массив, чтобы добавить ему ключ quantity со значением 1
                 let uniqueGoods = JSON.parse(jsonGoodsInBasket);
@@ -1856,6 +1859,10 @@
             
 
                bskContainer.innerHTML += templateGoodsInBasket.replace('${goods_img_mini}', data[i]['photo'])
+                                                              .replace('${category_id}', data[i]['category_id'])
+                                                              .replace('${ind_goods_id}', data[i]['id'])
+                                                              .replace('${ind_goods_id}', data[i]['id'])
+                                                              .replace('${category_id}', data[i]['category_id'])
                                                               .replace('${ind_goods_id}', data[i]['id'])
                                                               .replace('${bsk_goods_title}', data[i]['name'])
                                                               .replace('${bsk_goods_id}', i)

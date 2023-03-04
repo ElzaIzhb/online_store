@@ -1125,6 +1125,7 @@ select {
     /* border-radius: 18px; */
     min-width: 130px;
     height: 130px;
+    cursor: pointer;
 }
 
 .bsk-goods-info {
@@ -1138,6 +1139,7 @@ select {
 .bsk-goods-title > p {
     text-align: left;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .qnt {
