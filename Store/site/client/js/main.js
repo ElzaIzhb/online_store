@@ -261,23 +261,37 @@
 
     //вся завязка на айдишнике товара
 
-    function order(goods_id) {
+    function order() {
 
-        let data = "token=" + encodeURIComponent(hash) + "&good_id=" + encodeURIComponent(goods_id);
+        let element =  document.querySelectorAll('.bsk-goods-title');
 
-         // создаём объкт который умеет отправлять запросы
-         let requestObj = new XMLHttpRequest();
+        let array = [];
 
-        // собираем ссылку для запроса
-        let link = 'http://localhost/?order';
-                
-        //конфигурируем объект
-        requestObj.open('POST', link, false);
-    
-        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    
-        // отправляем запрос
-        requestObj.send(data);
+        array = element;
+
+        for (i = 0; i < array.length; i++) {
+
+            let row = array[i].getAttribute("data-ind_id");
+
+            // goods_id = row;
+
+            let data = "token=" + encodeURIComponent(hash) + "&good_id=" + encodeURIComponent(row);
+
+            // создаём объкт который умеет отправлять запросы
+            let requestObj = new XMLHttpRequest();
+   
+           // собираем ссылку для запроса
+           let link = 'http://localhost/?order';
+                   
+           //конфигурируем объект
+           requestObj.open('POST', link, false);
+       
+           requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+       
+           // отправляем запрос
+           requestObj.send(data);
+
+        }
 
     }
 
@@ -459,6 +473,34 @@
     }
 
     function renderOrders() {
+
+
+        //1. записать в бд те данные, которые пользователь записал в первый раз или изменил адрес и телефон
+        let data = "token=" + encodeURIComponent(hash);
+    
+            // создаём объкт который умеет отправлять запросы
+            let requestObj = new XMLHttpRequest();
+
+            requestObj.onreadystatechange = function() {
+                if (requestObj.readyState == XMLHttpRequest.DONE) {
+                    let date = JSON.parse(requestObj.responseText);
+
+                    console.log(date);
+            }
+        }
+
+        // собираем ссылку для запроса
+        let link = 'http://localhost/?getOrder';
+                
+        //конфигурируем объект
+        requestObj.open('POST', link, false);
+             
+        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+             
+        // отправляем запрос
+        requestObj.send(data);
+
+
         //очищаем страницу
         clearPage();
 
@@ -610,21 +652,21 @@
                 }
             }
 
-            //проверяем товар на наличие
-            if (data2[i]['quantity'] == null || parseInt(data2[i]['quantity']) < 1 ) {
-                document.getElementsByClassName('card-in-category')[i].style.opacity = '50%';
-                document.getElementsByClassName('price-line')[i].innerHTML = 'Нет в наличии';
-                document.getElementsByClassName('btn-add-to-basket')[i].classList.toggle('hidden-important');    
-            }
+            // //проверяем товар на наличие
+            // if (data2[i]['quantity'] == null || parseInt(data2[i]['quantity']) < 1 ) {
+            //     document.getElementsByClassName('card-in-category')[i].style.opacity = '50%';
+            //     document.getElementsByClassName('price-line')[i].innerHTML = 'Нет в наличии';
+            //     document.getElementsByClassName('btn-add-to-basket')[i].classList.toggle('hidden-important');    
+            // }
 
-            //в отдельном цикле делаем проверку на наличие скидки (т.к. в результате манипуляций в предыдущем if некоторые строки с ценами были скрыты)
-            for (let j = 0; j < main.getElementsByClassName('sale-num').length; j++) {
-                //скрываем зачеркнутую цену и скидку, если нулевая
-                if (main.getElementsByClassName('sale-num')[j].innerHTML === '-0%') {
-                    document.getElementsByClassName('crossed-out-price')[j].style.display = 'none';
-                    document.getElementsByClassName('sale-num')[j].style.display = 'none';
-                }
-            }
+            // //в отдельном цикле делаем проверку на наличие скидки (т.к. в результате манипуляций в предыдущем if некоторые строки с ценами были скрыты)
+            // for (let j = 0; j < main.getElementsByClassName('sale-num').length; j++) {
+            //     //скрываем зачеркнутую цену и скидку, если нулевая
+            //     if (main.getElementsByClassName('sale-num')[j].innerHTML === '-0%') {
+            //         document.getElementsByClassName('crossed-out-price')[j].style.display = 'none';
+            //         document.getElementsByClassName('sale-num')[j].style.display = 'none';
+            //     }
+            // }
                 
         }
 

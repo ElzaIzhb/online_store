@@ -91,6 +91,12 @@ if (isset($_GET['select_adress'])) {
 
 if (isset($_GET['order'])) {
 
+    Order::createOrder();
+                    
+}
+
+if (isset($_GET['getOrder'])) {
+
     Order::getOrder();
                     
 }
