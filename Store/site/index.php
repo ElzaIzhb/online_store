@@ -87,3 +87,9 @@ if (isset($_GET['select_adress'])) {
     User::select_adress();
                     
 }
+
+if (isset($_GET['order'])) {
+
+    Order::getOrder();
+                    
+}

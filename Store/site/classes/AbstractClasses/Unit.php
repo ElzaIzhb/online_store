@@ -234,5 +234,27 @@ abstract class Unit
 
         }
 
+        public static function getOrder() {
+
+            $token = $_POST['token'];
+
+            $good_id = $_POST['good_id'];
+
+            $pdo = \Connection::getConnection();
+
+            $sql = " SELECT * FROM " . static::TABLE . " WHERE user_hash = '" . $token . "'";
+
+            $result = $pdo->query($sql);
+
+            $row = $result->fetch();
+
+            $name = $row['name'];
+
+            $sql_ins = " INSERT INTO " . static::TABLE2 . " (`name`, `good`) VALUES('$name', '$good_id') ";
+        
+            $pdo->query($sql_ins);
+
+        }
+
 
 }
