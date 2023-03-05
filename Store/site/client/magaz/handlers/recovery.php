@@ -16,14 +16,14 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
     mysqli_stmt_fetch($stmt);
  
     if( !$emailDB ){
-      $_SESSION['message'][] = 'Восстановление несуществующего аккаунта';
-      header('Location: client/magaz');
+      $_SESSION['message'][] = 'Неверная почта';
+      header('Location: /client/magaz/?recovery'); //не уверена
       exit;
     }
 
     if( $verifiedDB == 'N' ){
       $_SESSION['message'][] = 'До входа подтвердите регистрацию - нажмите на ссылку в электронной почте';
-      header('Location: client/magaz');
+      header('Location: /client/magaz');
       exit;
     }
     // генерация токена
@@ -37,7 +37,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ){
     mail($to, $subject, $msg, $headers);
 
     $_SESSION['message'][] = 'На почту отправлена ссылка для восстановления пароля';
-    header('Location: client/magaz');
+    header('Location: /client/magaz/?login');
     exit; 
   }
 }

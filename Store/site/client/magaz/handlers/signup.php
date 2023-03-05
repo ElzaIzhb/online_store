@@ -15,18 +15,18 @@ $pass2= $_POST['pass2'] ?? '';
 
 $_SESSION['message'] = [];
 if( !$email ) {
-  $_SESSION['message'][] = 'Задайте корректный емейл';  
-  header('Location: ?signup');
+  $_SESSION['message'][] = 'Задайте корректную почту';  
+  header('Location: /client/magaz/?signup');
   exit;
 }
 if( !$pass1 || !$pass2 ) {
   $_SESSION['message'][] = 'Задайте пароль и подтверждение';
-  header('Location: ?signup');
+  header('Location: /client/magaz/?signup');
   exit;
 }
 if( $pass1 != $pass2 ) {
   $_SESSION['message'][] = 'Укажите одинаковые пароли';
-  header('Location: ?signup');
+  header('Location: /client/magaz/?signup');
   exit;
 }
 
@@ -37,8 +37,8 @@ if (mysqli_stmt_prepare($stmt, 'SELECT idusers FROM users WHERE email=?')) {
   mysqli_stmt_bind_result($stmt, $idusers);
   mysqli_stmt_fetch($stmt);
   if( $idusers ){
-    $_SESSION['message'][] = 'Email уже занят';
-    header('Location: ?signup');
+    $_SESSION['message'][] = 'Почта уже занята';
+    header('Location: /client/magaz/?signup');
     exit;
   }
   
@@ -52,15 +52,15 @@ $stmt = mysqli_stmt_init($db);
 if (mysqli_stmt_prepare($stmt, $query)) {
   mysqli_stmt_bind_param($stmt, "s", $email);
   mysqli_stmt_execute($stmt);
-  $_SESSION['message'][] = 'Проверьте емейл и подтвердите регистрацию';
+  $_SESSION['message'][] = 'Проверьте почту и подтвердите регистрацию';
 
   
   $subject = "Подтверждение регистрации {$_SERVER['SERVER_NAME']}";
-  $msg = "Нажмите на <a href=\"http://{$_SERVER['SERVER_NAME']}?confirmation_token=" . $confirmation_token . "\">ссылку</a> для подтверждения email";  
+  $msg = "Нажмите на <a href=\"http://{$_SERVER['SERVER_NAME']}?confirmation_token=" . $confirmation_token . "\">ссылку</a> для подтверждения почты";  
   $headers = "From: no-reply@{$_SERVER['SERVER_NAME']}";
   mail($to, $subject, $msg, $headers);
 
-  header('Location: client/magaz');
+  header('Location: /client/magaz');
 }
 
 }

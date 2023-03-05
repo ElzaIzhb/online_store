@@ -19,6 +19,9 @@
     //получем данные шаблона Карточки
     let templateCard = document.getElementById('tmpl-card').innerHTML;
 
+    //получаем данные шаблона с карточками товаров внутри Избранного
+    let templateFavourites = document.getElementById('tmpl-favourites').innerHTML;
+
     //получем данные шаблона Корзины
     let templateBasket = document.getElementById('tmpl-basket').innerHTML;
 
@@ -56,6 +59,24 @@
         document.getElementById('counter').classList.add('hidden');
     }
 
+    //не теряем значение счетчика Избранного при обновлении страницы
+    if (localStorage.getItem('favourites_quantity') != null) {
+
+        let json = localStorage.getItem('favourites_quantity');
+        console.log(json);
+        
+        //достаем из хранилища сохраненное значение
+        document.getElementById('counter').innerHTML = localStorage.getItem('favourites_quantity');
+        
+        //и делаем счетчик видимым
+        document.getElementById('counter2').classList.remove('hidden');
+
+    } else {
+
+        //снова скрываем счетчик
+        document.getElementById('counter2').classList.add('hidden');
+    }
+
     if(document.querySelectorAll('.rating')) {
         const ratings = document.querySelectorAll('.rating');
         //console.log(document.querySelectorAll('.rating'));
@@ -65,8 +86,8 @@
         
 
     //основная функция по рейтингам
-    function showRatings(goods_id) {
-        let id = goods_id;
+    function showRatings(ind_goods_id) {
+        let id = ind_goods_id;
         let ratingActive;
         let ratingValue;
         const ratings = document.querySelectorAll('.rating');
@@ -118,7 +139,7 @@
 
                 //получаем каждый из рейтингов на странице
                 const ratingItem = ratingItems[i];
-                console.log(ratingItem);
+                //console.log(ratingItem);
 
                 //событие при хождении мыши по звездам
                 ratingItem.addEventListener('mouseenter', function (e) {
@@ -566,25 +587,45 @@
         for (let i = 0; i < data2.length; i++) {
             //выводим данные шаблона
             flexFrameContainer.innerHTML += templateCategory.replace('${goods_img}', data2[i]['photo'])
+                                                            .replace('${ind_goods_id}', data2[i]['id'])
+                                                            .replace('${ind_goods_id}', data2[i]['id'])
+                                                            .replace('${category_id}', data2[i]['category_id'])
                                                             .replace('${bsk_goods_id}', data2[i]['id'])
-                                                            .replace('${goods_title}', data2[i]['name'])
-                                                            .replace('${goods_id}', i)
                                                             .replace('${price}', Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100))))
                                                             .replace('${crssd}', data2[i]['price'])
                                                             .replace('${sale}', (data2[i]['sale']) ? data2[i]['sale'] : '0')
                                                             .replace('${category_id}', data2[i]['category_id'])
-                                                            .replace('${goods_id}', i)
+                                                            .replace('${ind_goods_id}', data2[i]['id'])
                                                             .replace('${category_id}', data2[i]['category_id'])
                                                             .replace('${ind_goods_id}', data2[i]['id'])
                                                             .replace('${goods_title}', data2[i]['name'])
                                                             .replace('${rating}', data2[i]['rating'] ? data2[i]['rating'] : '0')
                                                             .replace('${popularity}', data2[i]['popularity'] ? data2[i]['popularity'] : '0');
-
-            if (main.getElementsByClassName('sale-num')[i].innerHTML === '-0%') {
-                document.getElementsByClassName('crossed-out-price')[i].style.display = 'none';
-                document.getElementsByClassName('sale-num')[i].style.display = 'none';
+            
+            //если на странице есть товар, добавленный в Избранное, отображать его сердечко
+            if (localStorage.getItem('favourites')) {
+                let faves = JSON.parse(localStorage.getItem('favourites'));
+                if (faves === data2[i]['id'] || contains(faves, data2[i]['id'])) {
+                    flexFrameContainer.getElementsByClassName('favourite-on-goods')[i].classList.toggle('visibility-important'); //НЕ РАБОТАЕТ
+                }
             }
 
+            //проверяем товар на наличие
+            if (data2[i]['quantity'] == null || parseInt(data2[i]['quantity']) < 1 ) {
+                document.getElementsByClassName('card-in-category')[i].style.opacity = '50%';
+                document.getElementsByClassName('price-line')[i].innerHTML = 'Нет в наличии';
+                document.getElementsByClassName('btn-add-to-basket')[i].classList.toggle('hidden-important');    
+            }
+
+            //в отдельном цикле делаем проверку на наличие скидки (т.к. в результате манипуляций в предыдущем if некоторые строки с ценами были скрыты)
+            for (let j = 0; j < main.getElementsByClassName('sale-num').length; j++) {
+                //скрываем зачеркнутую цену и скидку, если нулевая
+                if (main.getElementsByClassName('sale-num')[j].innerHTML === '-0%') {
+                    document.getElementsByClassName('crossed-out-price')[j].style.display = 'none';
+                    document.getElementsByClassName('sale-num')[j].style.display = 'none';
+                }
+            }
+                
         }
 
         //РЕЙТИНГ
@@ -598,7 +639,7 @@
     }
 
     //функция отрисовки Карточки
-    function renderCard(category_id,goods_id) {
+    function renderCard(category_id,ind_goods_id) {
         //очищаем страницу
         clearPage();
 
@@ -607,38 +648,45 @@
             document.getElementById('input-search-top').value = '';
         }
 
-        let json = sendRequestGET("http://localhost:80/?category_id=" + category_id);
+        let json = sendRequestGET("http://localhost:80/?category_id=" + category_id + '&&id=' + ind_goods_id);
 
         //раскодируем данные
-        let data = JSON.parse(json);
+        let data = JSON.parse(json)[0];
 
-        console.log(category_id,goods_id);
+        console.log(category_id,ind_goods_id);
         console.log(data);
 
         //отрисовываем в main шаблон Карточки
         main.innerHTML += templateCard.replace('${category_id}', category_id)
-                                      .replace('${category_title}', data[goods_id]['category'])
-                                      .replace('${goods_title}', data[goods_id]['name'])
-                                      .replace('${rating}', data[goods_id]['rating'])
-                                      .replace('${goods_id}', data[goods_id]['id'])
-                                      .replace('${popularity}', data[goods_id]['popularity'])
+                                      .replace('${category_title}', data['category'])
+                                      .replace('${goods_title}', data['name'])
+                                      .replace('${ind_goods_id}', data['id'])
+                                      .replace('${rating}', data['rating'])
+                                      .replace('${popularity}', data['popularity'])
                                       .replace('${category_id}', category_id)
-                                      .replace('${ind_goods_id}', data[goods_id]['id'])
-                                      .replace('${goods_title}', data[goods_id]['name'])
-                                      .replace('${goods_img_big}', data[goods_id]['photo'])
-                                      .replace('${price}', Math.round(parseInt(data[goods_id]['price']) - (parseInt(data[goods_id]['price']) * (data[goods_id]['sale'] ? (parseInt(data[goods_id]['sale']) / 100) : 0 / 100))))
-                                      .replace('${crssd}', data[goods_id]['price'])
-                                      .replace('${sale}', (data[goods_id]['sale']) ? data[goods_id]['sale'] : '0')
-                                      .replace('${bsk_goods_id}', data[goods_id]['id'])
-                                      .replace('${goods_title}', data[goods_id]['name'])
-                                      .replace('${goods_id}', [goods_id])
-                                      .replace('${goods_description}', data[goods_id]['consist']);
+                                      .replace('${ind_goods_id}', data['id'])
+                                      .replace('${goods_title}', data['name'])
+                                      .replace('${goods_img_big}', data['photo'])
+                                      .replace('${price}', Math.round(parseInt(data['price']) - (parseInt(data['price']) * (data['sale'] ? (parseInt(data['sale']) / 100) : 0 / 100))))
+                                      .replace('${crssd}', data['price'])
+                                      .replace('${sale}', (data['sale']) ? data['sale'] : '0')
+                                      .replace('${category_id}', data['category_id'])
+                                      .replace('${bsk_goods_id}', data['id'])
+                                      .replace('${goods_title}', data['name'])
+                                      .replace('${goods_description}', data['consist']);
                                      
             //если скидки нет
             if (main.getElementsByClassName('sale-num bigger')[0].innerHTML === '-0%') {
                 document.getElementsByClassName('crossed-out-price')[0].style.display = 'none';
                 document.getElementsByClassName('sale-num')[0].style.display = 'none';
             }
+
+            //проверяем товар на наличие
+            if (data['quantity'] == null || parseInt(data['quantity']) < 1 ) {
+                document.querySelector('.price-line').innerHTML = 'Нет в наличии';
+                document.querySelector('.btn-to-basket').classList.add('hidden');
+            }
+            
         
         main.style.padding = '40px';
 
@@ -692,17 +740,20 @@
                 if ((Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100)))) >= priceFrom && (Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100)))) <= priceTo) {
                     
                     //заново отрисовываем этот товар
-                    flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data2[i]['category_id'])
-                                                                    .replace('${goods_id}', i)
+                    flexFrameContainer.innerHTML += templateCategory.replace('${goods_img}', data2[i]['photo'])
+                                                                    .replace('${ind_goods_id}', data2[i]['id'])
+                                                                    .replace('${ind_goods_id}', data2[i]['id'])
                                                                     .replace('${bsk_goods_id}', data2[i]['id'])
-                                                                    .replace('${goods_img}', data2[i]['photo'])
-                                                                    .replace('${goods_title}', data2[i]['name'])
                                                                     .replace('${price}', Math.round(parseInt(data2[i]['price']) - (parseInt(data2[i]['price']) * (data2[i]['sale'] ? (parseInt(data2[i]['sale']) / 100) : 0 / 100))))
                                                                     .replace('${crssd}', data2[i]['price'])
                                                                     .replace('${sale}', (data2[i]['sale']) ? data2[i]['sale'] : '0')
                                                                     .replace('${category_id}', data2[i]['category_id'])
-                                                                    .replace('${goods_id}', i)
-                                                                    .replace('${goods_title}', data2[i]['name']);
+                                                                    .replace('${ind_goods_id}', data2[i]['id'])
+                                                                    .replace('${category_id}', data2[i]['category_id'])
+                                                                    .replace('${ind_goods_id}', data2[i]['id'])
+                                                                    .replace('${goods_title}', data2[i]['name'])
+                                                                    .replace('${rating}', data2[i]['rating'] ? data2[i]['rating'] : '0')
+                                                                    .replace('${popularity}', data2[i]['popularity'] ? data2[i]['popularity'] : '0');
                     
                     for (let j = 0; j < flexFrameContainer.children.length; j++) {
                         //если нет скидки, не показываем ее                              
@@ -997,86 +1048,169 @@
     }
 
     //функция счетчика популярности товара (по количеству кликов на "добавить в корзину")
-    function popularityCounter(goods_id) {
+    function popularityCounter() {
 
-        console.log(goods_id);
+        //console.log(goods_id);
   
         updateCounter();
 
         function updateCounter() {
             
-            let currentPopularity = document.getElementsByClassName("popularity-value")[goods_id].innerHTML;
-            //console.log(document.getElementsByClassName("popularity-value")[goods_id].innerHTML);
+            let currentPopularity = event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML;
             let newPopularity = 0;
 
             //если популярность пустая, меняем на 1
            if (currentPopularity === 'null' || currentPopularity == 0) {
-               document.getElementsByClassName("popularity-value")[goods_id].innerHTML = newPopularity + 1;
-               //console.log(document.getElementsByClassName("popularity-value")[goods_id].innerHTML);
+                event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML = newPopularity + 1;
+                console.log('популярность ' + event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML);
             
             //если уже есть числовое значение, достаем его и перезаписываем
             } else {
                 
                 newPopularity = parseInt(currentPopularity) + 1;
-                //console.log(newPopularity);
-                document.getElementsByClassName("popularity-value")[goods_id].innerHTML = newPopularity;
-                //console.log(goods_id, document.getElementsByClassName("popularity-value")[goods_id].innerHTML);
+                event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML = newPopularity;
+                console.log('популярность ' + event.target.closest('.card-in-category').querySelector(".popularity-value").innerHTML);
             }
-
-            newPopularity = document.getElementsByClassName("popularity-value")[goods_id].innerHTML;
-            console.log(newPopularity);
             
             //находим индивидуальный id товара из дата-атрибута
-            let indGoodsId = document.getElementsByClassName("goods-title")[goods_id].getAttribute('data-ind_id');
-            console.log(goods_id + ' ' + indGoodsId + ' ' + document.getElementsByClassName("popularity-value")[goods_id].innerHTML);
+            let indGoodsId = event.target.closest('.card-in-category').querySelector(".goods-title").getAttribute('data-ind_id');
+            //console.log(goods_id + ' ' + indGoodsId + ' ' + document.getElementsByClassName("popularity-value")[goods_id].innerHTML);
 
             //обновляем в БД его популярность
-            //sendRequestGET('http://localhost:80/?id=' + indGoodsId + '&&popularity=' + newPopularity);
+            let data = "id=" + encodeURIComponent(indGoodsId) + "&popularity=" + encodeURIComponent(newPopularity);
 
-                let data = "id=" + encodeURIComponent(indGoodsId) + "&popularity=" + encodeURIComponent(newPopularity);
-    
-                // создаём объкт который умеет отправлять запросы
-                let requestObj = new XMLHttpRequest();
+            // создаём объект, который умеет отправлять запросы
+            let requestObj = new XMLHttpRequest();
+        
+            // собираем ссылку для запроса
+            let link = 'http://localhost:80/api/update/index.php';
             
-                // собираем ссылку для запроса
-                let link = 'http://localhost:80/api/update/index.php';
-                
-                //конфигурируем объект
-                requestObj.open('POST', link, false);
-            
-                requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            
-                // отправляем запрос
-                requestObj.send(data);
+            //конфигурируем объект
+            requestObj.open('POST', link, false);
+        
+            requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+            //отправляем запрос
+            requestObj.send(data);
         } 
     }
 
     
 
     //функция прибавления значения к total_quantity в хранилище
-    function plusOne() {
-
+    function plusOne(l_c_cell, class_name) {
+        //console.log(l_c_cell);
+        //console.log(class_name);
         let newValue = 0;
 
         //достаем сохраненное значение из хранилища
-        let currentValue = parseInt(localStorage.getItem('total_quantity'));
-    
+        let currentValue = parseInt(localStorage.getItem(l_c_cell));
+        //console.log(localStorage.getItem(l_c_cell));
+        console.log(currentValue);
+
         //и прибавляем 1 уже к нему, записывая в переменную
         newValue += parseInt(currentValue) + 1;
-        console.log("Товаров в корзине: " + newValue);
+        console.log("Добавлено: " + newValue);
     
         //выводим в верстке новое значение счетчика
-        document.getElementById('counter').innerHTML = newValue;
+        document.getElementById(class_name).innerHTML = newValue;
     
         //записываем новое значение счетчика в local storage
-        localStorage.setItem('total_quantity', newValue);
+        localStorage.setItem(l_c_cell, newValue);
+    }
+
+
+    //вспомогательная функция на проверку во всем массиве какого-то элемента
+    function contains(arr, elem) {
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === elem) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //localStorage.setItem('favourites', '');
+    //функция добавления в Избранное
+    function addToFavourites(ind_goods_id) {
+
+        //console.log(ind_goods_id);
+        /*
+        //для ОБЩЕГО СЧЕТЧИКА НА ИКОНКЕ ИЗБРАННОГО проверяем, не было ли что-то уже добавлено в Избранное
+        //если в хранилище пусто
+        
+        if (localStorage.getItem('favourites_quantity') == null ) {
+
+            //начинаем с 0 и добавляем +1 визуально к счетчику Избранного и делаем его видимым
+            let newValue = 0;
+            newValue += 1;
+            console.log("Товаров в Избранном: " + newValue);
+            document.getElementById('counter2').innerHTML = newValue;
+
+            //записываем новое значение счетчика в local storage
+            localStorage.setItem('favourites_quantity', newValue);
+
+            //и делаем счетчик видимым
+            document.getElementById('counter2').classList.remove('hidden');
+        
+        //если в хранилище уже что-то лежит
+        } else {
+            console.log(localStorage.getItem('favourites_quantity'));
+            //прибавляем +1 к значению в total_quantity хранилище
+            let l_c_cell = "'favourites_quantity'";
+            let class_name = "'counter2'";
+            plusOne(l_c_cell, class_name);
+        }
+        */
+
+        //console.log(ind_goods_id);
+        //добавляем товары, по которым кликнули на сердечко, в local storage
+        //добавление в localStorage
+        if (!localStorage.getItem('favourites')) {
+            localStorage.setItem('favourites', ind_goods_id);
+            console.log('+1 в Избранном');
+            //console.log(localStorage.getItem('favourites'));
+        } else {
+
+            let favArr = JSON.parse(localStorage.getItem('favourites'));
+            console.log(favArr);
+
+            //если в хранилище всего 1 id, преобразуем его в массив из 1 элемента
+            if (typeof(favArr) === 'number') {
+                let arr = [];
+                arr[0] = favArr;
+                favArr = arr;
+            }
+
+            //если в хранилище еще нет такого id, добавляем его
+            if (!contains(favArr, ind_goods_id)) {
+                let favouritesArr = [];
+                let currentFavourites = favouritesArr.concat(favArr);
+                //console.log(currentFavourites);
+                currentFavourites.push(ind_goods_id);
+                //console.log(currentFavourites);
+                let favourites = JSON.stringify(currentFavourites);
+                localStorage.setItem('favourites', favourites);
+                //console.log(localStorage.getItem('favourites'));
+                console.log('+1 в Избранном');
+            }
+            
+        }
+
+        //console.log(localStorage.getItem('favourites'));
+        //меняем пустые сердечки на розовые
+        event.target.closest('.card-in-category_img').querySelector('.favourite-on-goods').classList.toggle('visibility-important');
+        // event.target.closest('.card-in-category_img').querySelector('.favourite-on-goods').style.display = 'inline';
+
     }
 
     //функция добавления товаров в Корзину
-    function addToBasket(goods_id, goods_name) {
+    function addToBasket(category_id, ind_goods_id) {
+        console.log(ind_goods_id);
 
         //для ОБЩЕГО СЧЕТЧИКА НА ИКОНКЕ КОРЗИНЫ проверяем, не было ли что-то уже добавлено в Корзину
         //если в хранилище пусто
+        localStorage.getItem('total_quantity');
         if (localStorage.getItem('total_quantity') == null ) {
 
             //начинаем с 0 и добавляем +1 визуально к счетчику Корзины и делаем его видимым
@@ -1095,7 +1229,9 @@
         } else {
             
             //прибавляем +1 к значению в total_quantity хранилище
-            plusOne();
+            //let l_c_cell = "'total_quantity'";
+            //let class_name = "'counter'";
+            plusOne('total_quantity', 'counter');
         }
 
 
@@ -1104,20 +1240,18 @@
         if (localStorage.getItem('basket') == null) {
 
             //передаем на сервер id выбранного товара, чтобы получить о нем нужные данные в виде jsona и положить в local storage
-            let jsonGoodsInBasket = sendRequestGET('http://localhost:80/basket/get/?id=' + goods_id);
-            console.log(jsonGoodsInBasket);
+            let jsonGoodsInBasket = sendRequestGET('http://localhost:80/?category_id=' + category_id + '&&id=' + ind_goods_id);
+            //console.log(jsonGoodsInBasket);
 
-            
             //помещаем данный товар в хранилище
             //но сначала превращаем в массив, чтобы добавить ему ключ quantity со значением 1
             let arr = JSON.parse(jsonGoodsInBasket);
             arr[0]['quantity'] = 1;
-            console.log(arr);
+            //console.log(arr);
 
             //кодируем обратно в json и кладем в хранилище
             let json = JSON.stringify(arr);
             
-
             localStorage.setItem('basket', json);
             console.log('Первый товар в корзине, занесенный в хранилище: ' + localStorage.getItem('basket'));
 
@@ -1125,65 +1259,84 @@
         } else {
             //перебираем массив хранилища, чтобы проверить, не был ли уже добавлен товар с этим id
             let arr = JSON.parse(localStorage.getItem('basket'));
-            console.log(arr);
+            //console.log(arr);
 
-            //перебираем массив по его длине
-            for (let i = 0; i < arr.length; i++) {
-
-                //если это не первый товар с таким id
-                if (arr[i]['id'] === goods_id) { //после выполнения этого условия по всей длине цикла отберутся все повторяющиеся товары. Но как быть с остальными? Нужно также собрать все те, которые не прошли это условие, но нужны
-
-                    console.log('В следующей строке массив с повторяющимся товаром');
-                    console.log(arr);
-                    console.log('повторяется товар с id' + arr[i]['id']);
-
-                    //мы прибаляем ему +1 в quantity 
-                    arr[i]['quantity'] += 1;        
-                    console.log(arr[i]);
-
-                    //кодируем массив в json
-                    let json = JSON.stringify(arr);
-
-                    //и перезаписываем local storage
-                    localStorage.setItem('basket', json);
-
-                    let currentBasket = localStorage.getItem('basket');
-
-                    console.log(currentBasket);
-
-                    console.log(localStorage.getItem('basket').includes(arr[i]['name']));
-                 
-                //если это ПЕРВЫЙ товар с таким id (доп. проверка на отсутствие вхождения в хранилище товара с таким названием)
-                } else if (localStorage.getItem('basket').includes(goods_name) == false) {
-
-                    //передаем на сервер id выбранного товара, чтобы получить о нем нужные данные в виде jsona и положить в local storage
-                    let jsonGoodsInBasket = sendRequestGET('http://localhost:80/basket/get/?id=' + goods_id);
-
-                    //превращаем в массив, чтобы добавить ему ключ quantity со значением 1
-                    let uniqueGoods = JSON.parse(jsonGoodsInBasket);
-
-                    uniqueGoods[0]['quantity'] = 1;
-                    console.log(uniqueGoods);
-
-                    //вносим его в хранилище, добавив к уже лежащим там товарам
-                    //для сложения преобразуем json в массив, т.к. простая склейка нескольких jsonов делает их нечитабельными
-                    let currentGoods = JSON.parse(localStorage.getItem('basket'));
-
-                    //теперь в currentGoods лежит общий массив из всех добавленных в Корзину товаров
-                    currentGoods.push.apply(currentGoods, uniqueGoods);
-
-                    console.log(currentGoods);
-
-                    //кодируем его обратно в json, чтобы положить в хранилище
-                    let currentGoodsJson = JSON.stringify(currentGoods);
-
-                    console.log(currentGoodsJson);
-
-                    //кладем закодированный массив в хранилище
-                    localStorage.setItem('basket', currentGoodsJson);
-                   
+            //вспомогательная функция проверки, содержит ли массив с товарами товар с контретным id
+            function containsSpecific(arr, id) {
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i]['id'] === id) {
+                        return true;
+                    }
                 }
+                return false;
             }
+
+            //вспомогательная функция, показывающая порядковый id повторяющегося товара
+            function showArrId(arr, id) {
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i]['id'] === id) {
+                        return i;
+                    }
+                }
+                return false;
+            }
+
+            //если это не первый товар с таким id
+            if (containsSpecific(arr, ind_goods_id)) { //после выполнения этого условия по всей длине цикла отберутся все повторяющиеся товары. Но как быть с остальными? Нужно также собрать все те, которые не прошли это условие, но нужны
+
+                //console.log('В следующей строке массив с повторяющимся товаром');
+                //console.log(arr);
+                console.log('повторяется товар с id' + ind_goods_id);
+
+                //мы прибаляем ему +1 в quantity 
+                arr[showArrId(arr, ind_goods_id)]['quantity'] += 1;        
+                //console.log(showArrId(arr, ind_goods_id));
+
+                //кодируем массив в json
+                let json = JSON.stringify(arr);
+
+                //и перезаписываем local storage
+                localStorage.setItem('basket', json);
+
+                let currentBasket = localStorage.getItem('basket');
+
+                console.log(currentBasket);
+
+                //console.log(localStorage.getItem('basket').includes(arr[i]['name']));
+             
+            //если это ПЕРВЫЙ товар с таким id (доп. проверка на отсутствие вхождения в хранилище товара с таким названием) - else if (localStorage.getItem('basket').includes(goods_name) == false)
+            } else if (!containsSpecific(arr, ind_goods_id)) {
+
+                //передаем на сервер id выбранного товара, чтобы получить о нем нужные данные в виде jsona и положить в local storage
+                let jsonGoodsInBasket = sendRequestGET('http://localhost:80/?category_id=' + category_id + '&&id=' + ind_goods_id);
+
+                //превращаем в массив, чтобы добавить ему ключ quantity со значением 1
+                let uniqueGoods = JSON.parse(jsonGoodsInBasket);
+
+                uniqueGoods[0]['quantity'] = 1;
+                //console.log(uniqueGoods);
+
+                //вносим его в хранилище, добавив к уже лежащим там товарам
+                //для сложения преобразуем json в массив, т.к. простая склейка нескольких jsonов делает их нечитабельными
+                let currentGoods = JSON.parse(localStorage.getItem('basket'));
+
+                //console.log(currentGoods);
+
+                //теперь в currentGoods лежит общий массив из всех добавленных в Корзину товаров
+                currentGoods.push.apply(currentGoods, uniqueGoods);
+
+                console.log(currentGoods);
+
+                //кодируем его обратно в json, чтобы положить в хранилище
+                let currentGoodsJson = JSON.stringify(currentGoods);
+
+                //console.log(currentGoodsJson);
+
+                //кладем закодированный массив в хранилище
+                localStorage.setItem('basket', currentGoodsJson);
+               
+            }
+
         }
         
 
@@ -1417,32 +1570,42 @@
 
 
     //функция удаления товара из Корзины
-    function delFromBasket(goods_name) {
+    function delFromBasket(ind_goods_id) {
 
         //достаем данные из хранилища и превращаем в массив
         let arrGoods = JSON.parse(localStorage.getItem('basket'));
+        //console.log(arrGoods);
 
         //готовим переменную, чтобы записать в нее количество удаленного товара
         let quantity = 0;
 
         //удаляем карточку с нужным названием (если делать через БД, нужно будет брать id вместо названия)
         for (let i = 0; i < arrGoods.length; i++) {
-            if(arrGoods[i]['name'] === goods_name) {
+            if(arrGoods[i]['id'] === ind_goods_id) {
 
                 //записываем в переменную количество удаляемого товара
                 quantity = arrGoods[i]['quantity'];
 
                 //удаляем товар из массива
                 arrGoods.splice(i, 1);
-                console.log(arrGoods);
+                //console.log(arrGoods);
             }
         }
 
         //если удалены все товары из Корзины
         if (arrGoods.length === 0) {
 
-            //чистим все хранилище
-            localStorage.clear();
+            //чистим хранилище
+            if (localStorage.getItem('favourites')) {
+                let faves = localStorage.getItem('favourites');
+                let token = localStorage.getItem('token');
+                localStorage.clear();
+                localStorage.setItem('favourites', faves);
+                localStorage.setItem('token', token);
+            } else {
+                localStorage.clear();
+            }
+
 
             //скрываем счетчик с нулем на иконке Корзины
             document.getElementById('counter').classList.add('hidden');
@@ -1455,20 +1618,20 @@
 
             //кодируем массив в json 
             let json = JSON.stringify(arrGoods);
-            console.log(json);
+            //console.log(json);
 
             //и перезаписываем хранилище
             localStorage.setItem('basket', json);
-            console.log(localStorage.getItem('basket'));
+            //console.log(localStorage.getItem('basket'));
 
             //также уменьшаем счетчик на иконке Корзины, в зависимости от значения quantity удаляемого товара
             let counter = localStorage.getItem('total_quantity');
             let intCounter = parseInt(counter);
-            console.log(counter);
+            //console.log(counter);
 
             //отнимаем количество удаленного товара quantity (именно через переменную, т.к. значение одного удаленного товара может быть больше 1)
             intCounter -= quantity;
-            console.log(intCounter);
+            //console.log(intCounter);
 
             //и отражаем это в верстке на счетчике
             document.getElementById('counter').innerHTML = intCounter;
@@ -1478,7 +1641,7 @@
 
             //кодируем обратно в виде строки и перезаписываем хранилище
             localStorage.setItem('total_quantity', String(intCounter));
-            console.log(localStorage.getItem('total_quantity'));
+            //console.log(localStorage.getItem('total_quantity'));
 
             //перерисовываем содержимое Корзины
             renderBasket();
@@ -1486,6 +1649,195 @@
         }
     }
 
+    //функция отрисовки Избранного
+    function showMyFavourites() {
+
+        clearPage();
+
+        //отрисовываем шапку
+        main.innerHTML += document.getElementById('tmpl-favourites_frame').innerHTML;
+
+        //создаем внутри отдельный контейнер для отрисовки карточек В НАЛИЧИИ
+        let flexFrameContainer = document.createElement('div');
+        flexFrameContainer.classList.add('frame__flex-wrap');
+        main.appendChild(flexFrameContainer);
+        main.style.padding = '40px';
+
+        //создаем внутри отдельный контейнер для отрисовки карточек НЕ В НАЛИЧИИ
+        let h3 = document.createElement('h3');
+        main.appendChild(h3);
+        h3.innerHTML = "Временно нет в наличии:";
+        h3.style.margin = "0 30px 30px 30px";
+        let flexFrameContainer2 = document.createElement('div');
+        flexFrameContainer2.classList.add('frame__flex-wrap');
+        main.appendChild(flexFrameContainer2);
+
+        //для незарегистрированных пользователей отрисовка карточек товаров через хранилище
+        //если в Избранное что-то добавлено
+        if (localStorage.getItem('favourites')) {
+
+            //выстроим айдишники элементов в виде перечисления
+            let arr = JSON.parse(localStorage.getItem('favourites'));
+            //console.log(arr);
+
+            let ids = '';
+            if (arr.length > 1) {
+                for (let j = 0; j < arr.length; j++) {
+                    ids += arr[j] + ', ';
+                }
+                //console.log(ids);
+                //console.log(ids.length);
+                ids = ids.slice(0, ids.length - 2);
+                //console.log(ids);
+            } else {
+                ids = String(arr);
+            }
+
+
+            let json = sendRequestGET("http://localhost:80/?ids=" + ids);
+
+            let data = JSON.parse(json);
+            console.log(data);
+            
+            flexFrameContainer.innerHTML = '';
+            flexFrameContainer2.innerHTML = '';
+
+            //рисуем данные на экран
+            for (let i = 0; i < data.length; i++) {
+
+                //товары в наличии отрисовываем в верхний блок
+                if (data[i]['quantity'] > 0 ) {
+                    //выводим данные шаблона
+                    flexFrameContainer.innerHTML += templateCategory.replace('${goods_img}', data[i]['photo'])
+                                                                    .replace('${ind_goods_id}', data[i]['id'])
+                                                                    .replace('${ind_goods_id}', data[i]['id'])
+                                                                    .replace('${bsk_goods_id}', data[i]['id'])
+                                                                    .replace('${price}', Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))))
+                                                                    .replace('${crssd}', data[i]['price'])
+                                                                    .replace('${sale}', (data[i]['sale']) ? data[i]['sale'] : '0')
+                                                                    .replace('${category_id}', data[i]['category_id'])
+                                                                    .replace('${ind_goods_id}', data[i]['id'])
+                                                                    .replace('${category_id}', data[i]['category_id'])
+                                                                    .replace('${ind_goods_id}', data[i]['id'])
+                                                                    .replace('${goods_title}', data[i]['name'])
+                                                                    .replace('${rating}', data[i]['rating'] ? data[i]['rating'] : '0')
+                                                                    .replace('${popularity}', data[i]['popularity'] ? data[i]['popularity'] : '0');
+                //а закончившиеся товары в нижний
+                } else {
+                    //выводим данные шаблона
+                    flexFrameContainer2.innerHTML += templateCategory.replace('${goods_img}', data[i]['photo'])
+                                                                     .replace('${ind_goods_id}', data[i]['id'])
+                                                                     .replace('${ind_goods_id}', data[i]['id'])
+                                                                     .replace('${bsk_goods_id}', data[i]['id'])
+                                                                     .replace('${price}', Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))))
+                                                                     .replace('${crssd}', data[i]['price'])
+                                                                     .replace('${sale}', (data[i]['sale']) ? data[i]['sale'] : '0')
+                                                                     .replace('${category_id}', data[i]['category_id'])
+                                                                     .replace('${ind_goods_id}', data[i]['id'])
+                                                                     .replace('${category_id}', data[i]['category_id'])
+                                                                     .replace('${ind_goods_id}', data[i]['id'])
+                                                                     .replace('${goods_title}', data[i]['name'])
+                                                                     .replace('${rating}', data[i]['rating'] ? data[i]['rating'] : '0')
+                                                                     .replace('${popularity}', data[i]['popularity'] ? data[i]['popularity'] : '0');
+
+                    document.getElementsByClassName('card-in-category')[i].style.opacity = '50%';
+                    document.getElementsByClassName('price-line')[i].innerHTML = 'Нет в наличии';
+                    document.getElementsByClassName('btn-add-to-basket')[i].classList.toggle('hidden-important');
+
+                }
+                
+            }
+
+            //делаем в отдельном цикле, раз при размещении в конце цикла выше работает избирательно
+            for (let k = 0; k < document.getElementsByClassName('card-in-category').length; k++) {
+                //скрываем иконки избранного на товарах и рейтинги на этой странице
+                document.getElementsByClassName('favourite-on-goods')[k].style.display = 'none';
+                document.getElementsByClassName('rating')[k].style.display = 'none';
+
+                //добавляем крестик удаления из Избранного к карточке товара
+                document.getElementsByClassName('delete-from-favs')[k].classList.remove('hidden');
+            }
+
+            //в отдельном цикле делаем проверку на наличие скидки, т.к. в результате манипуляций в 1м if некоторые строки были скрыты
+            for (let j = 0; j < main.getElementsByClassName('sale-num').length; j++) {
+    
+                //скрываем зачеркнутую цену и скидку, если нулевая
+                if (main.getElementsByClassName('sale-num')[j].innerHTML === '-0%') {
+                    document.getElementsByClassName('crossed-out-price')[j].style.display = 'none';
+                    document.getElementsByClassName('sale-num')[j].style.display = 'none';
+                }
+                
+            }
+
+            if (flexFrameContainer2.children.length == 0) {
+                h3.innerHTML = '';
+            }
+            
+        } else {
+
+            //выводим надпись
+            flexFrameContainer.innerHTML = "Нажимайте на иконку сердечка ваших любимых товаров, и они появятся здесь";
+            //и скрываем надпись "Временно нет в наличии у второго блока"
+            h3.innerHTML = '';
+
+            //document.getElementById('bsk-goods-container').style.color = '#B566B6';
+            //document.getElementById('bsk-goods-container').style.fontWeight = 'bold';
+
+            //выделяем жирным предложение вернуться в магазин
+            //document.querySelector('.back-to-store').style.fontWeight = 'bold';
+
+        }
+
+        
+    }
+
+    //функция удаления из Избранного
+    function delFromFavourites(ind_goods_id) {
+
+        //достаем данные из хранилища и превращаем в массив
+        let arrFaves = JSON.parse(localStorage.getItem('favourites'));
+        //console.log(arrFaves);
+
+        //удаляем карточку с нужным id
+        for (let i = 0; i < arrFaves.length; i++) {
+            if(arrFaves[i] == ind_goods_id) {
+
+                //удаляем товар из массива
+                arrFaves.splice(i, 1);
+                console.log('-1 в Избранном');
+            }
+        }
+
+        //если удалены все товары, которых нет в наличии
+        if (main.getElementsByClassName('frame__flex-wrap')[1].innerHTML = '') {
+            main.querySelector('h3').style.display = 'none';
+        }
+
+        //если удалены вообще все товары из Избранного
+        if (arrFaves.length === 0) {
+
+            //чистим все хранилище
+            localStorage.setItem('favourites', '');
+
+            //перерисовываем Избранное
+            showMyFavourites();
+
+        //если после удаления в Избранном еще остались товары
+        } else {
+
+            //кодируем массив в json 
+            let json = JSON.stringify(arrFaves);
+            //console.log(json);
+
+            //и перезаписываем хранилище
+            localStorage.setItem('favourites', json);
+            //console.log(localStorage.getItem('favourites'));
+
+            //перерисовываем содержимое Избранного
+            showMyFavourites();
+
+        }
+    }
 
     //функция отрисовки Корзины
     function renderBasket() {
@@ -1513,9 +1865,9 @@
            console.log(data);
 
            //делаем запрос в БД и сразу превращаем в массив, чтобы убедиться в наличии товара
-           let db = JSON.parse(sendRequestGET("http://localhost:80/basket/get/?goods_in_basket"));
+           //let db = JSON.parse(sendRequestGET("http://localhost:80/basket/get/?goods_in_basket"));
 
-           console.log(db);
+           //console.log(db);
 
            //находим контейнер для отрисовки товаров внутри Корзины
            let bskContainer = document.getElementById('bsk-goods-container');
@@ -1529,6 +1881,11 @@
             
 
                bskContainer.innerHTML += templateGoodsInBasket.replace('${goods_img_mini}', data[i]['photo'])
+                                                              .replace('${category_id}', data[i]['category_id'])
+                                                              .replace('${ind_goods_id}', data[i]['id'])
+                                                              .replace('${ind_goods_id}', data[i]['id'])
+                                                              .replace('${category_id}', data[i]['category_id'])
+                                                              .replace('${ind_goods_id}', data[i]['id'])
                                                               .replace('${bsk_goods_title}', data[i]['name'])
                                                               .replace('${bsk_goods_id}', i)
                                                               .replace('${N}', data[i]['quantity'])
@@ -1536,7 +1893,7 @@
                                                               .replace('${price}', data[i]['quantity'] == 1 ? Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))) : data[i]['quantity'] * Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))))
                                                               .replace('${crssd}', data[i]['quantity'] == 1 ? data[i]['price'] : data[i]['quantity'] * data[i]['price'])
                                                               .replace('${sale}', (data[i]['sale']) ? data[i]['sale'] : '0')
-                                                              .replace('${goods_name}', data[i]['name']);
+                                                              .replace('${ind_goods_id}', data[i]['id']);
                //если скидки нет
                if (bskContainer.getElementsByClassName('actual-price')[i].innerHTML === bskContainer.getElementsByClassName('crossed-out-price')[i].innerHTML) {
 
@@ -1624,7 +1981,7 @@
 
             if (name !='' || e_mail !='' || login !='' || password !='') {
 
-                let data = "name=" + encodeURIComponent(name) + "&e-mail=" + encodeURIComponent(e_mail) + "&login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password);
+                let data = "name=" + encodeURIComponent(name) + "&e_mail=" + encodeURIComponent(e_mail) + "&login=" + encodeURIComponent(login) + "&password=" + encodeURIComponent(password);
     
                 // создаём объкт который умеет отправлять запросы
                 let requestObj = new XMLHttpRequest();
@@ -1716,17 +2073,20 @@
         //рисуем данные на экран
         for (let i = 0; i < data.length; i++) {
             //выводим данные шаблона
-            flexFrameContainer.innerHTML += templateCategory.replace('${category_id}', data[i]['category_id'])
-                                                            .replace('${goods_id}', i)
+            flexFrameContainer.innerHTML += templateCategory.replace('${goods_img}', data[i]['photo'])
+                                                            .replace('${ind_goods_id}', data[i]['id'])
+                                                            .replace('${ind_goods_id}', data[i]['id'])
                                                             .replace('${bsk_goods_id}', data[i]['id'])
-                                                            .replace('${goods_img}', data[i]['photo'])
-                                                            .replace('${goods_title}', data[i]['name'])
                                                             .replace('${price}', Math.round(parseInt(data[i]['price']) - (parseInt(data[i]['price']) * (data[i]['sale'] ? (parseInt(data[i]['sale']) / 100) : 0 / 100))))
                                                             .replace('${crssd}', data[i]['price'])
                                                             .replace('${sale}', (data[i]['sale']) ? data[i]['sale'] : '0')
                                                             .replace('${category_id}', data[i]['category_id'])
-                                                            .replace('${goods_id}', i)
-                                                            .replace('${goods_title}', data[i]['name']);
+                                                            .replace('${ind_goods_id}', data[i]['id'])
+                                                            .replace('${category_id}', data[i]['category_id'])
+                                                            .replace('${ind_goods_id}', data[i]['id'])
+                                                            .replace('${goods_title}', data[i]['name'])
+                                                            .replace('${rating}', data[i]['rating'] ? data[i]['rating'] : '0')
+                                                            .replace('${popularity}', data[i]['popularity'] ? data[i]['popularity'] : '0');
         
             
         }
@@ -1780,7 +2140,7 @@
                 for (let i = 0; i < 5; i++) {
                     //console.log(document.getElementsByClassName[i].getAttribute('data-ind_id'));
                     containerSearch.innerHTML += resultSearch.replace('${category_id}', data[i]["category_id"])
-                                                            .replace('${goods_id}', i)
+                                                            .replace('${ind_goods_id}', data[i]['id'])
                                                             .replace('${category_search}', data[i]["category"])
                                                             .replace('${photo_search}', data[i]['photo'])
                                                             .replace('${name_search}', data[i]['name'])

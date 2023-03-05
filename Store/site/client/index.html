@@ -49,7 +49,9 @@
 				
 				<div class="customer-icons flex aic">
 					<div class="icon log-in-icon" onclick="renderPerson()"></div>
-					<div class="icon favourite-icon"></div>
+					<div class="icon favourite-icon" onclick="showMyFavourites();">
+						<div id="counter2" class="counter hidden">0</div>
+					</div>
 					<div class="icon basket-icon" onclick="renderBasket()">
 						<div id="counter" class="counter hidden">0</div>
 					</div>
@@ -251,7 +253,9 @@
 		<!-- Базовый фильтр товаров -->
 			<div class="card-in-category">
 				<div class="card-in-category_img" style="background-image: url('${goods_img}');">
-					<button class="btn-add-to-basket popularity-counter" onclick="addToBasket(${bsk_goods_id},'${goods_title}'); popularityCounter(${goods_id});">Добавить в корзину</button>
+					<div class="favourite-on-goods" onclick="addToFavourites(${ind_goods_id})"></div>
+					<div class="delete-goods delete-from-favs hidden" onclick="delFromFavourites(${ind_goods_id})">&#10006;</div>
+					<button class="btn-add-to-basket popularity-counter" onclick="addToBasket(${category_id},${bsk_goods_id}); popularityCounter();">Добавить в корзину</button>
 				</div>
 				<div class="info-under-img">
 					<div class="price-line">
@@ -259,7 +263,7 @@
 						<div class="crossed-out-price">${crssd} р.</div>
 						<div class="sale-num">-${sale}%</div>
 					</div>
-					<h4 class="goods-title" onclick="renderCard(${category_id},${goods_id})" data-cat="${category_id}" data-ind_id="${ind_goods_id}">${goods_title}</h4>
+					<h4 class="goods-title" onclick="renderCard(${category_id},${ind_goods_id})" data-cat="${category_id}" data-ind_id="${ind_goods_id}">${goods_title}</h4>
 					<!-- рейтинг из 5 звезд -->
 					<div class="rating rating_set flex aife">
 						<div class="rating-body">
@@ -283,7 +287,7 @@
 
     <template id="tmpl-card">
 		<!-- В Карточке отрисовывается ОДИН КОНКРЕТНЫЙ ТОВАР крупным планом	 -->
-		<div class="card">
+		<div class="card card-in-category">
 			<!-- "хлебные крошки" - навигация внутри каталога -->
 			<div class="breadcrumbs-container">
 				<ul class="breadcrumbs-list">
@@ -301,7 +305,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="leave-review-offer flex" onclick="showRatings(${goods_id})">
+			<div class="leave-review-offer flex" onclick="showRatings(${ind_goods_id})">
 				<!-- рейтинг из 5 звезд -->
 			<div class="rating rating_set flex aife">
 				<div class="rating-body">
@@ -319,7 +323,7 @@
 				<div class="popularity-value hidden">${popularity}</div>
 			</div>
 			<div class="review-suggestion">
-				<p>Оценить</p>
+				<!-- <p>Оценить</p> -->
 			</div>
 			</div>
 			
@@ -335,7 +339,7 @@
 						<div class="crossed-out-price bigger">${crssd} р.</div>
 						<div class="sale-num bigger">-${sale}%</div>
 					</div>
-					<button class="btn-to-basket popularity-counter box-shadow" onclick="addToBasket(${bsk_goods_id},'${goods_title}'); popularityCounter(0);">В корзину</button>
+					<button class="btn-to-basket popularity-counter box-shadow" onclick="addToBasket(${category_id},${bsk_goods_id},'${goods_title}'); popularityCounter(0);">В корзину</button>
 					<div class="dotted-line"></div>
 					<div class="goods-description">
 						<p><b>Состав:</b></p>
@@ -346,6 +350,45 @@
 			
 		</div>
     </template>
+
+	<template id="tmpl-favourites_frame">
+		<div class="main-container">
+			<!-- "хлебные крошки" - внутренняя навигация -->
+			<div class="breadcrumbs-container">
+				<ul class="breadcrumbs-list">
+					<li>
+						<a href="#" onclick="renderHomePage()">Главная</a>
+					</li>
+					<li>
+						<p>Избранное</p>
+					</li>
+				</ul>
+			</div>
+			<h2>Избранное</h2>
+			<div class="filter aic">
+				<div class="filter_price aic">
+					<p>Цена</p>
+					<input id="price-from" type="number" placeholder="от">
+					<input id="price-to" type="number" placeholder="до">
+					<button class="price-btn" onclick="filterByPrice()">Найти</button>
+				</div>
+				<div class="filter_sort-by aic">
+					<p>Сортировать:</p>
+					<select name="sort-type" id="sort-by" onclick="sortBySelect()">
+						<option value="default">По умолчанию</option>
+						<option value="price-up">По возрастанию цены</option>
+						<option value="price-down">По убыванию цены</option>
+						<option value="popularity">По популярности</option>
+						<option value="rating">По рейтингу</option>
+					</select>
+				</div>
+			</div>
+        </div>	
+	</template>
+
+	<template id="tmpl-favourites">
+
+	</template>
 
 	<template id="tmpl-basket">
 		<!-- "хлебные крошки" - навигация внутри каталога -->
@@ -390,9 +433,9 @@
 	<!-- Шаблон для карточек товаров, добавленных в корзину -->
 	<template id="tmpl_goods-in-basket">
 		<div class="chosen-goods flex jcs">
-			<div class="bsk-goods-img" style="background-image: url('${goods_img_mini}');"></div>
+			<div class="bsk-goods-img" style="background-image: url('${goods_img_mini}');" onclick="renderCard(${category_id},${ind_goods_id})"></div>
 			<div class="bsk-goods-info flex vertical-flex">
-				<div class="bsk-goods-title">
+				<div class="bsk-goods-title" data-ind_id="${ind_goods_id}" onclick="renderCard(${category_id},${ind_goods_id})">
 					<p>${bsk_goods_title}</p>
 				</div>
 				<div class="qnt flex aic">
@@ -406,7 +449,7 @@
 				<div class="crossed-out-price">${crssd} р.</div>
 				<div class="sale-num hidden">-${sale}%</div>
 			</div>
-			<div class="delete-goods" onclick="delFromBasket('${goods_name}')">&#10006;</div>
+			<div class="delete-goods" onclick="delFromBasket(${ind_goods_id})">&#10006;</div>
 		</div>
 		<div class="separating-line"></div>
 	</template>
@@ -633,7 +676,7 @@
 
 	<!-- шаблон результатов поиска  -->
 	<template id="search-tmpl">
-		<div class="box-search" onclick="renderCard(${category_id},${goods_id})">
+		<div class="box-search" onclick="renderCard(${category_id},${ind_goods_id})">
 			<div >
 				<img class="photo-search" src="${photo_search}" alt="">
 			</div>

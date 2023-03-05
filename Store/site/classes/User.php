@@ -132,7 +132,7 @@ final class User extends AbstractClasses\Unit
 
         error_reporting(0);
         
-        $e_mail = $_POST['e-mail'];
+        $e_mail = $_POST['e_mail'];
 
         //заходим в базу смотрим сколько у нас юзеров с таким паролем и логинов
         $pdo = \Connection::getConnection();
@@ -157,7 +157,7 @@ final class User extends AbstractClasses\Unit
 
         //запрос на создание пользователя
         $name = $_POST['name'];
-        $e_mail = $_POST['e-mail'];
+        $e_mail = $_POST['e_mail'];
         $login = $_POST['login'];
         $pass = $_POST['password'];
         $password = crypt($pass, 'shop');

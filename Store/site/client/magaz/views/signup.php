@@ -39,7 +39,7 @@
                                 
                                 <div class="text-center w-75 m-auto">
                                     <h4 class="text-dark-50 text-center mt-0 fw-bold">Зарегистрировать аккаунт</h4>
-                                    <p class="text-muted mb-4">Получите доступ к сайту, зарегистрируйте себе аккаунт.</p>
+                                    <p class="text-muted mb-4">Получите доступ к сайту, создав себе аккаунт.</p>
                                 </div>
 
                                 <form method="POST" action="?signup">
@@ -52,13 +52,13 @@
 
                                     <div class="mb-3">
                                         <label for="emailaddress" class="form-label">Ваша почта</label>
-                                        <input class="form-control" type="email" name="email" autocomplete="on" id="emailaddress" required placeholder="Введите ваш email">
+                                        <input class="form-control" type="email" name="email" autocomplete="on" id="emailaddress" required placeholder="Введите почту">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Пароль</label>
                                         <div class="input-group input-group-merge">
-                                            <input type="password" name="pass1" id="password" class="form-control" placeholder="Введит ваш пароль">
+                                            <input type="password" name="pass1" id="password" class="form-control" placeholder="Введите пароль">
                                             <div class="input-group-text" data-password="false">
                                                 <span class="password-eye"></span>
                                             </div>
@@ -68,7 +68,7 @@
                                     <div class="mb-3">
                                         <label for="password2" class="form-label">Повторите пароль</label>
                                         <div class="input-group input-group-merge">
-                                            <input type="password" name="pass2" id="password" class="form-control" placeholder="Введит ваш пароль еще раз">
+                                            <input type="password" name="pass2" id="password" class="form-control" placeholder="Введите пароль еще раз">
                                             <div class="input-group-text" data-password="false">
                                                 <span class="password-eye"></span>
                                             </div>
@@ -93,7 +93,7 @@
 
                         <div class="row mt-3">
                             <div class="col-12 text-center">
-                                <p class="text-muted">У вас уже есть аккаунт? <a href="/" class="text-muted ms-1"><b>Войти</b></a></p>
+                                <p class="text-muted">Уже есть аккаунт? <a href="/client/magaz/?login" class="text-muted ms-1"><b>Войти</b></a></p>
                             </div> <!-- end col-->
                         </div>
                         <!-- end row -->

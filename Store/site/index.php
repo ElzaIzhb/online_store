@@ -8,6 +8,12 @@ Good::getGoods();
 
 }
 
+if (isset($_GET['ids'])) {
+
+    Category::getGoodsWithCategories();
+    
+}
+
 if (isset($_GET['allcategories'])) {
 
 Category::getAllCategories();
@@ -70,11 +76,6 @@ User::deleteUser();
             
 }
 
-if (isset($_POST['updateField'])) {
-    $field = $_POST['updateField'];
-    Good::updateLine()[$field]; //???
-                
-}
 
 if (isset($_GET['select_phone'])) {
 
