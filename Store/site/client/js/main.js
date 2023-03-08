@@ -29,14 +29,23 @@
     let templateGoodsInBasket = document.getElementById('tmpl_goods-in-basket').innerHTML;
 
     //получем данные шаблона личного кабинета
-    let templatePerson1 = document.getElementById('tmpl-person1').innerHTML;
-    let templatePerson = document.getElementById('tmpl-person').innerHTML;
+    //let templatePerson1 = document.getElementById('tmpl-person1').innerHTML;
+    //let templatePerson = document.getElementById('tmpl-person').innerHTML;
 
     //получем данные шаблона отзывов
     let templateReviews = document.getElementById('tmpl_reviews').innerHTML;
 
     //получем данные шаблона карточки отзывов
     let templateCardReview = document.getElementById('tmpl_card_review').innerHTML;
+
+    //полупрозрачная подложка формы логина и регистрации
+    let screenDimmer = document.getElementById('screen-dimmer');
+
+    //форма loginа
+    let loginForm = document.getElementById('tmpl-request2');
+
+    //форма регистрации
+    let signupForm = document.getElementById('tmpl-request');
 
     //очищение хранилища для тестов
     //localStorage.clear();
@@ -76,6 +85,9 @@
         //снова скрываем счетчик
         document.getElementById('counter2').classList.add('hidden');
     }
+
+    let hash = localStorage.getItem('token');
+
 
     if(document.querySelectorAll('.rating')) {
         const ratings = document.querySelectorAll('.rating');
@@ -172,7 +184,7 @@
                         let requestObj = new XMLHttpRequest();
 
                         // собираем ссылку для запроса
-                        let link = 'http://localhost:80/api/update/index.php';
+                        let link = 'http://localhost/api/update/index.php';
                             
                         //конфигурируем объект
                         requestObj.open('POST', link, false);
@@ -193,70 +205,182 @@
     
     }
 
+    /*
+    document.addEventListener('click', (e)=>{
+        if(e.target == screenDimmer) {
+            alert(1);
+            loginForm.classList.add('hidden');
+            signupForm.classList.add('hidden');
+        }
+    }); */
+
     //вызываем функцию при загрузке страницы
     renderHomePage();
 
-    let hash = localStorage.getItem('token');
+    //если юзер залогинен, добавляем иконке ЛК свое меню, появляющееся и скрывающееся по клику
+    function persAccountSubmenuCheck() {
+        if (document.querySelector('.logged-in-icon')) {
+            //console.log(document.querySelector('.logged-in-icon'));
+            //console.log(document.querySelector('.logged-in-icon').classList);
+            document.getElementById('log-in').setAttribute('onClick', 'showOptions()');
+            
+        } else {
+            document.getElementById('log-in').setAttribute('onClick', 'authorization()');
+            document.querySelector('.pers').classList.add('hidden');
+        }
+    }
 
-    //функция отрисовки личного кабинета
-    function renderPerson() {
+    //показ/скрытие нижнего меню под иконкой ЛК
+    function showOptions() {
+        document.querySelector('.pers').classList.toggle('hidden');
+    }
 
-        if (hash !='') {
+    //функция проверки токена
+    function tokenChecked() {
+        
+        let hash = localStorage.getItem('token');
 
-        let data = "token=" + encodeURIComponent(hash);
+        if (hash != null) {
 
-        // создаём объкт который умеет отправлять запросы
-        let requestObj = new XMLHttpRequest();
+            console.log(hash);
 
-        requestObj.onreadystatechange = function() {
-            if (requestObj.readyState == XMLHttpRequest.DONE) {
-                let date = JSON.parse(requestObj.responseText);
+            let data = "token=" + encodeURIComponent(hash);
 
-                if (date['success'] == true) {
+            // создаём объект, который умеет отправлять запросы
+            let requestObj = new XMLHttpRequest();
 
-                    //если да, то отрисовываем дальше страницу кабинета
-                    personalaccount();
+            requestObj.onreadystatechange = function() {
+                if (requestObj.readyState == XMLHttpRequest.DONE) {
+                    let date = JSON.parse(requestObj.responseText);
 
-                    document.getElementById('pers_name').value = date['name'];
-                    document.getElementById('pers_mail').value = date['e-mail'];
-                    document.getElementById('pers_phone').value = date['phone'];
-                    document.getElementById('pers_adress').value = date['adress'];
+                    if (date['success'] == true) {
+
+                        console.log('true');
+
+                        //если да, то отрисовываем дальше страницу кабинета
+                        //personalaccount();
+                        // renderInfo();
+
+                        // document.getElementById('pers_name').value = date['name'];
+                        // document.getElementById('pers_mail').value = date['e-mail'];
+                        // document.getElementById('pers_phone').value = date['phone'];
+                        // document.getElementById('pers_adress').value = date['adress'];
+
+                    }
 
                 }
+            }
 
-             }
+            //собираем ссылку для запроса
+            let link = 'http://localhost/?check';
+            
+            //конфигурируем объект
+            requestObj.open('POST', link, false);
+                                    
+            requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                    
+            // отправляем запрос
+            requestObj.send(data);
+
+            console.log('token has been checked');
+
+        } else {
+
+            console.log('something is wrong with hash');
+            console.log('hash: ' + hash);
+
+            return false;
         }
 
-        //собираем ссылку для запроса
-        let link = 'http://localhost/?check';
         
-        //конфигурируем объект
-        requestObj.open('POST', link, false);
-                                
-        requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                
-        // отправляем запрос
-        requestObj.send(data);
+    }
 
+    //функция отрисовки личного кабинета
+    // function renderPerson() {
+
+    //функция вызова формы авторизации (логина)
+    function authorization() {
+
+        let hash = localStorage.getItem('token');
+
+        if (hash == null) {
+
+            //очищаем страницу
+            // clearPage();
+    
+            //отрисовываем в main шаблон личного кабинета
+            //main.innerHTML += templatePerson1;
+
+            //делаем форму loginа видимой
+            document.getElementById('screen-dimmer').style.opacity = '1';
+            document.getElementById('tmpl-request2').classList.remove('hidden');
+
+            // document.addEventListener('click', (e)=>{
+            //     if (e.target !== loginForm) {
+            //         document.getElementById('screen-dimmer').style.opacity = '0';
+            //         loginForm.classList.add('hidden');
+            //     }  
+            // })
+    
         } 
         
-        if (hash==null) {
+        // else if (hash != null) {
+        //     console.log(hash);
 
-        //очищаем страницу
-        clearPage();
+        // let data = "token=" + encodeURIComponent(hash);
 
-        //отрисовываем в main шаблон личного кабинета
-        main.innerHTML += templatePerson1;
+        // // создаём объкт который умеет отправлять запросы
+        // let requestObj = new XMLHttpRequest();
 
-    }
+        // requestObj.onreadystatechange = function() {
+        //     if (requestObj.readyState == XMLHttpRequest.DONE) {
+        //         let date = JSON.parse(requestObj.responseText);
+
+        //         if (date['success'] == true) {
+
+        //             //если да, то отрисовываем дальше страницу кабинета
+        //             //personalaccount();
+        //             renderInfo();
+
+        //             document.getElementById('pers_name').value = date['name'];
+        //             document.getElementById('pers_mail').value = date['e-mail'];
+        //             document.getElementById('pers_phone').value = date['phone'];
+        //             document.getElementById('pers_adress').value = date['adress'];
+
+        //         }
+
+        //      }
+        // }
+
+        // //собираем ссылку для запроса
+        // let link = 'http://localhost/?check';
+        
+        // //конфигурируем объект
+        // requestObj.open('POST', link, false);
+                                
+        // requestObj.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                
+        // // отправляем запрос
+        // requestObj.send(data);
+
+        // console.log('hash is not null, request sent');
+
+        //} 
 
 }
 
+    //функция вызова формы регистрации
     function registration() {
         //очищаем страницу
-        clearPage();
+        // clearPage();
 
-        main.innerHTML += templatePerson;
+        //main.innerHTML += templatePerson;
+
+        //скрываем форму loginа
+        document.getElementById('tmpl-request2').classList.add('hidden');
+
+        //делаем форму регистрации видимой
+        document.getElementById('tmpl-request').classList.remove('hidden');
     }
 
     //вся завязка на айдишнике товара
@@ -295,6 +419,7 @@
 
     }
 
+    //функция захода в ЛК после авторизации
     function entrance() {
 
         let login = document.getElementById('login_entrance').value;
@@ -311,6 +436,7 @@
                 requestObj.onreadystatechange = function() {
                     if (requestObj.readyState == XMLHttpRequest.DONE) {
                         let date = JSON.parse(requestObj.responseText);
+                        console.log(date);
 
                         if (date['success'] == false) {
 
@@ -320,22 +446,61 @@
             
                         if (date['success'] == true) {
 
-                        let token = date['token'];
+                            let token = date['token'];
 
-                        localStorage.setItem('token', token);
-                        //очищаем страницу
-                        clearPage();
-            
-                        //если да, то отрисовываем дальше страницу кабинета
-                        personalaccount();
-            
-                        document.getElementById('lk').classList.add('butpers1');
+                            localStorage.setItem('token', token);
+                            console.log(token);
 
-                        document.getElementById('pers_name').value = date['name'];
-                        document.getElementById('pers_mail').value = date['e-mail'];
-                        document.getElementById('pers_phone').value = date['phone'];
-                        document.getElementById('pers_adress').value = date['adress'];
+                            tokenChecked();
 
+                            //console.log(login);
+                            //кладем логин в хранилище
+                            //localStorage.setItem('login', login);
+                
+                            //если да, то отрисовываем дальше страницу кабинета
+                            //сначала скрываем форму loginа и полупрозрачную подложку
+                            document.getElementById('screen-dimmer').style.opacity = '0';
+                            document.getElementById('tmpl-request2').classList.add('hidden');
+                
+                            //document.getElementById('lk').classList.add('butpers1');
+
+                            //меняем иконку в хедере
+                            document.getElementById('log-in').classList.remove('log-in-icon');
+                            document.getElementById('log-in').classList.add('logged-in-icon');
+
+                            //меняем онклик у иконки входа в ЛК
+                            persAccountSubmenuCheck();
+
+                            // document.getElementById('pers_name').value = date['name'];
+                            // document.getElementById('pers_mail').value = date['e-mail'];
+                            // document.getElementById('pers_phone').value = date['phone'];
+                            // document.getElementById('pers_adress').value = date['adress'];
+
+                            let persInfoArr = {};
+
+                            persInfoArr['name'] = date['name'];
+                            persInfoArr['e-mail'] = date['e-mail'];
+
+                            if (date['phone']) {
+                                persInfoArr['phone'] = date['phone'];
+                            } else {
+                                persInfoArr['phone'] = '';
+                            }
+
+                            if (date['adress']) {
+                                persInfoArr['adress'] = date['adress'];
+                            } else {
+                                persInfoArr['adress'] = '';
+                            }
+
+                            console.log(persInfoArr);
+
+                            localStorage.setItem('personal_info', JSON.stringify(persInfoArr));
+
+                            //очищаем страницу
+                            clearPage();
+
+                            renderInfo();
                         }
                     }
                 }
@@ -356,9 +521,24 @@
     function exit() {
 
         localStorage.removeItem('token');
+        //console.log(localStorage.getItem('token'));
 
         //отрисовываем в main шаблон личного кабинета
-        main.innerHTML = templatePerson1;
+        //main.innerHTML = templatePerson1;
+
+        //меняем иконку в хедере
+        document.getElementById('log-in').classList.remove('logged-in-icon');
+        document.getElementById('log-in').classList.add('log-in-icon');
+
+        //возвращаем Главную страницу
+        renderHomePage();
+        
+        //делаем форму loginа невидимой НЕ РАБОТАЕТ
+        document.getElementById('screen-dimmer').style.opacity = '0';
+        document.getElementById('tmpl-request2').classList.add('hidden');
+
+        console.log(document.getElementById('screen-dimmer').style.opacity);
+        console.log(document.getElementById('tmpl-request2').classList);
 
     }
 
@@ -374,7 +554,7 @@
             let requestObj = new XMLHttpRequest();
 
             // собираем ссылку для запроса
-            let link = 'http://localhost:80/?deleteUser';
+            let link = 'http://localhost/?deleteUser';
                 
             //конфигурируем объект
             requestObj.open('POST', link, false);
@@ -387,17 +567,26 @@
             localStorage.removeItem('token');
 
             //отрисовываем в main шаблон личного кабинета
-            main.innerHTML = templatePerson1;
+            //main.innerHTML = templatePerson1;
+
+            //меняем иконку в хедере
+            document.getElementById('log-in').classList.remove('logged-in-icon');
+            document.getElementById('log-in').classList.add('log-in-icon');
+      
+            renderHomePage();
 
         } 
     }
 
     function select_phone() {
 
+        let hash = localStorage.getItem('token');
+
         let phone = document.getElementById('pers_phone').value;
 
         //1. записать в бд те данные, которые пользователь записал в первый раз или изменил адрес и телефон
         let data = "phone=" + encodeURIComponent(phone) + "&token=" + encodeURIComponent(hash);
+        console.log(phone + ' ' + hash);
     
             // создаём объкт который умеет отправлять запросы
             let requestObj = new XMLHttpRequest();
@@ -410,6 +599,9 @@
 
                     phone = response;
 
+                    let arrLC = JSON.parse(localStorage.getItem('personal_info'));
+                    arrLC['phone'] = response;
+                    localStorage.setItem('personal_info', JSON.stringify(arrLC));
 
             }
         }
@@ -428,11 +620,13 @@
     }
 
     function select_adress() {
+       
+        let hash = localStorage.getItem('token');
 
-        let phone = document.getElementById('pers_adress').value;
+        let adress = document.getElementById('pers_adress').value;
 
         //1. записать в бд те данные, которые пользователь записал в первый раз или изменил адрес и телефон
-        let data = "adress=" + encodeURIComponent(phone) + "&token=" + encodeURIComponent(hash);
+        let data = "adress=" + encodeURIComponent(adress) + "&token=" + encodeURIComponent(hash);
     
             // создаём объкт который умеет отправлять запросы
             let requestObj = new XMLHttpRequest();
@@ -445,7 +639,9 @@
 
                     adress = response;
 
-                    
+                    let arrLC = JSON.parse(localStorage.getItem('personal_info'));
+                    arrLC['adress'] = response;
+                    localStorage.setItem('personal_info', JSON.stringify(arrLC));
             }
         }
 
@@ -472,8 +668,37 @@
 
     }
 
+    function renderInfo() {
+
+        clearPage();
+
+        main.innerHTML += document.getElementById('tmpl-personalinfo').innerHTML;
+        main.style.padding = '40px';
+
+        //сделать через БД, а не хранилище
+
+        if (localStorage.getItem('personal_info')) {
+            
+            let persInfoArr = JSON.parse(localStorage.getItem('personal_info'));
+            
+            document.getElementById('pers_name').value = persInfoArr['name'];
+            document.getElementById('pers_mail').value = persInfoArr['e-mail'];
+
+            if (JSON.parse(localStorage.getItem('personal_info'))['phone']) {
+                document.getElementById('pers_phone').value = persInfoArr['phone'];
+            }
+
+            if (JSON.parse(localStorage.getItem('personal_info'))['adress']) {
+                document.getElementById('pers_adress').value = persInfoArr['adress'];
+            }
+            
+        }
+
+    }
+
     function renderOrders() {
 
+        let hash = localStorage.getItem('token');
 
         //1. записать в бд те данные, которые пользователь записал в первый раз или изменил адрес и телефон
         let data = "token=" + encodeURIComponent(hash);
@@ -509,16 +734,41 @@
         document.getElementById('zak').classList.add('butpers1');
     }
 
+    function closeLogin() {
+        screenDimmer.style.opacity = '0';
+        loginForm.classList.add('hidden');
+    }
+
+    function closeSignup () {
+        screenDimmer.style.opacity = '0';
+        signupForm.classList.add('hidden');
+    }
+
     //функция отрисовки Главной страницы
     function renderHomePage() {
+
+    //проверяем, зарегистрирован ли юзер
+    //let userLogin = localStorage.getItem('login');
+    //console.log(hash);
+
+    let hash = localStorage.getItem('token');
+
+    if (hash) {
+        //меняем дефолтную иконку в хедере на залогиненную
+        document.getElementById('log-in').classList.remove('log-in-icon');
+        document.getElementById('log-in').classList.add('logged-in-icon');
+    }
+
+    persAccountSubmenuCheck();
+
         //очищаем страницу
         clearPage();
 
         //чтобы слайдер не ломался
         $(function(){
             $('.slider').slick({
-                arrows: false, //отображение стрелок
-                dots: false, //отображение точек
+                arrows: true, //отображение стрелок
+                dots: true, //отображение точек
                 adaptiveHeight: false, //слайдер подстраивается по высоте под высоту активного слайда
                 slidesToShow: 2, //сколько слайдов будет показано в одном ряду
                 slidesToScroll: 1, //сколько слайдов пролистывается по одному нажатию на стрелку
@@ -567,7 +817,7 @@
         //очищаем страницу
         clearPage();
 
-        let json = sendRequestGET("http://localhost:80/?allcategories");
+        let json = sendRequestGET("http://localhost/?allcategories");
 
         //раскодируем данные
         let data = JSON.parse(json);    
@@ -598,7 +848,7 @@
         //очищаем страницу
         clearPage();
 
-        let json = sendRequestGET("http://localhost:80/?allcategories");
+        let json = sendRequestGET("http://localhost/?allcategories");
 
         //раскодируем данные
         let data = JSON.parse(json);    
@@ -611,7 +861,7 @@
         //console.log(data[category_id - 1]['category']);
 
         //отправляем отдельный запрос для получения данных из сджойненных таблиц goods и categories, выстроенных по category id
-        let json2 = sendRequestGET("http://localhost:80/?category_id=" + category_id);
+        let json2 = sendRequestGET("http://localhost/?category_id=" + category_id);
 
         //раскодируем данные
         let data2 = JSON.parse(json2);  
@@ -652,21 +902,21 @@
                 }
             }
 
-            // //проверяем товар на наличие
-            // if (data2[i]['quantity'] == null || parseInt(data2[i]['quantity']) < 1 ) {
-            //     document.getElementsByClassName('card-in-category')[i].style.opacity = '50%';
-            //     document.getElementsByClassName('price-line')[i].innerHTML = 'Нет в наличии';
-            //     document.getElementsByClassName('btn-add-to-basket')[i].classList.toggle('hidden-important');    
-            // }
+            //проверяем товар на наличие
+            if (data2[i]['quantity'] == null || parseInt(data2[i]['quantity']) < 1 ) {
+                document.getElementsByClassName('card-in-category')[i].style.opacity = '50%';
+                document.getElementsByClassName('price-line')[i].innerHTML = 'Нет в наличии';
+                document.getElementsByClassName('btn-add-to-basket')[i].classList.toggle('hidden-important');    
+            }
 
-            // //в отдельном цикле делаем проверку на наличие скидки (т.к. в результате манипуляций в предыдущем if некоторые строки с ценами были скрыты)
-            // for (let j = 0; j < main.getElementsByClassName('sale-num').length; j++) {
-            //     //скрываем зачеркнутую цену и скидку, если нулевая
-            //     if (main.getElementsByClassName('sale-num')[j].innerHTML === '-0%') {
-            //         document.getElementsByClassName('crossed-out-price')[j].style.display = 'none';
-            //         document.getElementsByClassName('sale-num')[j].style.display = 'none';
-            //     }
-            // }
+            //в отдельном цикле делаем проверку на наличие скидки (т.к. в результате манипуляций в предыдущем if некоторые строки с ценами были скрыты)
+            for (let j = 0; j < main.getElementsByClassName('sale-num').length; j++) {
+                //скрываем зачеркнутую цену и скидку, если нулевая
+                if (main.getElementsByClassName('sale-num')[j].innerHTML === '-0%') {
+                    document.getElementsByClassName('crossed-out-price')[j].style.display = 'none';
+                    document.getElementsByClassName('sale-num')[j].style.display = 'none';
+                }
+            }
                 
         }
 
@@ -690,7 +940,7 @@
             document.getElementById('input-search-top').value = '';
         }
 
-        let json = sendRequestGET("http://localhost:80/?category_id=" + category_id + '&&id=' + ind_goods_id);
+        let json = sendRequestGET("http://localhost/?category_id=" + category_id + '&&id=' + ind_goods_id);
 
         //раскодируем данные
         let data = JSON.parse(json)[0];
@@ -1125,7 +1375,7 @@
             let requestObj = new XMLHttpRequest();
         
             // собираем ссылку для запроса
-            let link = 'http://localhost:80/api/update/index.php';
+            let link = 'http://localhost/api/update/index.php';
             
             //конфигурируем объект
             requestObj.open('POST', link, false);
@@ -1282,7 +1532,7 @@
         if (localStorage.getItem('basket') == null) {
 
             //передаем на сервер id выбранного товара, чтобы получить о нем нужные данные в виде jsona и положить в local storage
-            let jsonGoodsInBasket = sendRequestGET('http://localhost:80/?category_id=' + category_id + '&&id=' + ind_goods_id);
+            let jsonGoodsInBasket = sendRequestGET('http://localhost/?category_id=' + category_id + '&&id=' + ind_goods_id);
             //console.log(jsonGoodsInBasket);
 
             //помещаем данный товар в хранилище
@@ -1350,7 +1600,7 @@
             } else if (!containsSpecific(arr, ind_goods_id)) {
 
                 //передаем на сервер id выбранного товара, чтобы получить о нем нужные данные в виде jsona и положить в local storage
-                let jsonGoodsInBasket = sendRequestGET('http://localhost:80/?category_id=' + category_id + '&&id=' + ind_goods_id);
+                let jsonGoodsInBasket = sendRequestGET('http://localhost/?category_id=' + category_id + '&&id=' + ind_goods_id);
 
                 //превращаем в массив, чтобы добавить ему ключ quantity со значением 1
                 let uniqueGoods = JSON.parse(jsonGoodsInBasket);
@@ -1638,16 +1888,8 @@
         if (arrGoods.length === 0) {
 
             //чистим хранилище
-            if (localStorage.getItem('favourites')) {
-                let faves = localStorage.getItem('favourites');
-                let token = localStorage.getItem('token');
-                localStorage.clear();
-                localStorage.setItem('favourites', faves);
-                localStorage.setItem('token', token);
-            } else {
-                localStorage.clear();
-            }
-
+            localStorage.removeItem('basket');
+            localStorage.removeItem('total_quantity');
 
             //скрываем счетчик с нулем на иконке Корзины
             document.getElementById('counter').classList.add('hidden');
@@ -1736,7 +1978,7 @@
             }
 
 
-            let json = sendRequestGET("http://localhost:80/?ids=" + ids);
+            let json = sendRequestGET("http://localhost/?ids=" + ids);
 
             let data = JSON.parse(json);
             console.log(data);
@@ -1835,10 +2077,19 @@
 
     //функция удаления из Избранного
     function delFromFavourites(ind_goods_id) {
+        console.log(ind_goods_id);
 
         //достаем данные из хранилища и превращаем в массив
         let arrFaves = JSON.parse(localStorage.getItem('favourites'));
         //console.log(arrFaves);
+
+        console.log(arrFaves);
+
+        if (typeof(arrFaves) === 'number') {
+            let arr = [];
+            arr[0] = arrFaves;
+            arrFaves = arr;
+        }
 
         //удаляем карточку с нужным id
         for (let i = 0; i < arrFaves.length; i++) {
@@ -1859,7 +2110,8 @@
         if (arrFaves.length === 0) {
 
             //чистим все хранилище
-            localStorage.setItem('favourites', '');
+            localStorage.removeItem('favourites');
+            console.log(localStorage.getItem('favourites'));
 
             //перерисовываем Избранное
             showMyFavourites();
@@ -2007,7 +2259,8 @@
         return xhr.responseText;
     }
 
-    function send() {
+    //функция регистрации + перенаправления на форму авторизации
+    function signUp() {
 
         let name = document.getElementById('name').value;
         let e_mail = document.getElementById('e-mail').value;
@@ -2031,11 +2284,47 @@
                 requestObj.onreadystatechange = function() {
                     if (requestObj.readyState == XMLHttpRequest.DONE) {
                         let date = JSON.parse(requestObj.responseText);
+                        console.log(date);
 
                         if (date["success"]) {
+
+                            //console.log('success');
+
+                            //скрываем форму регистрации и полупрозрачную подложку
+                            document.getElementById('screen-dimmer').style.opacity = '0';
+                            document.getElementById('tmpl-request').classList.add('hidden');
+
+                            //открываем форму авторизации
+                            document.getElementById('tmpl-request2').classList.remove('hidden');
+
+                            // //меняем иконку в хедере
+                            // document.getElementById('log-in').classList.remove('log-in-icon');
+                            // document.getElementById('log-in').classList.add('logged-in-icon');
         
-                            main.innerHTML = templatePerson1;
-        
+                            // //main.innerHTML = templatePerson1;
+                            
+                            // //personalaccount();
+                            // //меняем онклик у иконки входа в ЛК
+                            // persAccountSubmenuCheck();
+
+                            //document.getElementById('pers_name').value = name;
+                            //document.getElementById('pers_mail').value = e-mail;
+
+                            let persInfoArr = {};
+
+                            persInfoArr['name'] = name;
+                            persInfoArr['e-mail'] = e_mail;
+
+                            //console.log(persInfoArr);
+
+                            localStorage.setItem('personal_info', JSON.stringify(persInfoArr));
+                            //console.log(localStorage.getItem('personal_info'));
+
+                            // //очищаем страницу
+                            // clearPage();
+
+                            // renderInfo();
+
                         }
                         else if (date["reason"] == "already exist") {
 
@@ -2049,7 +2338,7 @@
                 }
             
                 // собираем ссылку для запроса
-                let link = 'http://localhost:80/?createUser';
+                let link = 'http://localhost/?createUser';
                 
                 //конфигурируем объект
                 requestObj.open('POST', link, false);
@@ -2094,7 +2383,7 @@
         //очищаем страницу
         clearPage();
 
-        let json = sendRequestGET("http://localhost:80/?sale");
+        let json = sendRequestGET("http://localhost/?sale");
 
         //делаем копию в хранилище для фильтрации
         localStorage.setItem('goods_on_page', json);
@@ -2171,7 +2460,7 @@
                 containerSearch.innerHTML = '';
         
                 //Отправляем GET заспрос на поиск товара 
-                let json = sendRequestGET("http://localhost:80/search.php?name=" + textSearch);
+                let json = sendRequestGET("http://localhost/search.php?name=" + textSearch);
 
                 //Раскодируем JSON
                 let data = JSON.parse(json);
@@ -2245,7 +2534,7 @@ function sendReview() {
         let requestObj = new XMLHttpRequest();
         
         // собираем ссылку для запроса
-        let link = 'http://localhost:80/?review';
+        let link = 'http://localhost/?review';
             
         //конфигурируем объект
         requestObj.open('POST', link, false);
@@ -2270,7 +2559,7 @@ function renderReviews() {
 
     main.innerHTML += document.getElementById('tmpl_reviews').innerHTML;
 
-    let json = sendRequestGET("http://localhost:80/?reviewGet");
+    let json = sendRequestGET("http://localhost/?reviewGet");
 
     let data = JSON.parse(json); 
 

@@ -26,7 +26,7 @@
 			<div class="navigation flex aic">
 				<div class="nav1 flex jcspb aic">
 					<div class="logo-co" onclick="renderHomePage()"></div>
-					<div class="catalog box-shadow" onclick="renderCatalog()">Каталог</div>
+					<div class="btn catalog box-shadow" onclick="renderCatalog()">Каталог</div>
 					<div id="search" class="search">
 						<input pattern="[А-Яа-яЁё ]+" id="input-search-top" class="input-search" type="text" oninput="searchGoods()" placeholder="Поиск">
 						<div id="container-search">
@@ -40,15 +40,22 @@
 
 				</div>
 				<div class="nav2 flex jcspb aic">
-					<div><a href="#" class="nav-item" onclick="renderAkc()">Акции</a></div>
-					<div><a href="#" class="nav-item" onclick="renderDelivery()">Доставка</a></div>
-					<div><a href="#" class="nav-item" onclick="renderCont()">Контакты</a></div>
-					<div><a href="#" class="nav-item" onclick="renderReviews()">Отзывы</a></div>
+					<a href="#" class="nav-item" onclick="renderAkc()">Акции</a>
+					<a href="#" class="nav-item" onclick="renderDelivery()">Доставка</a>
+					<a href="#" class="nav-item" onclick="renderCont()">Контакты</a>
+					<a href="#" class="nav-item" onclick="renderReviews()">Отзывы</a>
 				
 				</div>
 				
 				<div class="customer-icons flex aic">
-					<div class="icon log-in-icon" onclick="renderPerson()"></div>
+					<div id="log-in" class="icon log-in-icon" onclick="authorization()">
+						<div class="pers box-shadow hidden">
+							<button id="lk" class="butpers" onclick="renderInfo()">Личные данные</button>
+							<button id="zak" class="butpers" onclick="renderOrders()">Заказы</button>
+							<button class="butpers" onclick="deleteAccount()">Удалить аккаунт</button>
+							<button class="butpers" onclick="exit()">Выйти</button>
+						</div>
+					</div>
 					<div class="icon favourite-icon" onclick="showMyFavourites();">
 						<div id="counter2" class="counter hidden">0</div>
 					</div>
@@ -84,10 +91,57 @@
 	<main id="container">
 		<!-- контейнер для отрисовки любого из шаблонов, которые занимают всю страницу -->
 
-
-		
-
 	</main>
+
+	<div id="screen-dimmer" class="screen-dimmer"></div>
+	<div id="tmpl-request" class="request-background hidden">
+		<div class="request-container request-container-signin">
+			<div class="request-header">
+				<div class="close-form" onclick="closeSignup()">&#10006;</div>
+				<img src="http://localhost/client/magaz/assets/images/logo2.png" alt="logo">
+			</div>
+			<!-- <h1 class="text-request">Регистрация</h1> -->
+			<div class="form">
+				<div class="request-title">
+					<h4>Зарегистрировать аккаунт</h4>
+					<p class="request-undertext">для получения доступа к личному кабинету</p>
+				</div>
+				<div class="form-text">Имя<span>*</span></div>
+				<input class="form-area" id="name" type="text" name="name" autocomplete="off" placeholder="Введите имя" required>
+				<div class="form-text">E-mail<span>*</span></div>
+				<input class="form-area" id="e-mail" type="e-mail" name="e-mail" autocomplete="off" placeholder="Введите почту" required>
+				<div class="form-text">Логин</div>
+				<input class="form-area" id="login" type="text" name="login" autocomplete="off" placeholder="Введите логин" required>
+				<div class="form-text">Пароль</div>
+				<input class="form-area" id="password" type="password" name="password" autocomplete="off" placeholder="Введите пароль" required>
+				<div class="form-text">Подтвердите пароль</div>
+				<input class="form-area" id="password2" type="password" name="password2" autocomplete="off" placeholder="Введите пароль еще раз" required>
+				<button class="btn form-submit" type="submit" onclick="signUp()">Зарегистрироваться</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="tmpl-request2" class="request-background hidden">
+		<div class="request-container">
+			<div class="request-header">
+				<div class="close-form" onclick="closeLogin()">&#10006;</div>
+				<img src="http://localhost/client/magaz/assets/images/logo2.png" alt="logo">
+			</div>
+			<!-- <h1 class="text-request">Личный кабинет</h1> -->
+			<div class="form">
+				<div class="request-title">
+					<h4>Войти в личный кабинет</h4>
+					<p class="request-undertext">Введите логин и пароль</p>
+				</div>
+				<div class="form-text">Логин</div>
+				<input class="form-area" id="login_entrance" type="text" name="login" autocomplete="off" placeholder="Введите логин" required>
+				<div class="form-text">Пароль</div>
+				<input class="form-area" id="password_entrance" type="password" name="password" autocomplete="off" placeholder="Введите почту" placeholder="Введите почту" required>
+				<button class="btn form-submit" type="submit" onclick="entrance()">Войти</button>
+			</div>
+			<button class="form-reg" type="submit" onclick="registration()">Зарегистрироваться</button>
+		</div>
+	</div>
 
 	<!-- шаблон Главной страницы -->
 	<template id="tmpl-home-page">
@@ -96,7 +150,7 @@
 				<h1><b>Распродажа в честь</b> <br>предстоящих праздников!</h1>
 			</div>
 			<div class="flex butdiv">
-				<button class="but1 box-shadow" onclick="renderAkc()">
+				<button class="btn but1 box-shadow" onclick="renderAkc()">
 					<b>Все акции</b>
 				</button>
 				<button class="but2 box-shadow" onclick="renderCatalog()">
@@ -173,8 +227,8 @@
 					Скидка 5% <br>на первый заказ
 				</div>
 				<div class="phone-and-btn flex fdc">
-					<input class="discount user-phone" id="discount" name="text" type="text" placeholder="+7 (999) 999-99-99">
-					<button class="but4 btn-order box-shadow" onclick="sendTelegram()">Получить скидку</button>
+					<input class="discount user-phone" id="discount" name="text" type="tel" placeholder="+7 (999) 999-99-99">
+					<button class="btn but4 btn-order box-shadow" onclick="sendTelegram()">Получить скидку</button>
 				</div>
 			</div>
 		</div>
@@ -228,7 +282,7 @@
 				<p>Цена</p>
 				<input id="price-from" type="number" placeholder="от">
 				<input id="price-to" type="number" placeholder="до">
-				<button class="price-btn box-shadow" onclick="filterByPrice()">Найти</button>
+				<button class="btn price-btn box-shadow" onclick="filterByPrice()">Найти</button>
 			</div>
 			<div class="filter_with-discount aic">
 				<p>Товары со скидкой</p>
@@ -339,7 +393,7 @@
 						<div class="crossed-out-price bigger">${crssd} р.</div>
 						<div class="sale-num bigger">-${sale}%</div>
 					</div>
-					<button class="btn-to-basket popularity-counter box-shadow" onclick="addToBasket(${category_id},${bsk_goods_id},'${goods_title}'); popularityCounter(0);">В корзину</button>
+					<button class="btn btn-to-basket popularity-counter box-shadow" onclick="addToBasket(${category_id},${bsk_goods_id},'${goods_title}'); popularityCounter(0);">В корзину</button>
 					<div class="dotted-line"></div>
 					<div class="goods-description">
 						<p><b>Состав:</b></p>
@@ -370,7 +424,7 @@
 					<p>Цена</p>
 					<input id="price-from" type="number" placeholder="от">
 					<input id="price-to" type="number" placeholder="до">
-					<button class="price-btn" onclick="filterByPrice()">Найти</button>
+					<button class="btn price-btn" onclick="filterByPrice()">Найти</button>
 				</div>
 				<div class="filter_sort-by aic">
 					<p>Сортировать:</p>
@@ -424,7 +478,7 @@
 				</div>
 				<div class="order-form">
 					<input class="user-phone" id="userPhone" type="tel" placeholder="+7 (999) 999-99-99">
-					<div id="btn-order" class="btn-order box-shadow" onclick="order()">Заказать</div>
+					<div id="btn-order" class="btn btn-order box-shadow" onclick="order()">Заказать</div>
 				</div>
 			</div>
 		</div>
@@ -454,41 +508,104 @@
 		<div class="separating-line"></div>
 	</template>
 
-	<template id="tmpl-person">
-		<div id="tmpl-request">
-			<h1 class="text-request">Регистрация</h1>
-		<div class="form">
-				<div class="form-text">Имя<span>*</span></div><br>
-				<input class="form-area" id="name" type="text" name="name" autocomplete="off" required>
-				<div class="form-text">E-mail<span>*</span></div><br>
-				<input class="form-area" id="e-mail" type="e-mail" name="e-mail" autocomplete="off" required>
-				<div class="form-text">Логин</div><br>
-				<input class="form-area" id="login" type="text" name="login" autocomplete="off" required><br>
-				<div class="form-text">Пароль</div><br>
-				<input class="form-area" id="password" type="password" name="password" autocomplete="off" required><br>
-				<div class="form-text">Подтвердите пароль</div><br>
-				<input class="form-area" id="password2" type="password" name="password2" autocomplete="off" required><br>
-				<button class="form-submit" type="submit" onclick="send()">Зарегистрироваться</button>
+	<!-- <template id="tmpl-person">
+		<div id="tmpl-request" class="request-background">
+			<div class="request-container request-container-signin">
+				<div class="request-header">
+					<img src="http://localhost/client/magaz/assets/images/logo2.png" alt="logo">
+				</div>
+				<h1 class="text-request">Регистрация</h1>
+				<div class="form">
+					<div class="request-title">
+						<h4>Зарегистрировать аккаунт</h4>
+						<p class="request-undertext">для получения доступа к личному кабинету</p>
+					</div>
+					<div class="form-text">Имя<span>*</span></div>
+					<input class="form-area" id="name" type="text" name="name" autocomplete="off" placeholder="Введите имя" required>
+					<div class="form-text">E-mail<span>*</span></div>
+					<input class="form-area" id="e-mail" type="e-mail" name="e-mail" autocomplete="off" placeholder="Введите почту" required>
+					<div class="form-text">Логин</div>
+					<input class="form-area" id="login" type="text" name="login" autocomplete="off" placeholder="Введите логин" required>
+					<div class="form-text">Пароль</div>
+					<input class="form-area" id="password" type="password" name="password" autocomplete="off" placeholder="Введите пароль" required>
+					<div class="form-text">Подтвердите пароль</div>
+					<input class="form-area" id="password2" type="password" name="password2" autocomplete="off" placeholder="Введите пароль еще раз" required>
+					<button class="btn form-submit" type="submit" onclick="send()">Зарегистрироваться</button>
+				</div>
+			</div>
+		</div>
+	</template> -->
+
+	<!-- <template id="tmpl-person1">
+		<div id="tmpl-request" class="request-background">
+			<div class="request-container">
+				<div class="request-header">
+					<img src="http://localhost/client/magaz/assets/images/logo2.png" alt="logo">
+				</div>
+				<h1 class="text-request">Личный кабинет</h1>
+				<div class="form">
+					<div class="request-title">
+						<h4>Войти в личный кабинет</h4>
+						<p class="request-undertext">Введите логин и пароль</p>
+					</div>
+					<div class="form-text">Логин</div>
+					<input class="form-area" id="login_entrance" type="text" name="login" autocomplete="off" placeholder="Введите логин" required>
+					<div class="form-text">Пароль</div>
+					<input class="form-area" id="password_entrance" type="password" name="password" autocomplete="off" placeholder="Введите почту" placeholder="Введите почту" required>
+					<button class="btn form-submit" type="submit" onclick="entrance()">Войти</button>
+				</div>
+				<button class="form-reg" type="submit" onclick="registration()">Зарегистрироваться</button>
+			</div>
+		</div>
+	</template> -->
+
+	<template id="tmpl-personalinfo">
+		<div class="breadcrumbs-container">
+			<ul class="breadcrumbs-list">
+				<li>
+					<a href="#" onclick="renderHomePage()">Главная</a>
+				</li>
+				<li>
+					<p>Личный кабинет: личные данные</p>
+				</li>
+			</ul>
+		</div>
+		<h2>Личные данные</h2>
+		<div class="flex jcspa personal">
+			<div>
+				<div class="form-text1">Имя</div>
+				<div class="flex">
+					<input class="form-area form-area1" id="pers_name" type="text"  autocomplete="off" readonly>
+				</div>
+				<div class="form-text1">Телефон</div>
+				<div class="flex">
+					<input class="form-area form-area1" id="pers_phone" type="tel"  autocomplete="off" onchange="select_phone()"  placeholder="+7 (999) 999-99-99">
+				</div>
+				<div class="form-text1">E-mail</div>
+				<div class="flex">
+					<input class="form-area form-area1" id="pers_mail" type="e-mail" name="e-mail" autocomplete="off"readonly>
+				</div>
+				<div class="form-text1">Адрес</div>
+				<div class="flex">
+					<input class="form-area form-area1" id="pers_adress" type="text"  autocomplete="off" onchange="select_adress()" placeholder="Введите Ваш адрес">
+				</div>
+				<button class="btn form-submit">Сохранить</button>
 			</div>
 		</div>
 	</template>
 
-	<template id="tmpl-person1">
-		<div id="tmpl-request">
-			<h1 class="text-request">Личный кабинет</h1>
-			<div class="form">
-				<div class="form-text">Логин</div><br>
-				<input class="form-area" id="login_entrance" type="text" name="login" autocomplete="off" required><br>
-				<div class="form-text">Пароль</div><br>
-				<input class="form-area" id="password_entrance" type="password" name="password" autocomplete="off" required><br>
-				<button class="form-submit" type="submit" onclick="entrance()">Войти</button>
-			</div>
-			<button class="form-reg" type="submit" onclick="registration()">Зарегистрироваться</button>
+	<!-- <template id="personalaccount">
+		<div class="breadcrumbs-container">
+			<ul class="breadcrumbs-list">
+				<li>
+					<a href="#" onclick="renderHomePage()">Главная</a>
+				</li>
+				<li>
+					<p>Личный кабинет</p>
+				</li>
+			</ul>
 		</div>
-	</template>
-
-	<template id="personalaccount">
-		<h1 class="">Личный кабинет</h1>
+		<h2>Личный кабинет</h2>
 		<div class="flex jcspa personal">
 			<div class="pers">
 				<button id="lk" class="butpers" >Личные данные</button>
@@ -499,33 +616,43 @@
 			<div>
 				<div class="form-text1">Имя</div>
 				<div class="flex">
-					<input class="form-area1" id="pers_name" type="text"  autocomplete="off" readonly>
+					<input class="form-area form-area1" id="pers_name" type="text"  autocomplete="off" readonly>
 				</div>
 				<div class="form-text1">Телефон</div>
 				<div class="flex">
-					<input class="form-area1" id="pers_phone" type="text"  autocomplete="off" onchange="select_phone()">
+					<input class="form-area form-area1" id="pers_phone" type="tel"  autocomplete="off" onchange="select_phone()"  placeholder="+7 (999) 999-99-99">
 				</div>
 				<div class="form-text1">E-mail</div>
 				<div class="flex">
-					<input class="form-area1" id="pers_mail" type="e-mail" name="e-mail" autocomplete="off"readonly>
+					<input class="form-area form-area1" id="pers_mail" type="e-mail" name="e-mail" autocomplete="off"readonly>
 				</div>
 				<div class="form-text1">Адрес</div>
 				<div class="flex">
-					<input class="form-area1" id="pers_adress" type="text"  autocomplete="off" onchange="select_adress()">
+					<input class="form-area form-area1" id="pers_adress" type="text"  autocomplete="off" onchange="select_adress()" placeholder="Введите Ваш адрес">
 				</div>
-				<button class="form-submit">Сохранить</button>
+				<button class="btn form-submit">Сохранить</button>
 			</div>
 		</div>
-	</template>
+	</template> -->
 
 	<template id="personalorders">
-		<h1 class="">Личный кабинет</h1>
+		<div class="breadcrumbs-container">
+			<ul class="breadcrumbs-list">
+				<li>
+					<a href="#" onclick="renderHomePage()">Главная</a>
+				</li>
+				<li>
+					<p>Личный кабинет: заказы</p>
+				</li>
+			</ul>
+		</div>
+		<h2>Заказы</h2>
 		<div class="flex  personal">
-			<div class="pers">
+			<!-- <div class="pers">
 				<button id="lk" class="butpers" onclick="personalaccount()">Личные данные</button>
 				<button id="zak" class="butpers" onclick="renderOrders()">Заказы</button>
 				<button class="butpers" onclick="deleteAccount()">Удалить аккаунт</button>
-			</div>
+			</div> -->
 			<div id="order0">
 				У вас пока нет заказов.
 				<br>
@@ -557,7 +684,7 @@
 					<p>Цена</p>
 					<input id="price-from" type="number" placeholder="от">
 					<input id="price-to" type="number" placeholder="до">
-					<button class="price-btn" onclick="filterByPrice()">Найти</button>
+					<button class="btn price-btn" onclick="filterByPrice()">Найти</button>
 				</div>
 				<div class="filter_sort-by aic">
 					<p>Сортировать:</p>
@@ -713,7 +840,7 @@
 
 	<template id="tmpl_card_review">
 		<div class="slider-card">
-			<div id="name">
+			<div id="name" class="name-reviewer">
 				${name}
 			</div>
 			<div id="message">

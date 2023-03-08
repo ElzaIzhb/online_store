@@ -45,7 +45,34 @@ final class User extends AbstractClasses\Unit
          return $array;
 
      }
-    
+
+/*
+    public static function getLine() 
+    {
+
+        $token = $_POST['token'];
+
+        $pdo = \Connection::getConnection();
+        $sql = $pdo->query(" SELECT * FROM " . static::TABLE . " WHERE user_hash = " . $token);
+
+        $result = $pdo->query($sql);
+            
+        //создаём пустой массив
+        $array = array();
+        
+        //с помощью цикла перебираем каждую строчку массива с данными из бд
+        while($row = $result->fetch()){
+        
+            //записываем строчки в пустой массив
+            array_push($array, $row);
+        }
+        
+        //кодируем данные в json
+        $data = json_encode($array, JSON_UNESCAPED_UNICODE);
+        
+        print_r($data);
+    }
+    */
 
     public static function select_phone() 
     {

@@ -21,23 +21,9 @@ CREATE TABLE `Users` (
 INSERT INTO `Users` (`id`, `name`, `e_mail`, `login`, `password`, `user_hash`, `phone`, `adress`) VALUES
 (1,	'Родион',	'rodion@bk.ru',	'rodion',	'strong',	NULL,	NULL,	NULL),
 (2,	'n',	'n@ya.ru',	'nn',	'1234',	NULL,	NULL,	NULL),
-(7,	'nnn',	'dshzrsnzd',	'xfdhnfngf',	'shCpKRzWWVSCI',	NULL,	NULL,	NULL),
-(12,	'test2',	'test22',	'uiioooooo',	'shPcCgnGWTEA2',	NULL,	NULL,	NULL),
-(14,	'test3',	'test3',	'kkkkkk',	'sh/97BLdMVV8Y',	NULL,	NULL,	NULL),
-(15,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
-(16,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
-(17,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
-(18,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
-(19,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
-(20,	'555',	'555',	'555',	'in2otoFMr2qlQ',	NULL,	NULL,	NULL),
-(21,	'dgnghdmyg',	's5r',	'srthrtjn',	'inMemIhVJArEE',	NULL,	NULL,	NULL),
-(22,	'пвоаоа',	'testest',	'чарар',	'inMJtY1rNvcTI',	NULL,	NULL,	NULL),
-(23,	'xfbb',	'yyy',	'dbxdf',	'inuQi87XMNiac',	NULL,	NULL,	NULL),
-(24,	'ачпва',	'test55',	'авч',	'inpfdBMpN./GA',	NULL,	NULL,	NULL),
-(25,	'gngn',	'test56',	'gfdnxgf',	'inRH0.4x6/7UQ',	NULL,	NULL,	NULL),
-(26,	'gfxfg',	'test57',	'fxbf',	'innzwIUP3XZHg',	NULL,	NULL,	NULL),
-(29,	'test',	'test',	'ewferf',	'sh48AF4SplA/Q',	'shLSdxGW6z6/Q',	'24224244',	NULL),
-(31,	'1',	'1',	'1',	'shoAN5qc.L4Fs',	'shsxxXSvYpUHU',	'123113131',	'Арбат');
+(3, 'stacymch',	's@ya.ru',	'stacymch',	'shHUjXMxO7Ims',	'shVZhfrhB9VJQ',	'7777777777',	'uuuuuuuuu'),
+(4,	'test',	'test',	'ewferf',	'sh48AF4SplA/Q',	'shLSdxGW6z6/Q',	'24224244',	NULL),
+(5,	'1',	'1',	'1',	'shoAN5qc.L4Fs',	'shsxxXSvYpUHU',	'123113131',	'Арбат');
 
 DROP TABLE IF EXISTS `basket`;
 CREATE TABLE `basket` (

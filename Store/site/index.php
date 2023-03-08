@@ -76,6 +76,12 @@ User::deleteUser();
             
 }
 
+/*
+if (isset($GET['userGetLine'])) {
+    User::getLine();
+}
+*/
+
 
 if (isset($_GET['select_phone'])) {
 
